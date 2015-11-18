@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="BodyMetrics" customModuleProvider="target">
+            <connections>
+                <outlet property="caloriesMeterView" destination="LRU-J1-S71" id="6bT-S0-vcf"/>
+                <outlet property="carbsMeterView" destination="W3x-AF-g1Q" id="LYd-s2-eNO"/>
+                <outlet property="fatMeterView" destination="1uK-Va-ch6" id="Qqq-pH-dtA"/>
+                <outlet property="proteinMeterView" destination="uW5-iH-iKv" id="kUe-KY-xnX"/>
+                <outlet property="randomButton" destination="bx1-cl-EYD" id="9lW-SC-sQf"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LRU-J1-S71" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
+                    <rect key="frame" x="20" y="80" width="560" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="5yp-Zy-Uuz"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uK-Va-ch6" userLabel="Fat Meter View" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
+                    <rect key="frame" x="20" y="150" width="560" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="wb2-CM-ytW"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3x-AF-g1Q" userLabel="Carbs Meter View" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
+                    <rect key="frame" x="20" y="220" width="560" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="TFm-rd-f2K"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uW5-iH-iKv" userLabel="Protein Meter View" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
+                    <rect key="frame" x="20" y="290" width="560" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="GBd-oc-Oox"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bx1-cl-EYD">
+                    <rect key="frame" x="20" y="550" width="560" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="46" id="9tv-nd-VBQ"/>
+                        <constraint firstAttribute="height" constant="30" id="BYj-fX-320"/>
+                    </constraints>
+                    <state key="normal" title="Random"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="9tv-nd-VBQ"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="increment:" destination="-1" eventType="touchUpInside" id="t93-uq-l6Z"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="bx1-cl-EYD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="1t6-0t-5JI"/>
+                <constraint firstItem="uW5-iH-iKv" firstAttribute="trailing" secondItem="W3x-AF-g1Q" secondAttribute="trailing" id="56H-FX-7k9"/>
+                <constraint firstItem="1uK-Va-ch6" firstAttribute="trailing" secondItem="LRU-J1-S71" secondAttribute="trailing" id="6cL-RS-qjF"/>
+                <constraint firstAttribute="bottom" secondItem="bx1-cl-EYD" secondAttribute="bottom" constant="20" id="BGL-zo-9HD"/>
+                <constraint firstItem="1uK-Va-ch6" firstAttribute="top" secondItem="LRU-J1-S71" secondAttribute="bottom" constant="20" id="I8i-8f-7pR"/>
+                <constraint firstAttribute="trailing" secondItem="bx1-cl-EYD" secondAttribute="trailing" constant="20" id="Nhf-bi-pSf"/>
+                <constraint firstItem="LRU-J1-S71" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="QwM-qq-CcI"/>
+                <constraint firstAttribute="trailing" secondItem="LRU-J1-S71" secondAttribute="trailing" constant="20" id="T8n-KD-C5W"/>
+                <constraint firstItem="LRU-J1-S71" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="ZLx-Ax-eP8"/>
+                <constraint firstItem="W3x-AF-g1Q" firstAttribute="trailing" secondItem="1uK-Va-ch6" secondAttribute="trailing" id="aDP-Hm-XFa"/>
+                <constraint firstItem="1uK-Va-ch6" firstAttribute="leading" secondItem="LRU-J1-S71" secondAttribute="leading" id="caJ-dN-GW7"/>
+                <constraint firstItem="W3x-AF-g1Q" firstAttribute="top" secondItem="1uK-Va-ch6" secondAttribute="bottom" constant="20" id="eYj-Ug-LO0"/>
+                <constraint firstItem="uW5-iH-iKv" firstAttribute="top" secondItem="W3x-AF-g1Q" secondAttribute="bottom" constant="20" id="r7g-fN-oti"/>
+                <constraint firstItem="uW5-iH-iKv" firstAttribute="leading" secondItem="W3x-AF-g1Q" secondAttribute="leading" id="rN5-K5-UPW"/>
+                <constraint firstItem="W3x-AF-g1Q" firstAttribute="leading" secondItem="1uK-Va-ch6" secondAttribute="leading" id="wHe-DE-7rr"/>
+                <constraint firstItem="bx1-cl-EYD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="zbz-MN-zhT"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="1t6-0t-5JI"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>
