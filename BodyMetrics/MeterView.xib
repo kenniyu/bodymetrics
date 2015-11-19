@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ai7-TA-87Q">
-                    <rect key="frame" x="8" y="88" width="464" height="2"/>
+                    <rect key="frame" x="0.0" y="88" width="480" height="2"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUi-ST-tog">
                             <rect key="frame" x="0.0" y="0.0" width="0.0" height="2"/>
@@ -40,13 +40,13 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Calories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ww-2k-Je4">
-                    <rect key="frame" x="8" y="8" width="62.5" height="72"/>
+                    <rect key="frame" x="0.0" y="8" width="62.5" height="72"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="200/4000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HMc-Ft-HMh">
-                    <rect key="frame" x="78.5" y="8" width="393.5" height="72"/>
+                    <rect key="frame" x="70.5" y="8" width="409.5" height="72"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -56,11 +56,11 @@
             <constraints>
                 <constraint firstItem="HMc-Ft-HMh" firstAttribute="leading" secondItem="2Ww-2k-Je4" secondAttribute="trailing" constant="8" id="7Vf-zJ-v8A"/>
                 <constraint firstItem="Ai7-TA-87Q" firstAttribute="top" secondItem="2Ww-2k-Je4" secondAttribute="bottom" constant="8" id="AIR-zy-jGE"/>
-                <constraint firstAttribute="trailing" secondItem="Ai7-TA-87Q" secondAttribute="trailing" constant="8" id="IOX-Ys-ubH"/>
-                <constraint firstItem="2Ww-2k-Je4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="MtI-6s-nw7"/>
-                <constraint firstAttribute="trailing" secondItem="HMc-Ft-HMh" secondAttribute="trailing" constant="8" id="ikX-HC-bM0"/>
+                <constraint firstAttribute="trailing" secondItem="Ai7-TA-87Q" secondAttribute="trailing" id="IOX-Ys-ubH"/>
+                <constraint firstItem="2Ww-2k-Je4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MtI-6s-nw7"/>
+                <constraint firstAttribute="trailing" secondItem="HMc-Ft-HMh" secondAttribute="trailing" id="ikX-HC-bM0"/>
                 <constraint firstItem="2Ww-2k-Je4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="jyz-8u-bR7"/>
-                <constraint firstItem="Ai7-TA-87Q" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="k4N-n8-rPw"/>
+                <constraint firstItem="Ai7-TA-87Q" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="k4N-n8-rPw"/>
                 <constraint firstItem="HMc-Ft-HMh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="oxk-wu-r0u"/>
                 <constraint firstItem="Ai7-TA-87Q" firstAttribute="top" secondItem="HMc-Ft-HMh" secondAttribute="bottom" constant="8" id="r0h-BA-8dB"/>
                 <constraint firstAttribute="bottom" secondItem="Ai7-TA-87Q" secondAttribute="bottom" constant="8" id="vRh-4K-QJx"/>

@@ -64,6 +64,13 @@
                         <action selector="increment:" destination="-1" eventType="touchUpInside" id="t93-uq-l6Z"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBY-6y-HUe">
+                    <rect key="frame" x="20" y="512" width="560" height="30"/>
+                    <state key="normal" title="Eat"/>
+                    <connections>
+                        <action selector="eat:" destination="-1" eventType="touchUpInside" id="e7N-D8-JFD"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -71,13 +78,17 @@
                 <constraint firstItem="uW5-iH-iKv" firstAttribute="trailing" secondItem="W3x-AF-g1Q" secondAttribute="trailing" id="56H-FX-7k9"/>
                 <constraint firstItem="1uK-Va-ch6" firstAttribute="trailing" secondItem="LRU-J1-S71" secondAttribute="trailing" id="6cL-RS-qjF"/>
                 <constraint firstAttribute="bottom" secondItem="bx1-cl-EYD" secondAttribute="bottom" constant="20" id="BGL-zo-9HD"/>
+                <constraint firstItem="vBY-6y-HUe" firstAttribute="height" secondItem="bx1-cl-EYD" secondAttribute="height" id="BUa-KU-PK5"/>
                 <constraint firstItem="1uK-Va-ch6" firstAttribute="top" secondItem="LRU-J1-S71" secondAttribute="bottom" constant="20" id="I8i-8f-7pR"/>
+                <constraint firstItem="bx1-cl-EYD" firstAttribute="top" secondItem="vBY-6y-HUe" secondAttribute="bottom" constant="8" id="ILy-hS-S4l"/>
                 <constraint firstAttribute="trailing" secondItem="bx1-cl-EYD" secondAttribute="trailing" constant="20" id="Nhf-bi-pSf"/>
                 <constraint firstItem="LRU-J1-S71" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="QwM-qq-CcI"/>
                 <constraint firstAttribute="trailing" secondItem="LRU-J1-S71" secondAttribute="trailing" constant="20" id="T8n-KD-C5W"/>
                 <constraint firstItem="LRU-J1-S71" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="ZLx-Ax-eP8"/>
                 <constraint firstItem="W3x-AF-g1Q" firstAttribute="trailing" secondItem="1uK-Va-ch6" secondAttribute="trailing" id="aDP-Hm-XFa"/>
                 <constraint firstItem="1uK-Va-ch6" firstAttribute="leading" secondItem="LRU-J1-S71" secondAttribute="leading" id="caJ-dN-GW7"/>
+                <constraint firstAttribute="trailing" secondItem="vBY-6y-HUe" secondAttribute="trailing" constant="20" id="dWn-Ki-cla"/>
+                <constraint firstItem="vBY-6y-HUe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="eNK-he-LnQ"/>
                 <constraint firstItem="W3x-AF-g1Q" firstAttribute="top" secondItem="1uK-Va-ch6" secondAttribute="bottom" constant="20" id="eYj-Ug-LO0"/>
                 <constraint firstItem="uW5-iH-iKv" firstAttribute="top" secondItem="W3x-AF-g1Q" secondAttribute="bottom" constant="20" id="r7g-fN-oti"/>
                 <constraint firstItem="uW5-iH-iKv" firstAttribute="leading" secondItem="W3x-AF-g1Q" secondAttribute="leading" id="rN5-K5-UPW"/>

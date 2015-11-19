@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import Bolts
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,11 +17,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // [Optional] Power your app with Local Datastore. For more info, go to
+        // https://parse.com/docs/ios_guide#localdatastore/iOS
+        Parse.enableLocalDatastore()
+
+        // Initialize Parse.
+        Parse.setApplicationId("tsGK9NsgjFjZyfCq01JQFKO3bvDX88N7TnYrHxKP",
+            clientKey: "XeRxmacbaTjMLuRTHmmPpxHHgGF0GlaYNMwE7Lrc")
+
+        // [Optional] Track statistics around application opens.
+        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+
+
+        setupNavBar()
+        setupSegmentedControls()
+
         // Override point for customization after application launch.
         let homeViewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
-        window!.rootViewController = homeViewController
+        let navigationController = UINavigationController(rootViewController: homeViewController)
+        window!.rootViewController = navigationController
         window!.makeKeyAndVisible()
         return true
+    }
+
+    private func setupSegmentedControls() {
+        let attr = [NSFontAttributeName: Styles.Fonts.MediumMedium!]
+        UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: .Normal)
+        UISegmentedControl.appearance().tintColor = Styles.Colors.AppOrange
+    }
+
+    private func setupNavBar() {
+        let topBarTextAttributes = [
+            NSForegroundColorAttributeName: Styles.Colors.AppGreen,
+            NSFontAttributeName: Styles.Fonts.MediumXLarge!
+        ]
+
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.tintColor = Styles.Colors.AppGreen
+        navigationBarAppearance.barTintColor = Styles.Colors.AppDarkBlue
+
+        navigationBarAppearance.titleTextAttributes = topBarTextAttributes
+        navigationBarAppearance.barStyle = .Default
+
+        let barButtonAppearance = UIBarButtonItem.appearance()
+        barButtonAppearance.setTitleTextAttributes(topBarTextAttributes, forState: .Normal)
     }
 
     func applicationWillResignActive(application: UIApplication) {

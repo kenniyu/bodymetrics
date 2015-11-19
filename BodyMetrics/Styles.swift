@@ -32,6 +32,9 @@ struct Styles {
         static let White = UIColor.whiteColor()
 
         static let AppDarkBlue = UIColor(red: 18/255.0, green: 22/255.0, blue: 28/255.0, alpha: 1.0)
+        static let AppGreen = UIColor(red: 38/255.0, green: 206/255.0, blue: 77/255.0, alpha: 1.0)
+        static let AppYellow = UIColor(red: 226/255.0, green: 205/255.0, blue: 0/255.0, alpha: 1.0)
+        static let AppOrange = UIColor(red: 229/255.0, green: 124/255.0, blue: 22/255.0, alpha: 1.0)
         static let BarBackground = UIColor(red: 38/255.0, green: 42/255.0, blue: 48/255.0, alpha: 1.0)
         static let BarLabel = UIColor(red: 101/255.0, green: 120/255.0, blue: 130/255.0, alpha: 1.0)
         static let BarNumber = UIColor(red: 146/255.0, green: 159/255.0, blue: 175/255.0, alpha: 1.0)

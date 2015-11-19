@@ -56,6 +56,14 @@
 		C1B2101F1BFC4D7C002C72E9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B2101E1BFC4D7C002C72E9 /* SystemConfiguration.framework */; };
 		C1B210211BFC4D82002C72E9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B210201BFC4D82002C72E9 /* libz.tbd */; };
 		C1B210231BFC4D88002C72E9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B210221BFC4D88002C72E9 /* libsqlite3.tbd */; };
+		C1B210271BFD0574002C72E9 /* FoodSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210251BFD0574002C72E9 /* FoodSearchViewController.swift */; };
+		C1B210281BFD0574002C72E9 /* FoodSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1B210261BFD0574002C72E9 /* FoodSearchViewController.xib */; };
+		C1B2102B1BFD0757002C72E9 /* SearchResultsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210291BFD0757002C72E9 /* SearchResultsCollectionViewCell.swift */; };
+		C1B2102C1BFD0757002C72E9 /* SearchResultsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1B2102A1BFD0757002C72E9 /* SearchResultsCollectionViewCell.xib */; };
+		C1B2102F1BFE45E0002C72E9 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B2102E1BFE45E0002C72E9 /* CustomNavigationController.swift */; };
+		C1B210331BFE4702002C72E9 /* FoodDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210311BFE4702002C72E9 /* FoodDetailViewController.swift */; };
+		C1B210341BFE4702002C72E9 /* FoodDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1B210321BFE4702002C72E9 /* FoodDetailViewController.xib */; };
+		C1B210371BFE8491002C72E9 /* fruit-loops.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C1B210361BFE8491002C72E9 /* fruit-loops.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +139,14 @@
 		C1B2101E1BFC4D7C002C72E9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C1B210201BFC4D82002C72E9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		C1B210221BFC4D88002C72E9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		C1B210251BFD0574002C72E9 /* FoodSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodSearchViewController.swift; sourceTree = "<group>"; };
+		C1B210261BFD0574002C72E9 /* FoodSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodSearchViewController.xib; sourceTree = "<group>"; };
+		C1B210291BFD0757002C72E9 /* SearchResultsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsCollectionViewCell.swift; sourceTree = "<group>"; };
+		C1B2102A1BFD0757002C72E9 /* SearchResultsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultsCollectionViewCell.xib; sourceTree = "<group>"; };
+		C1B2102E1BFE45E0002C72E9 /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		C1B210311BFE4702002C72E9 /* FoodDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDetailViewController.swift; sourceTree = "<group>"; };
+		C1B210321BFE4702002C72E9 /* FoodDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodDetailViewController.xib; sourceTree = "<group>"; };
+		C1B210361BFE8491002C72E9 /* fruit-loops.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "fruit-loops.jpg"; path = "images/fruit-loops.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +210,9 @@
 		C1B20F901BFBE9A7002C72E9 /* BodyMetrics */ = {
 			isa = PBXGroup;
 			children = (
+				C1B210301BFE46F5002C72E9 /* Food */,
+				C1B2102D1BFE45D0002C72E9 /* Common */,
+				C1B210241BFD0551002C72E9 /* Search */,
 				C1B210091BFC4D21002C72E9 /* Frameworks */,
 				C1B210061BFBEE03002C72E9 /* Widgets */,
 				C1B20FF21BFBED59002C72E9 /* Resources */,
@@ -278,6 +297,7 @@
 		C1B20FF21BFBED59002C72E9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C1B210351BFE8482002C72E9 /* Images */,
 				C1B20FF31BFBED5F002C72E9 /* Fonts */,
 			);
 			name = Resources;
@@ -326,6 +346,42 @@
 				C1B2100B1BFC4D2A002C72E9 /* Parse.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C1B210241BFD0551002C72E9 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				C1B210251BFD0574002C72E9 /* FoodSearchViewController.swift */,
+				C1B210261BFD0574002C72E9 /* FoodSearchViewController.xib */,
+				C1B210291BFD0757002C72E9 /* SearchResultsCollectionViewCell.swift */,
+				C1B2102A1BFD0757002C72E9 /* SearchResultsCollectionViewCell.xib */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		C1B2102D1BFE45D0002C72E9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C1B2102E1BFE45E0002C72E9 /* CustomNavigationController.swift */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		C1B210301BFE46F5002C72E9 /* Food */ = {
+			isa = PBXGroup;
+			children = (
+				C1B210311BFE4702002C72E9 /* FoodDetailViewController.swift */,
+				C1B210321BFE4702002C72E9 /* FoodDetailViewController.xib */,
+			);
+			name = Food;
+			sourceTree = "<group>";
+		};
+		C1B210351BFE8482002C72E9 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C1B210361BFE8491002C72E9 /* fruit-loops.jpg */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,18 +490,22 @@
 			files = (
 				C1B20FFF1BFBED69002C72E9 /* BlenderPro-Book.otf in Resources */,
 				C1B20F9C1BFBE9A7002C72E9 /* LaunchScreen.storyboard in Resources */,
+				C1B210281BFD0574002C72E9 /* FoodSearchViewController.xib in Resources */,
 				C1B20F991BFBE9A7002C72E9 /* Assets.xcassets in Resources */,
 				C1B210001BFBED69002C72E9 /* BlenderPro-BookItalic.otf in Resources */,
 				C1B20F971BFBE9A7002C72E9 /* Main.storyboard in Resources */,
 				C1B20FFE1BFBED69002C72E9 /* BlenderPro-BoldItalic.otf in Resources */,
 				C1B210031BFBED69002C72E9 /* BlenderPro-MediumItalic.otf in Resources */,
+				C1B210371BFE8491002C72E9 /* fruit-loops.jpg in Resources */,
 				C1B210051BFBED69002C72E9 /* BlenderPro-ThinItalic.otf in Resources */,
 				C1B210011BFBED69002C72E9 /* BlenderPro-Heavy.otf in Resources */,
 				C1B20FC21BFBE9E5002C72E9 /* HomeViewController.xib in Resources */,
+				C1B2102C1BFD0757002C72E9 /* SearchResultsCollectionViewCell.xib in Resources */,
 				C1B20FFD1BFBED69002C72E9 /* BlenderPro-Bold.otf in Resources */,
 				C1B210021BFBED69002C72E9 /* BlenderPro-Medium.otf in Resources */,
 				C19911711BFBEE9F003C97D3 /* MeterView.xib in Resources */,
 				C1B210041BFBED69002C72E9 /* BlenderPro-Thin.otf in Resources */,
+				C1B210341BFE4702002C72E9 /* FoodDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,8 +533,10 @@
 				C1B20F941BFBE9A7002C72E9 /* ViewController.swift in Sources */,
 				C1B20FED1BFBEC32002C72E9 /* WebUrlRegularExpressionConstants.swift in Sources */,
 				C1B210081BFBEE22002C72E9 /* MeterView.swift in Sources */,
+				C1B210331BFE4702002C72E9 /* FoodDetailViewController.swift in Sources */,
 				C1B20FDA1BFBEA54002C72E9 /* Styles.swift in Sources */,
 				C1B20FCE1BFBEA31002C72E9 /* UIImage+.swift in Sources */,
+				C1B2102F1BFE45E0002C72E9 /* CustomNavigationController.swift in Sources */,
 				C1B20FD41BFBEA31002C72E9 /* String+.swift in Sources */,
 				C1B20FD61BFBEA31002C72E9 /* UITextField+.swift in Sources */,
 				C1B20FD31BFBEA31002C72E9 /* CGRect+.swift in Sources */,
@@ -487,9 +549,11 @@
 				C1B20FD51BFBEA31002C72E9 /* UIViewController+.swift in Sources */,
 				C1B20FD71BFBEA31002C72E9 /* UIColor+.swift in Sources */,
 				C1B20FEE1BFBEC32002C72E9 /* KeyboardObserver.swift in Sources */,
+				C1B210271BFD0574002C72E9 /* FoodSearchViewController.swift in Sources */,
 				C1B20F921BFBE9A7002C72E9 /* AppDelegate.swift in Sources */,
 				C1B20FC11BFBE9E5002C72E9 /* HomeViewController.swift in Sources */,
 				C1B20FF01BFBEC32002C72E9 /* PlaceholderTextView.swift in Sources */,
+				C1B2102B1BFD0757002C72E9 /* SearchResultsCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
