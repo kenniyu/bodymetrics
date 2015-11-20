@@ -109,31 +109,16 @@ class MeterView : UIView {
         let newWidth = barTotal.width * pctWidth
         barCurrentWidthConstraint.constant = newWidth
 
-//        let gradient = CAGradientLayer()
-//        gradient.startPoint = CGPointMake(0, 0)
-//        gradient.endPoint = CGPointMake(1, 0)
-//        gradient.frame = CGRectMake(0, 0, newWidth, barTotal.height)
-//        gradient.colors = [UIColor.whiteColor().CGColor, UIColor.blackColor().CGColor]
-//        self.barCurrent.layer.insertSublayer(gradient, atIndex: 0)
-//
-//        let frameAnimation = CABasicAnimation()
-//        frameAnimation.duration = 0.5
-//        frameAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
-//        self.barCurrent.layer.actions = [
-//            "frame": frameAnimation
-//        ]
-
         if meterCurrent > meterMax {
             numberLabel.textColor = Styles.Colors.Red
         } else {
             numberLabel.textColor = Styles.Colors.BarNumber
         }
 
-
         let color = getColor(newWidth/barTotal.width)
         UIView.animateWithDuration(0.8, animations: { () -> Void in
             self.barCurrent.backgroundColor = color
-            self.layoutIfNeeded()
+            self.view.layoutIfNeeded()
             }) { (completed) -> Void in
         }
     }

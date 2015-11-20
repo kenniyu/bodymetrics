@@ -43,17 +43,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupSegmentedControls() {
         let attr = [NSFontAttributeName: Styles.Fonts.MediumMedium!]
         UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: .Normal)
-        UISegmentedControl.appearance().tintColor = Styles.Colors.AppBlue
+        UISegmentedControl.appearance().tintColor = Styles.Colors.AppLightGray
     }
 
     private func setupNavBar() {
         let topBarTextAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.AppBlue,
+            NSForegroundColorAttributeName: Styles.Colors.AppLightGray,
             NSFontAttributeName: Styles.Fonts.BookLarge!
         ]
 
         let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.tintColor = Styles.Colors.AppBlue
+        navigationBarAppearance.tintColor = Styles.Colors.AppLightGray
         navigationBarAppearance.barTintColor = Styles.Colors.AppDarkBlue
 
         navigationBarAppearance.titleTextAttributes = topBarTextAttributes

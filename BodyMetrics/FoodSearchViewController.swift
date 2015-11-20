@@ -53,7 +53,7 @@ class FoodSearchViewController: UIViewController {
     public func setup() {
         // add done button
         addRightBarButtons([createDoneButton()])
-        title = "Select Food Item"
+        title = "Search Food Item"
 
         searchResultsCollectionView.backgroundColor = Styles.Colors.AppDarkBlue
         searchResultsCollectionView.delegate = self

@@ -64,6 +64,8 @@
 		C1B210331BFE4702002C72E9 /* FoodDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210311BFE4702002C72E9 /* FoodDetailViewController.swift */; };
 		C1B210341BFE4702002C72E9 /* FoodDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1B210321BFE4702002C72E9 /* FoodDetailViewController.xib */; };
 		C1B210371BFE8491002C72E9 /* fruit-loops.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C1B210361BFE8491002C72E9 /* fruit-loops.jpg */; };
+		C1B210391BFF95B0002C72E9 /* MDRotatingPieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210381BFF95B0002C72E9 /* MDRotatingPieChart.swift */; };
+		C1B210771BFFA8C4002C72E9 /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210761BFFA8C4002C72E9 /* Double+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +149,8 @@
 		C1B210311BFE4702002C72E9 /* FoodDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDetailViewController.swift; sourceTree = "<group>"; };
 		C1B210321BFE4702002C72E9 /* FoodDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FoodDetailViewController.xib; sourceTree = "<group>"; };
 		C1B210361BFE8491002C72E9 /* fruit-loops.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "fruit-loops.jpg"; path = "images/fruit-loops.jpg"; sourceTree = "<group>"; };
+		C1B210381BFF95B0002C72E9 /* MDRotatingPieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDRotatingPieChart.swift; sourceTree = "<group>"; };
+		C1B210761BFFA8C4002C72E9 /* Double+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +265,7 @@
 				C1B20FCB1BFBEA31002C72E9 /* UIViewController+.swift */,
 				C1B20FCC1BFBEA31002C72E9 /* UITextField+.swift */,
 				C1B20FCD1BFBEA31002C72E9 /* UIColor+.swift */,
+				C1B210761BFFA8C4002C72E9 /* Double+.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 				C1B20FE91BFBEC32002C72E9 /* KeyboardObserver.swift */,
 				C1B20FEA1BFBEC32002C72E9 /* KeyboardUtils.swift */,
 				C1B20FEB1BFBEC32002C72E9 /* PlaceholderTextView.swift */,
+				C1B210381BFF95B0002C72E9 /* MDRotatingPieChart.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -544,6 +550,8 @@
 				C1B20FD11BFBEA31002C72E9 /* UIView+.swift in Sources */,
 				C1B20FEC1BFBEC32002C72E9 /* TextUtils.swift in Sources */,
 				C1B20FEF1BFBEC32002C72E9 /* KeyboardUtils.swift in Sources */,
+				C1B210771BFFA8C4002C72E9 /* Double+.swift in Sources */,
+				C1B210391BFF95B0002C72E9 /* MDRotatingPieChart.swift in Sources */,
 				C1B20FD01BFBEA31002C72E9 /* UILabelWithPadding.swift in Sources */,
 				C1B20FCF1BFBEA31002C72E9 /* UILabel+.swift in Sources */,
 				C1B20FD51BFBEA31002C72E9 /* UIViewController+.swift in Sources */,

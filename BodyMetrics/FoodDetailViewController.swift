@@ -8,6 +8,13 @@
 
 import UIKit
 import Parse
+import QuartzCore
+
+public class NutritionKeys {
+    public static let kFatKey = "Total lipid (fat)"
+    public static let kCarbsKey = "Carbohydrate, by difference"
+    public static let kProteinKey = "Protein"
+}
 
 public
 class FoodDetailViewController: UIViewController {
@@ -20,6 +27,19 @@ class FoodDetailViewController: UIViewController {
     @IBOutlet weak var projectedDailyTotalsLabel: UILabel!
     @IBOutlet weak var quantityTextField: UITextField!
     @IBOutlet weak var unitSizeControl: UISegmentedControl!
+    @IBOutlet weak var foodImageOverlay: UIView!
+    @IBOutlet weak var pieChartContainerView: UIView!
+    @IBOutlet weak var scrollViewBackgroundView: UIView!
+
+    @IBOutlet weak var foodImageHeightConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var fatPctLabel: UILabel!
+    @IBOutlet weak var fatNameLabel: UILabel!
+    @IBOutlet weak var carbsPctLabel: UILabel!
+    @IBOutlet weak var carbsNameLabel: UILabel!
+    @IBOutlet weak var proteinPctLabel: UILabel!
+    @IBOutlet weak var proteinNameLabel: UILabel!
+    @IBOutlet weak var caloricBreakdownLabel: UILabel!
 
     @IBOutlet weak var fatTheoMeter: MeterView!
     @IBOutlet weak var carbsTheoMeter: MeterView!
@@ -27,6 +47,7 @@ class FoodDetailViewController: UIViewController {
 
     private var foodItem: PFObject?
     private var didLoadData = false
+    private var didSetupTapGesture = false
 
     private static let kItemSpacingDim1: CGFloat = 4
     private static let kItemSpacingDim2: CGFloat = 8
@@ -36,18 +57,25 @@ class FoodDetailViewController: UIViewController {
     private static let kItemSpacingDim6: CGFloat = 24
     private static let kItemSpacingDim7: CGFloat = 28
     private static let kItemSpacingDim8: CGFloat = 32
-    
     private static let kMeterHeight: CGFloat = 50
+    private static let kPieChartContainerViewHeight: CGFloat = 100
 
     private static let kLabelFont = Styles.Fonts.MediumMedium!
-    private static let kFoodNameFont = Styles.Fonts.MediumLarge!
-    private static let kStatsFont = Styles.Fonts.MediumSmall!
+    private static let kFoodNameFont = Styles.Fonts.BookLarge!
+
+    private static let kSubtitleFont = Styles.Fonts.MediumMedium!
+    private static let kStatsNameFont = Styles.Fonts.MediumSmall!
+    private static let kStatsPctFont = Styles.Fonts.ThinLarge!
 
     public var nutritionDelegate: NutritionDelegate?
     private var categorizedNutritions: [String: AnyObject] = [:]
 
 
     @IBOutlet weak var foodNameHeightConstraint: NSLayoutConstraint!
+
+    // pie chart shit
+    var slicesData:Array<Data> = Array<Data>()
+    var pieChart: MDRotatingPieChart!
 
     public static let kNibName = "FoodDetailViewController"
     public override func viewDidLoad() {
@@ -56,6 +84,10 @@ class FoodDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         setup()
+    }
+
+    public override func viewWillAppear(animated: Bool) {
+//        updateMeters()
     }
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -79,6 +111,8 @@ class FoodDetailViewController: UIViewController {
     public override func viewDidLayoutSubviews() {
         setupScrollView()
         updateMeters()
+
+//        setupImageGradient()
     }
 
     private func setBackButton() {
@@ -100,17 +134,30 @@ class FoodDetailViewController: UIViewController {
         scrollView.backgroundColor = UIColor.clearColor()
         scrollView.scrollEnabled = true
         scrollView.bounces = true
+        scrollView.delegate = self
 
-        // calculate content size
+        // calculate content size, starting with image height
         var totalHeight = foodImageView.height
         totalHeight += FoodDetailViewController.kItemSpacingDim5
+
         totalHeight += getFoodNameLabelHeight()
         totalHeight += FoodDetailViewController.kItemSpacingDim5
+
         totalHeight += unitSizeControl.height
         totalHeight += FoodDetailViewController.kItemSpacingDim5
 
         totalHeight += quantityTextField.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim8
+        totalHeight += FoodDetailViewController.kItemSpacingDim6
+
+        totalHeight += caloricBreakdownLabel.height
+        totalHeight += FoodDetailViewController.kItemSpacingDim3
+
+        totalHeight += FoodDetailViewController.kPieChartContainerViewHeight
+        totalHeight += FoodDetailViewController.kItemSpacingDim3
+
+        totalHeight += fatPctLabel.height
+        totalHeight += fatNameLabel.height
+        totalHeight += FoodDetailViewController.kItemSpacingDim6
 
         totalHeight += projectedDailyTotalsLabel.height
         totalHeight += FoodDetailViewController.kItemSpacingDim2
@@ -119,7 +166,18 @@ class FoodDetailViewController: UIViewController {
         totalHeight += 2 * FoodDetailViewController.kItemSpacingDim2
         totalHeight += FoodDetailViewController.kItemSpacingDim5
 
-        scrollView.contentSize = CGSizeMake(view.size.width, totalHeight + 30)
+        scrollView.contentSize = CGSizeMake(view.size.width, totalHeight)
+        setupTapGesture()
+    }
+
+    private func setupTapGesture() {
+        if didSetupTapGesture {
+            return
+        }
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: "scrollViewTapped:")
+        scrollView.addGestureRecognizer(tapGesture)
+        didSetupTapGesture = true
     }
 
     private func loadData() {
@@ -134,8 +192,25 @@ class FoodDetailViewController: UIViewController {
 
             storeData()
             setupSegmentControl()
+            setupPieChart()
+            setupBreakdownData()
         }
         didLoadData = true
+    }
+
+    private func setupBreakdownData() {
+        let gramsFat = getNutritionData(NutritionKeys.kFatKey)
+        let gramsCarbs = getNutritionData(NutritionKeys.kCarbsKey)
+        let gramsProtein = getNutritionData(NutritionKeys.kProteinKey)
+        let totalCalories = gramsFat * 9 + gramsCarbs * 4 + gramsProtein * 4
+
+        let fatPct = Double(100 * gramsFat * 9 / totalCalories).roundToPlaces(1)
+        let carbsPct = Double(100 * gramsCarbs * 4 / totalCalories).roundToPlaces(1)
+        let proteinPct = Double(100 * gramsProtein * 4 / totalCalories).roundToPlaces(1)
+
+        fatPctLabel.text = "\(fatPct)%"
+        carbsPctLabel.text = "\(carbsPct)%"
+        proteinPctLabel.text = "\(proteinPct)%"
     }
 
     private func setupSegmentControl() {
@@ -147,6 +222,7 @@ class FoodDetailViewController: UIViewController {
             segmentIndex += 1
         }
         unitSizeControl.addTarget(self, action: "unitSizeChanged:", forControlEvents: .ValueChanged)
+        unitSizeControl.selectedSegmentIndex = 0
     }
 
     private func getFoodNameLabelHeight() -> CGFloat {
@@ -160,19 +236,39 @@ class FoodDetailViewController: UIViewController {
 
     private func setupStyles() {
         view.backgroundColor = Styles.Colors.AppDarkBlue
-
+        scrollViewBackgroundView.backgroundColor = UIColor.clearColor()
         unitSizeLabel.text = unitSizeLabel.text?.uppercaseString
         adjustQuantityLabel.text = adjustQuantityLabel.text?.uppercaseString
 
+        // Food details
         foodNameLabel.font = FoodDetailViewController.kFoodNameFont
         unitSizeLabel.font = FoodDetailViewController.kLabelFont
         adjustQuantityLabel.font = FoodDetailViewController.kLabelFont
-        projectedDailyTotalsLabel.font = FoodDetailViewController.kStatsFont
+        projectedDailyTotalsLabel.font = FoodDetailViewController.kSubtitleFont
 
-        foodNameLabel.textColor = Styles.Colors.AppBlue
-        unitSizeLabel.textColor = Styles.Colors.AppBlue
-        adjustQuantityLabel.textColor = Styles.Colors.AppBlue
+        foodNameLabel.textColor = Styles.Colors.AppLightGray
+        unitSizeLabel.textColor = Styles.Colors.AppLightGray
+        adjustQuantityLabel.textColor = Styles.Colors.AppLightGray
 
+        // Caloric breakdown stats
+        caloricBreakdownLabel.font = FoodDetailViewController.kSubtitleFont
+        caloricBreakdownLabel.textColor = Styles.Colors.BarLabel
+        caloricBreakdownLabel.text = caloricBreakdownLabel.text?.uppercaseString
+        fatNameLabel.font = FoodDetailViewController.kStatsNameFont
+        carbsNameLabel.font = FoodDetailViewController.kStatsNameFont
+        proteinNameLabel.font = FoodDetailViewController.kStatsNameFont
+        fatPctLabel.font = FoodDetailViewController.kStatsPctFont
+        carbsPctLabel.font = FoodDetailViewController.kStatsPctFont
+        proteinPctLabel.font = FoodDetailViewController.kStatsPctFont
+        fatPctLabel.textColor = Styles.Colors.AppOrange
+        carbsPctLabel.textColor = Styles.Colors.AppYellow
+        proteinPctLabel.textColor = Styles.Colors.AppBlue
+        fatNameLabel.textColor = Styles.Colors.AppOrange
+        carbsNameLabel.textColor = Styles.Colors.AppYellow
+        proteinNameLabel.textColor = Styles.Colors.AppBlue
+
+
+        // Projection
         projectedDailyTotalsLabel.text = projectedDailyTotalsLabel.text?.uppercaseString
         projectedDailyTotalsLabel.textColor = Styles.Colors.BarLabel
     }
@@ -181,6 +277,52 @@ class FoodDetailViewController: UIViewController {
         setupStyles()
         setupTopBar()
         setupQuantityTextField()
+    }
+
+    private func setupPieChart() {
+        pieChart = MDRotatingPieChart(frame: CGRectMake(0, 0, pieChartContainerView.frame.width, pieChartContainerView.frame.height))
+
+        let fatGrams = getNutritionData(NutritionKeys.kFatKey)
+        let carbsGrams = getNutritionData(NutritionKeys.kCarbsKey)
+        let proteinGrams = getNutritionData(NutritionKeys.kProteinKey)
+
+        let fatCalories = fatGrams * 9
+        let carbsCalories = carbsGrams * 4
+        let proteinCalories = proteinGrams * 4
+
+        slicesData = [
+            Data(myValue: fatCalories, myColor: Styles.Colors.AppOrange, myLabel: "Fat"),
+            Data(myValue: carbsCalories, myColor: Styles.Colors.AppYellow, myLabel: "Carbs"),
+            Data(myValue: proteinCalories, myColor: Styles.Colors.AppBlue, myLabel: "Protein")]
+
+        pieChart.delegate = self
+        pieChart.datasource = self
+        pieChartContainerView.addSubview(pieChart)
+
+        var properties = Properties()
+        properties.smallRadius = pieChartContainerView.width/4
+        properties.bigRadius = pieChartContainerView.width/2
+        properties.expand = 10
+        pieChart.properties = properties
+        refreshPieChart()
+    }
+
+    private func setupImageGradient() {
+        let gradientLayer = CAGradientLayer()
+        foodImageOverlay.setNeedsLayout()
+        if let sublayers = foodImageOverlay.layer.sublayers {
+            for sublayer in sublayers {
+                sublayer.removeFromSuperlayer()
+            }
+        }
+
+        gradientLayer.frame = foodImageOverlay.bounds
+        gradientLayer.colors = [UIColor.blackColor().colorWithAlphaComponent(0.0).CGColor,
+            Styles.Colors.AppDarkBlue.CGColor]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
+        foodImageOverlay.layer.addSublayer(gradientLayer)
+
     }
 
     private func setupQuantityTextField() {
@@ -206,7 +348,21 @@ class FoodDetailViewController: UIViewController {
                 }
             }
         }
-//        print(categorizedNutritions)
+    }
+
+    private func getNutritionData(key: String) -> CGFloat {
+        let selectedSegmentIndex = unitSizeControl.selectedSegmentIndex
+        if selectedSegmentIndex < 0 {
+            return 0
+        }
+        let category = unitSizeControl.titleForSegmentAtIndex(selectedSegmentIndex)
+        let categoryData = categorizedNutritions[category!] as! NSDictionary
+
+        if let value = categoryData.valueForKey(key) as? NSString {
+            let numericValue = CGFloat(value.floatValue)
+            return numericValue
+        }
+        return 0
     }
 
     public func updateMeters() {
@@ -215,22 +371,9 @@ class FoodDetailViewController: UIViewController {
             let currentCarbs = nutritionDelegate.getCurrentGramsCarbs()
             let currentProtein = nutritionDelegate.getCurrentGramsProtein()
 
-            // no selected segment - state = initial load
-            if unitSizeControl.selectedSegmentIndex <  0 {
-                fatTheoMeter.setup("Fat", current: currentFat, max: nutritionDelegate.getMaxGramsFat())
-                carbsTheoMeter.setup("Carbs", current: currentCarbs, max: nutritionDelegate.getMaxGramsCarbs())
-                proteinTheoMeter.setup("Protein", current: currentProtein, max: nutritionDelegate.getMaxGramsProtein())
-                return
-            }
-
-            // there is a selected segment
-            let selectedSegmentIndex = unitSizeControl.selectedSegmentIndex
-            let category = unitSizeControl.titleForSegmentAtIndex(selectedSegmentIndex)
-            let categoryData = categorizedNutritions[category!] as! NSDictionary
-
-            let fatGrams = CGFloat((categoryData.valueForKey("Total lipid (fat)") as! NSString).floatValue)
-            let carbsGrams = CGFloat((categoryData.valueForKey("Carbohydrate, by difference") as! NSString).floatValue)
-            let proteinGrams = CGFloat((categoryData.valueForKey("Protein") as! NSString).floatValue)
+            let fatGrams = getNutritionData(NutritionKeys.kFatKey)
+            let carbsGrams = getNutritionData(NutritionKeys.kCarbsKey)
+            let proteinGrams = getNutritionData(NutritionKeys.kProteinKey)
 
             // get quantity
             var multiplier: CGFloat = 0
@@ -251,11 +394,78 @@ class FoodDetailViewController: UIViewController {
     public func unitSizeChanged(sender: UISegmentedControl) {
         updateMeters()
     }
+
+    public func scrollViewTapped(sender: UITapGestureRecognizer) {
+        quantityTextField.resignFirstResponder()
+    }
 }
 
 extension FoodDetailViewController: UITextFieldDelegate {
     public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         updateMeters()
         return true
+    }
+}
+
+extension FoodDetailViewController: MDRotatingPieChartDelegate, MDRotatingPieChartDataSource {
+    //Delegate
+    //some sample messages when actions are triggered (open/close slices)
+    func didOpenSliceAtIndex(index: Int) {
+        print("Open slice at \(index)")
+    }
+
+    func didCloseSliceAtIndex(index: Int) {
+        print("Close slice at \(index)")
+    }
+
+    func willOpenSliceAtIndex(index: Int) {
+        print("Will open slice at \(index)")
+    }
+
+    func willCloseSliceAtIndex(index: Int) {
+        print("Will close slice at \(index)")
+    }
+
+    //Datasource
+    func colorForSliceAtIndex(index:Int) -> UIColor {
+        return slicesData[index].color
+    }
+
+    func valueForSliceAtIndex(index:Int) -> CGFloat {
+        return slicesData[index].value
+    }
+
+    func labelForSliceAtIndex(index:Int) -> String {
+        return slicesData[index].label
+    }
+
+    func numberOfSlices() -> Int {
+        return slicesData.count
+    }
+
+    /// This must be called to render the pie chart
+    func refreshPieChart()  {
+        pieChart.build()
+    }
+}
+
+extension FoodDetailViewController: UIScrollViewDelegate {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        // TODO: wtf are these magic numbers
+        foodImageView.alpha = min(1, 1 - min(1, scrollView.contentOffset.y / 200))
+        let imageHeight = max(264, 264 - scrollView.contentOffset.y)
+        foodImageView.height = imageHeight
+    }
+}
+
+class Data {
+    var value: CGFloat
+    var color: UIColor = UIColor.grayColor()
+    var label: String = ""
+
+    init(myValue: CGFloat, myColor: UIColor, myLabel: String) {
+        value = myValue
+        color = myColor
+        label = myLabel
     }
 }

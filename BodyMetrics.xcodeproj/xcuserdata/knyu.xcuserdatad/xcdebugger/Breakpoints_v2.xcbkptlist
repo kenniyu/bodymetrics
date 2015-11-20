@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/FoodDetailViewController.swift"
-            timestampString = "469690269.535149"
+            timestampString = "469753453.081945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
             landmarkName = "unitSizeChanged(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/FoodDetailViewController.swift"
-            timestampString = "469690269.535149"
+            timestampString = "469753453.081945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "updateMeters()"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
+            landmarkName = "textFieldShouldEndEditing(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/FoodDetailViewController.swift"
-            timestampString = "469690269.535149"
+            timestampString = "469753453.081945"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
-            landmarkName = "textFieldShouldEndEditing(_:)"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
+            landmarkName = "setupPieChart()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
