@@ -26,7 +26,7 @@ class FoodDetailViewController: UIViewController {
     @IBOutlet weak var proteinTheoMeter: MeterView!
 
     private var foodItem: PFObject?
-    private var didSetupScrollView = false
+    private var didLoadData = false
 
     private static let kItemSpacingDim1: CGFloat = 4
     private static let kItemSpacingDim2: CGFloat = 8
@@ -40,7 +40,7 @@ class FoodDetailViewController: UIViewController {
     private static let kMeterHeight: CGFloat = 50
 
     private static let kLabelFont = Styles.Fonts.MediumMedium!
-    private static let kFoodNameFont = Styles.Fonts.ThinLarge!
+    private static let kFoodNameFont = Styles.Fonts.MediumLarge!
     private static let kStatsFont = Styles.Fonts.MediumSmall!
 
     public var nutritionDelegate: NutritionDelegate?
@@ -78,6 +78,7 @@ class FoodDetailViewController: UIViewController {
 
     public override func viewDidLayoutSubviews() {
         setupScrollView()
+        updateMeters()
     }
 
     private func setBackButton() {
@@ -93,11 +94,6 @@ class FoodDetailViewController: UIViewController {
     }
 
     private func setupScrollView() {
-        if didSetupScrollView {
-            return
-        }
-
-        didSetupScrollView = true
         // load data
         loadData()
 
@@ -114,7 +110,7 @@ class FoodDetailViewController: UIViewController {
         totalHeight += FoodDetailViewController.kItemSpacingDim5
 
         totalHeight += quantityTextField.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim6
+        totalHeight += FoodDetailViewController.kItemSpacingDim8
 
         totalHeight += projectedDailyTotalsLabel.height
         totalHeight += FoodDetailViewController.kItemSpacingDim2
@@ -127,6 +123,10 @@ class FoodDetailViewController: UIViewController {
     }
 
     private func loadData() {
+        if didLoadData {
+            return
+        }
+
         if let foodItem = foodItem {
             let foodName = foodItem.objectForKey("name") as! String
             self.foodNameLabel.text = foodName
@@ -134,10 +134,8 @@ class FoodDetailViewController: UIViewController {
 
             storeData()
             setupSegmentControl()
-
-            unitSizeControl.selectedSegmentIndex = 0
-//            updateMeters()
         }
+        didLoadData = true
     }
 
     private func setupSegmentControl() {
@@ -148,7 +146,6 @@ class FoodDetailViewController: UIViewController {
             unitSizeControl.insertSegmentWithTitle(measurementName, atIndex: segmentIndex, animated: false)
             segmentIndex += 1
         }
-        unitSizeControl.enabled = true
         unitSizeControl.addTarget(self, action: "unitSizeChanged:", forControlEvents: .ValueChanged)
     }
 
@@ -183,6 +180,12 @@ class FoodDetailViewController: UIViewController {
     public func setup() {
         setupStyles()
         setupTopBar()
+        setupQuantityTextField()
+    }
+
+    private func setupQuantityTextField() {
+        quantityTextField.delegate = self
+        quantityTextField.font = Styles.Fonts.MediumLarge!
     }
 
     private func storeData() {
@@ -206,24 +209,38 @@ class FoodDetailViewController: UIViewController {
 //        print(categorizedNutritions)
     }
 
-    private func updateMeters() {
-        // get selected segment
-        let selectedSegmentIndex = unitSizeControl.selectedSegmentIndex
-        let category = unitSizeControl.titleForSegmentAtIndex(selectedSegmentIndex)
-        let categoryData = categorizedNutritions[category!] as! NSDictionary
-
-
-        let fatGrams = CGFloat((categoryData.valueForKey("Total lipid (fat)") as! NSString).floatValue)
-        let carbsGrams = CGFloat((categoryData.valueForKey("Carbohydrate, by difference") as! NSString).floatValue)
-        let proteinGrams = CGFloat((categoryData.valueForKey("Protein") as! NSString).floatValue)
-
+    public func updateMeters() {
         if let nutritionDelegate = nutritionDelegate {
             let currentFat = nutritionDelegate.getCurrentGramsFat()
             let currentCarbs = nutritionDelegate.getCurrentGramsCarbs()
             let currentProtein = nutritionDelegate.getCurrentGramsProtein()
-            let projectedFat = currentFat + fatGrams
-            let projectedCarbs = currentCarbs + carbsGrams
-            let projectedProtein = currentProtein + proteinGrams
+
+            // no selected segment - state = initial load
+            if unitSizeControl.selectedSegmentIndex <  0 {
+                fatTheoMeter.setup("Fat", current: currentFat, max: nutritionDelegate.getMaxGramsFat())
+                carbsTheoMeter.setup("Carbs", current: currentCarbs, max: nutritionDelegate.getMaxGramsCarbs())
+                proteinTheoMeter.setup("Protein", current: currentProtein, max: nutritionDelegate.getMaxGramsProtein())
+                return
+            }
+
+            // there is a selected segment
+            let selectedSegmentIndex = unitSizeControl.selectedSegmentIndex
+            let category = unitSizeControl.titleForSegmentAtIndex(selectedSegmentIndex)
+            let categoryData = categorizedNutritions[category!] as! NSDictionary
+
+            let fatGrams = CGFloat((categoryData.valueForKey("Total lipid (fat)") as! NSString).floatValue)
+            let carbsGrams = CGFloat((categoryData.valueForKey("Carbohydrate, by difference") as! NSString).floatValue)
+            let proteinGrams = CGFloat((categoryData.valueForKey("Protein") as! NSString).floatValue)
+
+            // get quantity
+            var multiplier: CGFloat = 0
+            if let quantityMultiplier = quantityTextField.text {
+                multiplier = CGFloat(quantityMultiplier.floatValue)
+            }
+
+            let projectedFat = currentFat + multiplier * fatGrams
+            let projectedCarbs = currentCarbs + multiplier * carbsGrams
+            let projectedProtein = currentProtein + multiplier * proteinGrams
 
             fatTheoMeter.setup("Fat", current: projectedFat, max: nutritionDelegate.getMaxGramsFat())
             carbsTheoMeter.setup("Carbs", current: projectedCarbs, max: nutritionDelegate.getMaxGramsCarbs())
@@ -232,9 +249,13 @@ class FoodDetailViewController: UIViewController {
     }
 
     public func unitSizeChanged(sender: UISegmentedControl) {
-//        sender.selectedSegmentIndex = 1
-//        print("Hello \(sender.selectedSegmentIndex)")
-        sender.layoutIfNeeded()
         updateMeters()
+    }
+}
+
+extension FoodDetailViewController: UITextFieldDelegate {
+    public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        updateMeters()
+        return true
     }
 }

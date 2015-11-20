@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupNavBar() {
         let topBarTextAttributes = [
             NSForegroundColorAttributeName: Styles.Colors.AppBlue,
-            NSFontAttributeName: Styles.Fonts.MediumXLarge!
+            NSFontAttributeName: Styles.Fonts.BookLarge!
         ]
 
         let navigationBarAppearance = UINavigationBar.appearance()

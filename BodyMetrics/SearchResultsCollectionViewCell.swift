@@ -111,11 +111,11 @@ public class SearchResultsCollectionViewCell: UICollectionViewCell {
         var cellHeight: CGFloat = 0
 
         // add cell spacing
-        cellHeight += SearchResultsCollectionViewCell.kCellContainerPadding
+        cellHeight += 2 * SearchResultsCollectionViewCell.kCellContainerPadding
         // add title label height
         let titleLabelHeight = SearchResultsCollectionViewCell.titleLabelHeight(boundingWidth - 2 * SearchResultsCollectionViewCell.kCellContainerPadding, viewModel: viewModel)
         cellHeight += titleLabelHeight
-        cellHeight += SearchResultsCollectionViewCell.kCellContainerPadding
+        cellHeight += 2 * SearchResultsCollectionViewCell.kCellContainerPadding
 
         print("the height = \(cellHeight)")
         return CGSizeMake(boundingWidth, cellHeight)
@@ -123,7 +123,7 @@ public class SearchResultsCollectionViewCell: UICollectionViewCell {
 
     public func setSubviewFrames() {
         let titleLabelHeight = SearchResultsCollectionViewCell.titleLabelHeight(containerView.width - 2 * SearchResultsCollectionViewCell.kCellContainerPadding, viewModel: viewModel)
-        foodNameLabel.top = SearchResultsCollectionViewCell.kCellContainerPadding
+        foodNameLabel.top = SearchResultsCollectionViewCell.kCellContainerPadding * 2
         foodNameLabel.left = SearchResultsCollectionViewCell.kCellContainerPadding
         foodNameLabel.width = containerView.width - 2 * SearchResultsCollectionViewCell.kCellContainerPadding
         foodNameLabel.height = titleLabelHeight

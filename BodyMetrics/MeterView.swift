@@ -123,6 +123,12 @@ class MeterView : UIView {
 //            "frame": frameAnimation
 //        ]
 
+        if meterCurrent > meterMax {
+            numberLabel.textColor = Styles.Colors.Red
+        } else {
+            numberLabel.textColor = Styles.Colors.BarNumber
+        }
+
 
         let color = getColor(newWidth/barTotal.width)
         UIView.animateWithDuration(0.8, animations: { () -> Void in

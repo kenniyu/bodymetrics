@@ -108,6 +108,12 @@ extension FoodSearchViewController: UICollectionViewDataSource, UICollectionView
     }
 }
 
+extension FoodSearchViewController: UIScrollViewDelegate {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+}
+
 
 extension FoodSearchViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
