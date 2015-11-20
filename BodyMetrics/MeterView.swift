@@ -124,6 +124,7 @@ class MeterView : UIView {
     }
 
     private func getColor(percent: CGFloat) -> UIColor {
+        return Styles.Colors.AppGreen
         // for now, we're restricted to hues of 0 to 0.3
         let hue:        CGFloat = 0.3 * percent
         let saturation: CGFloat = 1

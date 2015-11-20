@@ -41,6 +41,21 @@ struct Styles {
         static let BarLabel = UIColor(red: 101/255.0, green: 120/255.0, blue: 130/255.0, alpha: 1.0)
         static let BarNumber = UIColor(red: 146/255.0, green: 159/255.0, blue: 175/255.0, alpha: 1.0)
 
+        static let DataVisBlue = UIColor(red: 22/255.0, green: 96/255.0, blue: 167/255.0, alpha: 1.0)
+        static let DataVisLightBlue = UIColor(red: 158/255.0, green: 185/255.0, blue: 228/255.0, alpha: 1.0)
+        static let DataVisRed = UIColor(red: 205/255.0, green: 12/255.0, blue: 24/255.0, alpha: 1.0)
+        static let DataVisLightRed = UIColor(red: 255/255.0, green: 130/255.0, blue: 130/255.0, alpha: 1.0)
+        static let DataVisTeal = UIColor(red: 17/255.0, green: 178/255.0, blue: 198/255.0, alpha: 1.0)
+        static let DataVisLightTeal = UIColor(red: 140/255.0, green: 210/255.0, blue: 224/255.0, alpha: 1.0)
+        static let DataVisGreen = UIColor(red: 34/255.0, green: 148/255.0, blue: 26/255.0, alpha: 1.0)
+        static let DataVisLightGreen = UIColor(red: 135/255.0, green: 221/255.0, blue: 115/255.0, alpha: 1.0)
+        static let DataVisOrange = UIColor(red: 255/255.0, green: 106/255.0, blue: 0/255.0, alpha: 1.0)
+        static let DataVisLightOrange = UIColor(red: 255/255.0, green: 176/255.0, blue: 96/255.0, alpha: 1.0)
+        static let DataVisPurple = UIColor(red: 129/255.0, green: 75/255.0, blue: 178/255.0, alpha: 1.0)
+        static let DataVisLightPurple = UIColor(red: 184/255.0, green: 157/255.0, blue: 205/255.0, alpha: 1.0)
+        static let DataVisPink = UIColor(red: 220/255.0, green: 89/255.0, blue: 182/255.0, alpha: 1.0)
+        static let DataVisLightPink = UIColor(red: 245/255.0, green: 163/255.0, blue: 200/255.0, alpha: 1.0)
+
         static let BarMax = UIColor(red: 0/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0)
         static let BarMin = UIColor(red: 0/255.0, green: 77/255.0, blue: 104/255.0, alpha: 1.0)
     }

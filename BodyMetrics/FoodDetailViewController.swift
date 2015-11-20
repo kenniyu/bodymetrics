@@ -58,7 +58,7 @@ class FoodDetailViewController: UIViewController {
     private static let kItemSpacingDim7: CGFloat = 28
     private static let kItemSpacingDim8: CGFloat = 32
     private static let kMeterHeight: CGFloat = 50
-    private static let kPieChartContainerViewHeight: CGFloat = 100
+    private static let kPieChartContainerViewHeight: CGFloat = 140
 
     private static let kLabelFont = Styles.Fonts.MediumMedium!
     private static let kFoodNameFont = Styles.Fonts.BookLarge!
@@ -147,7 +147,7 @@ class FoodDetailViewController: UIViewController {
         totalHeight += FoodDetailViewController.kItemSpacingDim5
 
         totalHeight += quantityTextField.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim6
+        totalHeight += FoodDetailViewController.kItemSpacingDim8
 
         totalHeight += caloricBreakdownLabel.height
         totalHeight += FoodDetailViewController.kItemSpacingDim3
@@ -157,10 +157,9 @@ class FoodDetailViewController: UIViewController {
 
         totalHeight += fatPctLabel.height
         totalHeight += fatNameLabel.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim6
+        totalHeight += FoodDetailViewController.kItemSpacingDim8
 
         totalHeight += projectedDailyTotalsLabel.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim2
 
         totalHeight += 3 * FoodDetailViewController.kMeterHeight
         totalHeight += 2 * FoodDetailViewController.kItemSpacingDim2
@@ -260,12 +259,12 @@ class FoodDetailViewController: UIViewController {
         fatPctLabel.font = FoodDetailViewController.kStatsPctFont
         carbsPctLabel.font = FoodDetailViewController.kStatsPctFont
         proteinPctLabel.font = FoodDetailViewController.kStatsPctFont
-        fatPctLabel.textColor = Styles.Colors.AppOrange
-        carbsPctLabel.textColor = Styles.Colors.AppYellow
-        proteinPctLabel.textColor = Styles.Colors.AppBlue
-        fatNameLabel.textColor = Styles.Colors.AppOrange
-        carbsNameLabel.textColor = Styles.Colors.AppYellow
-        proteinNameLabel.textColor = Styles.Colors.AppBlue
+        fatPctLabel.textColor = Styles.Colors.DataVisLightRed
+        carbsPctLabel.textColor = Styles.Colors.DataVisLightPurple
+        proteinPctLabel.textColor = Styles.Colors.DataVisLightTeal
+        fatNameLabel.textColor = Styles.Colors.DataVisLightRed
+        carbsNameLabel.textColor = Styles.Colors.DataVisLightPurple
+        proteinNameLabel.textColor = Styles.Colors.DataVisLightTeal
 
 
         // Projection
@@ -291,18 +290,17 @@ class FoodDetailViewController: UIViewController {
         let proteinCalories = proteinGrams * 4
 
         slicesData = [
-            Data(myValue: fatCalories, myColor: Styles.Colors.AppOrange, myLabel: "Fat"),
-            Data(myValue: carbsCalories, myColor: Styles.Colors.AppYellow, myLabel: "Carbs"),
-            Data(myValue: proteinCalories, myColor: Styles.Colors.AppBlue, myLabel: "Protein")]
+            Data(myValue: fatCalories, myColor: Styles.Colors.DataVisLightRed, myLabel: "Fat"),
+            Data(myValue: carbsCalories, myColor: Styles.Colors.DataVisLightPurple, myLabel: "Carbs"),
+            Data(myValue: proteinCalories, myColor: Styles.Colors.DataVisLightTeal, myLabel: "Protein")]
 
         pieChart.delegate = self
         pieChart.datasource = self
         pieChartContainerView.addSubview(pieChart)
 
         var properties = Properties()
-        properties.smallRadius = pieChartContainerView.width/4
+        properties.smallRadius = pieChartContainerView.width * 2 / 5
         properties.bigRadius = pieChartContainerView.width/2
-        properties.expand = 10
         pieChart.properties = properties
         refreshPieChart()
     }
