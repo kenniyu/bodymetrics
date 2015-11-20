@@ -17,6 +17,7 @@ class FoodDetailViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var unitSizeLabel: UILabel!
     @IBOutlet weak var adjustQuantityLabel: UILabel!
+    @IBOutlet weak var projectedDailyTotalsLabel: UILabel!
     @IBOutlet weak var quantityTextField: UITextField!
     @IBOutlet weak var unitSizeControl: UISegmentedControl!
 
@@ -25,18 +26,25 @@ class FoodDetailViewController: UIViewController {
     @IBOutlet weak var proteinTheoMeter: MeterView!
 
     private var foodItem: PFObject?
+    private var didSetupScrollView = false
 
+    private static let kItemSpacingDim1: CGFloat = 4
     private static let kItemSpacingDim2: CGFloat = 8
+    private static let kItemSpacingDim3: CGFloat = 12
     private static let kItemSpacingDim4: CGFloat = 16
     private static let kItemSpacingDim5: CGFloat = 20
+    private static let kItemSpacingDim6: CGFloat = 24
+    private static let kItemSpacingDim7: CGFloat = 28
+    private static let kItemSpacingDim8: CGFloat = 32
+    
     private static let kMeterHeight: CGFloat = 50
 
-
     private static let kLabelFont = Styles.Fonts.MediumMedium!
-    private static let kFoodNameFont = Styles.Fonts.BookLarge!
+    private static let kFoodNameFont = Styles.Fonts.ThinLarge!
+    private static let kStatsFont = Styles.Fonts.MediumSmall!
 
     public var nutritionDelegate: NutritionDelegate?
-    private var measurements: [String: AnyObject] = [:]
+    private var categorizedNutritions: [String: AnyObject] = [:]
 
 
     @IBOutlet weak var foodNameHeightConstraint: NSLayoutConstraint!
@@ -85,6 +93,11 @@ class FoodDetailViewController: UIViewController {
     }
 
     private func setupScrollView() {
+        if didSetupScrollView {
+            return
+        }
+
+        didSetupScrollView = true
         // load data
         loadData()
 
@@ -100,8 +113,11 @@ class FoodDetailViewController: UIViewController {
         totalHeight += unitSizeControl.height
         totalHeight += FoodDetailViewController.kItemSpacingDim5
 
-        totalHeight += unitSizeControl.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim5
+        totalHeight += quantityTextField.height
+        totalHeight += FoodDetailViewController.kItemSpacingDim6
+
+        totalHeight += projectedDailyTotalsLabel.height
+        totalHeight += FoodDetailViewController.kItemSpacingDim2
 
         totalHeight += 3 * FoodDetailViewController.kMeterHeight
         totalHeight += 2 * FoodDetailViewController.kItemSpacingDim2
@@ -116,38 +132,24 @@ class FoodDetailViewController: UIViewController {
             self.foodNameLabel.text = foodName
             foodNameHeightConstraint.constant = getFoodNameLabelHeight()
 
-            if let nutrients = foodItem.objectForKey("nutrients") {
-                // determine diff types of servings
-                setServings(nutrients as! [AnyObject])
-            }
+            storeData()
+            setupSegmentControl()
+
+            unitSizeControl.selectedSegmentIndex = 0
+//            updateMeters()
         }
     }
 
-    private func setServings(nutrients: [AnyObject]) {
-        var unitSizeLabels: [String] = []
-        var foundMeasures = false
-        for nutrient in nutrients {
-            if let measures = nutrient.objectForKey("measures") as? [AnyObject] {
-                for measure in measures {
-                    if let measureLabel = measure.objectForKey("label") as? String {
-                        unitSizeLabels.append(measureLabel)
-                        foundMeasures = true
-                    }
-                }
-                if foundMeasures {
-                    break
-                }
-            }
-        }
-
+    private func setupSegmentControl() {
         // setup segment control
         unitSizeControl.removeAllSegments()
-        for (index, unit) in unitSizeLabels.enumerate() {
-            unitSizeControl.insertSegmentWithTitle(unit, atIndex: index, animated: false)
-            measurements[unit] = [:]
+        var segmentIndex = 0
+        for (measurementName, nutritionData) in categorizedNutritions {
+            unitSizeControl.insertSegmentWithTitle(measurementName, atIndex: segmentIndex, animated: false)
+            segmentIndex += 1
         }
-        print(measurements)
-        unitSizeControl.selectedSegmentIndex = 0
+        unitSizeControl.enabled = true
+        unitSizeControl.addTarget(self, action: "unitSizeChanged:", forControlEvents: .ValueChanged)
     }
 
     private func getFoodNameLabelHeight() -> CGFloat {
@@ -160,23 +162,27 @@ class FoodDetailViewController: UIViewController {
     }
 
     private func setupStyles() {
+        view.backgroundColor = Styles.Colors.AppDarkBlue
+
         unitSizeLabel.text = unitSizeLabel.text?.uppercaseString
         adjustQuantityLabel.text = adjustQuantityLabel.text?.uppercaseString
 
         foodNameLabel.font = FoodDetailViewController.kFoodNameFont
         unitSizeLabel.font = FoodDetailViewController.kLabelFont
         adjustQuantityLabel.font = FoodDetailViewController.kLabelFont
+        projectedDailyTotalsLabel.font = FoodDetailViewController.kStatsFont
 
         foodNameLabel.textColor = Styles.Colors.AppBlue
         unitSizeLabel.textColor = Styles.Colors.AppBlue
         adjustQuantityLabel.textColor = Styles.Colors.AppBlue
+
+        projectedDailyTotalsLabel.text = projectedDailyTotalsLabel.text?.uppercaseString
+        projectedDailyTotalsLabel.textColor = Styles.Colors.BarLabel
     }
 
     public func setup() {
-        view.backgroundColor = Styles.Colors.AppDarkBlue
-        setupTopBar()
         setupStyles()
-        setupMeters()
+        setupTopBar()
     }
 
     private func storeData() {
@@ -187,37 +193,48 @@ class FoodDetailViewController: UIViewController {
                     if let measures = nutrient.objectForKey("measures") as? [AnyObject], let name = nutrient.objectForKey("name") as? String {
                         for measure in measures {
                             if let measureLabel = measure.objectForKey("label") as? String, let value = measure.objectForKey("value") as? String {
-                                print(measurements)
-                                if measurements[measureLabel] == nil {
-                                    measurements[measureLabel] = [name: value]
-                                } else {
-                                    var innerMeasurements: [String: AnyObject] = measurements[measureLabel]
-                                    innerMeasurements["\(name)"] = value
-//                                    measurements[measureLabel]!.setObject(value, forKey: "\(name)")
+                                if categorizedNutritions[measureLabel] == nil {
+                                    categorizedNutritions[measureLabel] = NSMutableDictionary()
                                 }
-
-                                print("For serving size: \(measureLabel), we have \(value) for key \(name)")
-                                //                                if let measurementCategory = measurements[measureLabel] as? [String: AnyObject] {
-                                //                                    print("Got something")
-                                //                                } else {
-                                //                                    print("NO Wonder")
-                                //                                }
-                                print(measurements)
+                                categorizedNutritions[measureLabel]?.setObject(value, forKey: name)
                             }
                         }
                     }
                 }
-                print(measurements)
             }
+        }
+//        print(categorizedNutritions)
+    }
+
+    private func updateMeters() {
+        // get selected segment
+        let selectedSegmentIndex = unitSizeControl.selectedSegmentIndex
+        let category = unitSizeControl.titleForSegmentAtIndex(selectedSegmentIndex)
+        let categoryData = categorizedNutritions[category!] as! NSDictionary
+
+
+        let fatGrams = CGFloat((categoryData.valueForKey("Total lipid (fat)") as! NSString).floatValue)
+        let carbsGrams = CGFloat((categoryData.valueForKey("Carbohydrate, by difference") as! NSString).floatValue)
+        let proteinGrams = CGFloat((categoryData.valueForKey("Protein") as! NSString).floatValue)
+
+        if let nutritionDelegate = nutritionDelegate {
+            let currentFat = nutritionDelegate.getCurrentGramsFat()
+            let currentCarbs = nutritionDelegate.getCurrentGramsCarbs()
+            let currentProtein = nutritionDelegate.getCurrentGramsProtein()
+            let projectedFat = currentFat + fatGrams
+            let projectedCarbs = currentCarbs + carbsGrams
+            let projectedProtein = currentProtein + proteinGrams
+
+            fatTheoMeter.setup("Fat", current: projectedFat, max: nutritionDelegate.getMaxGramsFat())
+            carbsTheoMeter.setup("Carbs", current: projectedCarbs, max: nutritionDelegate.getMaxGramsCarbs())
+            proteinTheoMeter.setup("Protein", current: projectedProtein, max: nutritionDelegate.getMaxGramsProtein())
         }
     }
 
-    private func setupMeters() {
-        storeData()
-        if let nutritionDelegate = nutritionDelegate {
-            fatTheoMeter.setup("Theoretical Fat", current: nutritionDelegate.getCurrentGramsFat(), max: nutritionDelegate.getMaxGramsFat())
-            carbsTheoMeter.setup("Theoretical Carbs", current: nutritionDelegate.getCurrentGramsCarbs(), max: nutritionDelegate.getMaxGramsCarbs())
-            proteinTheoMeter.setup("Theortetical Protein", current: nutritionDelegate.getCurrentGramsProtein(), max: nutritionDelegate.getMaxGramsProtein())
-        }
+    public func unitSizeChanged(sender: UISegmentedControl) {
+//        sender.selectedSegmentIndex = 1
+//        print("Hello \(sender.selectedSegmentIndex)")
+        sender.layoutIfNeeded()
+        updateMeters()
     }
 }

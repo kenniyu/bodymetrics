@@ -26,12 +26,8 @@ public class SearchResultsCollectionViewCell: UICollectionViewCell {
     static let kNib = UINib(nibName: kClassName, bundle: NSBundle(forClass: SearchResultsCollectionViewCell.self))
 
     static let kCellContainerPadding: CGFloat = 12
-    static let kTextViewFontStyle: UIFont = Styles.Fonts.ThinLarge!
-    static let kTitleLabelFontStyle: UIFont = Styles.Fonts.ThinLarge!
-    static let kSocialActionsFontStyle: UIFont = Styles.Fonts.MediumLarge!
-    static let kActivityTitleFontStyle: UIFont = Styles.Fonts.MediumXLarge!
-    static let kActivityTimestampFontStyle: UIFont = Styles.Fonts.ThinMedium!
-    static let kFontColor: UIColor = Styles.Colors.AppGreen
+    static let kTitleLabelFontStyle: UIFont = Styles.Fonts.BookLarge!
+    static let kFontColor: UIColor = Styles.Colors.AppBlue
     static let kImageHeight: CGFloat = 200
     static let kActorPhotoHeight: CGFloat = 50
     static let kSocialActionsHeight: CGFloat = 40
@@ -76,37 +72,6 @@ public class SearchResultsCollectionViewCell: UICollectionViewCell {
 
         foodNameLabel.font = SearchResultsCollectionViewCell.kTitleLabelFontStyle
         foodNameLabel.textColor = SearchResultsCollectionViewCell.kFontColor
-
-//        tradeDescriptionTextView.backgroundColor = UIColor.clearColor()
-//        tradeDescriptionTextView.font = SearchResultsCollectionViewCell.kTextViewFontStyle
-//        tradeDescriptionTextView.textColor = SearchResultsCollectionViewCell.kFontColor
-//        tradeDescriptionTextView.textContainerInset = UIEdgeInsetsZero
-//        tradeDescriptionTextView.textContainer.lineFragmentPadding = 0
-//        tradeDescriptionTextView.contentInset = UIEdgeInsetsZero
-//
-//        titleLabel.backgroundColor = UIColor.clearColor()
-//        titleLabel.font = SearchResultsCollectionViewCell.kTitleLabelFontStyle
-//        titleLabel.textColor = SearchResultsCollectionViewCell.kFontColor
-//
-//        activityTimestamp.font = SearchResultsCollectionViewCell.kActivityTimestampFontStyle
-//        activityTitle.font = SearchResultsCollectionViewCell.kActivityTitleFontStyle
-//        actorImageView.userInteractionEnabled = true
-//
-//        articleImageView.userInteractionEnabled = true
-//        articleImageView.backgroundColor = Styles.Colors.LightGray
-//
-//        likeButton.titleLabel?.font = SearchResultsCollectionViewCell.kSocialActionsFontStyle
-//        likeButton.titleLabel?.tintColor = Styles.Colors.AppGray
-//        likeButton.titleLabel?.textColor = Styles.Colors.AppGray
-//        likeButton.tintColor = Styles.Colors.AppGray
-//        commentButton.titleLabel?.font = SearchResultsCollectionViewCell.kSocialActionsFontStyle
-//        commentButton.titleLabel?.tintColor = Styles.Colors.AppGray
-//        commentButton.titleLabel?.textColor = Styles.Colors.AppGray
-//        commentButton.tintColor = Styles.Colors.AppGray
-//        followButton.titleLabel?.font = SearchResultsCollectionViewCell.kSocialActionsFontStyle
-//        followButton.titleLabel?.tintColor = Styles.Colors.AppGray
-//        followButton.titleLabel?.textColor = Styles.Colors.AppGray
-//        followButton.tintColor = Styles.Colors.AppGray
 
         loadDataIntoViews(viewModel)
         hideUnhideViews()
@@ -226,14 +191,6 @@ public class SearchResultsCollectionViewCell: UICollectionViewCell {
     public class func imageHeight(viewModel: PFObject?) -> CGFloat {
         let imageHeight: CGFloat = kImageHeight
         return imageHeight
-    }
-
-    public class func textViewHeight(boundingWidth: CGFloat, viewModel: PFObject) -> CGFloat {
-        if let text = viewModel.objectForKey("description") as? String {
-            let textHeight = TextUtils.textViewHeight(text, font: SearchResultsCollectionViewCell.kTextViewFontStyle, boundingWidth: boundingWidth)
-            return textHeight
-        }
-        return 0
     }
 
     public class func titleLabelHeight(boundingWidth: CGFloat, viewModel: PFObject) -> CGFloat {

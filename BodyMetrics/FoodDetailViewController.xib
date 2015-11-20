@@ -13,6 +13,7 @@
                 <outlet property="foodImageView" destination="Lws-5G-F0O" id="ghv-HN-b0e"/>
                 <outlet property="foodNameHeightConstraint" destination="m7X-U2-MyH" id="vp2-ak-Ol4"/>
                 <outlet property="foodNameLabel" destination="SfN-4l-0XQ" id="bIi-b5-SWO"/>
+                <outlet property="projectedDailyTotalsLabel" destination="062-ZM-WeA" id="elF-6r-BAa"/>
                 <outlet property="proteinTheoMeter" destination="fBD-Wz-Lla" id="goA-y5-rWs"/>
                 <outlet property="quantityTextField" destination="LCZ-4w-bBX" id="zik-kT-fDm"/>
                 <outlet property="scrollView" destination="30t-CK-gmB" id="w9d-Qz-D4V"/>
@@ -35,16 +36,19 @@
                                 <constraint firstAttribute="height" constant="200" id="TJ1-DJ-bNb"/>
                             </constraints>
                         </imageView>
-                        <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="OfM-Uw-Jin">
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="OfM-Uw-Jin">
                             <rect key="frame" x="106" y="260" width="183" height="29"/>
                             <segments>
                                 <segment title="33 g."/>
                                 <segment title="48 oz."/>
                                 <segment title="Sandwich"/>
                             </segments>
+                            <connections>
+                                <action selector="unitSizeChanged:" destination="-1" eventType="valueChanged" id="Psq-Ba-hZ0"/>
+                            </connections>
                         </segmentedControl>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Hamburger" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SfN-4l-0XQ">
-                            <rect key="frame" x="20" y="220" width="269" height="20"/>
+                            <rect key="frame" x="20" y="220" width="269" height="20.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="m7X-U2-MyH"/>
                             </constraints>
@@ -59,14 +63,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BIp-Co-7HB" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
-                            <rect key="frame" x="20" y="416" width="269" height="50"/>
+                            <rect key="frame" x="20" y="448" width="269" height="50"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="rqO-F8-uRs"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fBD-Wz-Lla" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
-                            <rect key="frame" x="20" y="474" width="269" height="50"/>
+                            <rect key="frame" x="20" y="506" width="269" height="50"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="fUH-7P-SEc"/>
@@ -86,8 +90,17 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                         </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Projected Daily Totals" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="062-ZM-WeA">
+                            <rect key="frame" x="20" y="362" width="269" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="Zaf-ae-xQ0"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pue-By-wKV" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
-                            <rect key="frame" x="20" y="358" width="269" height="50"/>
+                            <rect key="frame" x="20" y="390" width="269" height="50"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="mW5-4R-GCn"/>
@@ -97,11 +110,15 @@
                     <constraints>
                         <constraint firstItem="BIp-Co-7HB" firstAttribute="trailing" secondItem="Pue-By-wKV" secondAttribute="trailing" id="0Df-4X-cCb"/>
                         <constraint firstItem="Lws-5G-F0O" firstAttribute="centerX" secondItem="30t-CK-gmB" secondAttribute="centerX" id="3b4-tY-kdF"/>
+                        <constraint firstItem="062-ZM-WeA" firstAttribute="leading" secondItem="SfN-4l-0XQ" secondAttribute="leading" id="3hM-az-gkl"/>
+                        <constraint firstItem="062-ZM-WeA" firstAttribute="trailing" secondItem="SfN-4l-0XQ" secondAttribute="trailing" id="4XF-yG-wSj"/>
                         <constraint firstItem="Pue-By-wKV" firstAttribute="leading" secondItem="30t-CK-gmB" secondAttribute="leading" constant="20" id="4YQ-zH-sS4"/>
                         <constraint firstItem="OfM-Uw-Jin" firstAttribute="bottom" secondItem="h2a-jr-8q4" secondAttribute="bottom" id="B4J-Ow-vjH"/>
                         <constraint firstAttribute="trailing" secondItem="OfM-Uw-Jin" secondAttribute="trailing" constant="20" id="Beo-6j-M9A"/>
+                        <constraint firstItem="Pue-By-wKV" firstAttribute="top" secondItem="062-ZM-WeA" secondAttribute="bottom" constant="8" id="DbH-lq-YuK"/>
+                        <constraint firstItem="062-ZM-WeA" firstAttribute="top" secondItem="LCZ-4w-bBX" secondAttribute="bottom" constant="24" id="Dc0-8C-yOf"/>
                         <constraint firstItem="SfN-4l-0XQ" firstAttribute="top" secondItem="Lws-5G-F0O" secondAttribute="bottom" constant="20" id="EDm-f8-OjL"/>
-                        <constraint firstItem="Pue-By-wKV" firstAttribute="top" secondItem="LCZ-4w-bBX" secondAttribute="bottom" constant="20" id="HAl-hH-8xE"/>
+                        <constraint firstItem="Pue-By-wKV" firstAttribute="top" secondItem="LCZ-4w-bBX" secondAttribute="bottom" constant="80" id="HAl-hH-8xE"/>
                         <constraint firstAttribute="bottom" secondItem="Lws-5G-F0O" secondAttribute="bottom" constant="319" id="Kah-Re-nGC"/>
                         <constraint firstItem="BIp-Co-7HB" firstAttribute="leading" secondItem="Pue-By-wKV" secondAttribute="leading" id="Lyy-cS-XYU"/>
                         <constraint firstItem="SfN-4l-0XQ" firstAttribute="leading" secondItem="30t-CK-gmB" secondAttribute="leading" constant="20" id="P54-yP-M5t"/>
@@ -129,6 +146,7 @@
                         <mask key="constraints">
                             <exclude reference="Kah-Re-nGC"/>
                             <exclude reference="qaG-uQ-VPf"/>
+                            <exclude reference="HAl-hH-8xE"/>
                         </mask>
                     </variation>
                 </scrollView>
