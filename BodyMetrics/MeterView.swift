@@ -124,7 +124,7 @@ class MeterView : UIView {
     }
 
     private func getColor(percent: CGFloat) -> UIColor {
-        return Styles.Colors.AppGreen
+        return Styles.Colors.DataVisLightTeal
         // for now, we're restricted to hues of 0 to 0.3
         let hue:        CGFloat = 0.3 * percent
         let saturation: CGFloat = 1
@@ -134,6 +134,11 @@ class MeterView : UIView {
 
         let color = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
         return color
+    }
+
+    public func reset() {
+        meterCurrent = 0
+        updateBar()
     }
 
     public func increment(value: CGFloat) {

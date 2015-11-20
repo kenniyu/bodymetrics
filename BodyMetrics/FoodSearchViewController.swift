@@ -143,7 +143,7 @@ extension FoodSearchViewController: UISearchBarDelegate {
         // perform search
         if let searchQuery = searchBar.text {
             let query: PFQuery = PFQuery(className: "food")
-            query.limit = 30
+            query.limit = 100
             query.whereKey("name", matchesRegex: searchQuery, modifiers: "im")
             query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
                 if let error = error {

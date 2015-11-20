@@ -27,7 +27,7 @@ public class SearchResultsCollectionViewCell: UICollectionViewCell {
 
     static let kCellContainerPadding: CGFloat = 12
     static let kTitleLabelFontStyle: UIFont = Styles.Fonts.BookLarge!
-    static let kFontColor: UIColor = Styles.Colors.AppBlue
+    static let kFontColor: UIColor = Styles.Colors.DataVisLightTeal
     static let kImageHeight: CGFloat = 200
     static let kActorPhotoHeight: CGFloat = 50
     static let kSocialActionsHeight: CGFloat = 40

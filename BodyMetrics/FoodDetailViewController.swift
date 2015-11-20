@@ -57,15 +57,20 @@ class FoodDetailViewController: UIViewController {
     private static let kItemSpacingDim6: CGFloat = 24
     private static let kItemSpacingDim7: CGFloat = 28
     private static let kItemSpacingDim8: CGFloat = 32
+    private static let kItemSpacingDim9: CGFloat = 36
+    private static let kItemSpacingDim10: CGFloat = 40
+    private static let kItemSpacingDim11: CGFloat = 44
+    private static let kItemSpacingDim12: CGFloat = 48
+
     private static let kMeterHeight: CGFloat = 50
     private static let kPieChartContainerViewHeight: CGFloat = 140
 
     private static let kLabelFont = Styles.Fonts.MediumMedium!
     private static let kFoodNameFont = Styles.Fonts.BookLarge!
 
-    private static let kSubtitleFont = Styles.Fonts.MediumMedium!
-    private static let kStatsNameFont = Styles.Fonts.MediumSmall!
-    private static let kStatsPctFont = Styles.Fonts.ThinLarge!
+    private static let kSubtitleFont = Styles.Fonts.BookLarge!
+    private static let kStatsNameFont = Styles.Fonts.MediumMedium!
+    private static let kStatsPctFont = Styles.Fonts.ThinXLarge!
 
     public var nutritionDelegate: NutritionDelegate?
     private var categorizedNutritions: [String: AnyObject] = [:]
@@ -84,10 +89,6 @@ class FoodDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         setup()
-    }
-
-    public override func viewWillAppear(animated: Bool) {
-//        updateMeters()
     }
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -147,17 +148,17 @@ class FoodDetailViewController: UIViewController {
         totalHeight += FoodDetailViewController.kItemSpacingDim5
 
         totalHeight += quantityTextField.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim8
+        totalHeight += FoodDetailViewController.kItemSpacingDim12
 
         totalHeight += caloricBreakdownLabel.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim3
+        totalHeight += FoodDetailViewController.kItemSpacingDim4
 
         totalHeight += FoodDetailViewController.kPieChartContainerViewHeight
         totalHeight += FoodDetailViewController.kItemSpacingDim3
 
         totalHeight += fatPctLabel.height
         totalHeight += fatNameLabel.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim8
+        totalHeight += FoodDetailViewController.kItemSpacingDim12
 
         totalHeight += projectedDailyTotalsLabel.height
 
@@ -261,10 +262,14 @@ class FoodDetailViewController: UIViewController {
         proteinPctLabel.font = FoodDetailViewController.kStatsPctFont
         fatPctLabel.textColor = Styles.Colors.DataVisLightRed
         carbsPctLabel.textColor = Styles.Colors.DataVisLightPurple
-        proteinPctLabel.textColor = Styles.Colors.DataVisLightTeal
+        proteinPctLabel.textColor = Styles.Colors.DataVisLightGreen
         fatNameLabel.textColor = Styles.Colors.DataVisLightRed
         carbsNameLabel.textColor = Styles.Colors.DataVisLightPurple
-        proteinNameLabel.textColor = Styles.Colors.DataVisLightTeal
+        proteinNameLabel.textColor = Styles.Colors.DataVisLightGreen
+
+        fatNameLabel.text = fatNameLabel.text?.uppercaseString
+        carbsNameLabel.text = carbsNameLabel.text?.uppercaseString
+        proteinNameLabel.text = proteinNameLabel.text?.uppercaseString
 
 
         // Projection
@@ -292,7 +297,7 @@ class FoodDetailViewController: UIViewController {
         slicesData = [
             Data(myValue: fatCalories, myColor: Styles.Colors.DataVisLightRed, myLabel: "Fat"),
             Data(myValue: carbsCalories, myColor: Styles.Colors.DataVisLightPurple, myLabel: "Carbs"),
-            Data(myValue: proteinCalories, myColor: Styles.Colors.DataVisLightTeal, myLabel: "Protein")]
+            Data(myValue: proteinCalories, myColor: Styles.Colors.DataVisLightGreen, myLabel: "Protein")]
 
         pieChart.delegate = self
         pieChart.datasource = self
@@ -444,6 +449,15 @@ extension FoodDetailViewController: MDRotatingPieChartDelegate, MDRotatingPieCha
     /// This must be called to render the pie chart
     func refreshPieChart()  {
         pieChart.build()
+    }
+
+    public override func done() {
+        let newFat = fatTheoMeter.meterCurrent
+        let newCarbs = carbsTheoMeter.meterCurrent
+        let newProtein = proteinTheoMeter.meterCurrent
+        dismissViewControllerAnimated(true) { () -> Void in
+            self.nutritionDelegate?.didUpdateMacros(newFat, carbs: newCarbs, protein: newProtein)
+        }
     }
 }
 

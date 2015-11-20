@@ -19,6 +19,8 @@ public protocol NutritionDelegate: class {
     func getCurrentGramsCarbs() -> CGFloat
     func getCurrentGramsProtein() -> CGFloat
     func getCurrentCalories() -> CGFloat
+
+    func didUpdateMacros(fat: CGFloat, carbs: CGFloat, protein: CGFloat)
 }
 
 public class HomeViewController: UIViewController {
@@ -32,7 +34,8 @@ public class HomeViewController: UIViewController {
     private static let maxCarbs: CGFloat = 400
     private static let maxProtein: CGFloat = 400
 
-    @IBOutlet weak var randomButton: UIButton!
+    @IBOutlet weak var eatButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,29 +58,28 @@ public class HomeViewController: UIViewController {
         fatMeterView.setup("Fat", current: 20, max: HomeViewController.maxFat)
         carbsMeterView.setup("Carbs", current: 44, max: HomeViewController.maxCarbs)
         proteinMeterView.setup("Protein", current: 120, max: HomeViewController.maxProtein)
+
+        setupStyles()
     }
 
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
 
-    @IBAction func increment(sender: UIButton) {
-        // pick a bar to animate
-        let randBar = Int(arc4random_uniform(3))
-
-        let randValue = CGFloat(-40 + Int(arc4random_uniform(100)))
-        switch randBar {
-        case 0:
-            fatMeterView.increment(randValue)
-        case 1:
-            carbsMeterView.increment(randValue)
-        case 2:
-            proteinMeterView.increment(randValue)
-        default:
-            break
-        }
+    @IBAction func reset(sender: UIButton) {
+        fatMeterView.reset()
+        carbsMeterView.reset()
+        proteinMeterView.reset()
 
         updateCalories()
+    }
+
+    private func setupStyles() {
+        eatButton.titleLabel?.font = Styles.Fonts.BookLarge
+        resetButton.titleLabel?.font = Styles.Fonts.BookLarge
+
+        eatButton.tintColor = Styles.Colors.DataVisLightTeal
+        resetButton.tintColor = Styles.Colors.DataVisLightRed
     }
 
     private func updateCalories() {
@@ -99,6 +101,14 @@ public class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: NutritionDelegate {
+    public func didUpdateMacros(fat: CGFloat, carbs: CGFloat, protein: CGFloat) {
+        fatMeterView.meterCurrent = fat
+        carbsMeterView.meterCurrent = carbs
+        proteinMeterView.meterCurrent = protein
+
+        updateCalories()
+    }
+
     public func getMaxCalories() -> CGFloat {
         return HomeViewController.maxFat * 9 + HomeViewController.maxCarbs * 4 + HomeViewController.maxProtein * 4
     }
