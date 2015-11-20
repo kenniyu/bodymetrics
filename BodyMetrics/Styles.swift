@@ -35,6 +35,7 @@ struct Styles {
         static let AppGreen = UIColor(red: 38/255.0, green: 206/255.0, blue: 77/255.0, alpha: 1.0)
         static let AppYellow = UIColor(red: 226/255.0, green: 205/255.0, blue: 0/255.0, alpha: 1.0)
         static let AppOrange = UIColor(red: 229/255.0, green: 124/255.0, blue: 22/255.0, alpha: 1.0)
+        static let AppBlue = UIColor(red: 0/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0)
         static let BarBackground = UIColor(red: 38/255.0, green: 42/255.0, blue: 48/255.0, alpha: 1.0)
         static let BarLabel = UIColor(red: 101/255.0, green: 120/255.0, blue: 130/255.0, alpha: 1.0)
         static let BarNumber = UIColor(red: 146/255.0, green: 159/255.0, blue: 175/255.0, alpha: 1.0)
@@ -63,6 +64,12 @@ struct Styles {
         static let MediumXXLarge = UIFont(name: "BlenderPro-Medium", size: 24.0)
         static let MediumXXXLarge = UIFont(name: "BlenderPro-Medium", size: 32.0)
         static let MediumXXXXLarge = UIFont(name: "BlenderPro-Medium", size: 48.0)
+
+        static let BookSmall = UIFont(name: "BlenderPro-Bold", size: 12.0)
+        static let BookMedium = UIFont(name: "BlenderPro-Bold", size: 16.0)
+        static let BookLarge = UIFont(name: "BlenderPro-Bold", size: 20.0)
+        static let BookXLarge = UIFont(name: "BlenderPro-Bold", size: 24.0)
+        static let BookXXLarge = UIFont(name: "BlenderPro-Bold", size: 32.0)
 
         static let BoldSmall = UIFont(name: "BlenderPro-Bold", size: 22.0)
         static let BoldMedium = UIFont(name: "BlenderPro-Bold", size: 32.0)
