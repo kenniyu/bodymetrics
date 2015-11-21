@@ -81,4 +81,13 @@ public extension String {
     public func filter(pred: Character -> Bool) -> String {
         return String(self.characters.filter(pred))
     }
+
+    public func URLencode() -> String {
+        let characters = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
+        characters.removeCharactersInString("&")
+        guard let encodedString = self.stringByAddingPercentEncodingWithAllowedCharacters(characters) else {
+            return self
+        }
+        return encodedString
+    }
 }

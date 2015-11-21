@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05C8CA32C397ED5A8E7A8CA0 /* Pods_BodyMetrics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED0F968D1D78EB81FBA6BB6B /* Pods_BodyMetrics.framework */; };
 		C19911711BFBEE9F003C97D3 /* MeterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C19911701BFBEE9F003C97D3 /* MeterView.xib */; };
 		C1B20F921BFBE9A7002C72E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B20F911BFBE9A7002C72E9 /* AppDelegate.swift */; };
 		C1B20F941BFBE9A7002C72E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B20F931BFBE9A7002C72E9 /* ViewController.swift */; };
@@ -86,6 +87,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E2E0F2B41546CA659394006 /* Pods-BodyMetrics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyMetrics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics.debug.xcconfig"; sourceTree = "<group>"; };
+		A47138EF96DC9527A779C96B /* Pods-BodyMetrics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyMetrics.release.xcconfig"; path = "Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics.release.xcconfig"; sourceTree = "<group>"; };
 		C19911701BFBEE9F003C97D3 /* MeterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeterView.xib; sourceTree = "<group>"; };
 		C1B20F8E1BFBE9A7002C72E9 /* BodyMetrics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BodyMetrics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1B20F911BFBE9A7002C72E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 		C1B210361BFE8491002C72E9 /* fruit-loops.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "fruit-loops.jpg"; path = "images/fruit-loops.jpg"; sourceTree = "<group>"; };
 		C1B210381BFF95B0002C72E9 /* MDRotatingPieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDRotatingPieChart.swift; sourceTree = "<group>"; };
 		C1B210761BFFA8C4002C72E9 /* Double+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
+		ED0F968D1D78EB81FBA6BB6B /* Pods_BodyMetrics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BodyMetrics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,7 @@
 				C1B2100D1BFC4D2A002C72E9 /* Parse.framework in Frameworks */,
 				C1B2100F1BFC4D31002C72E9 /* ParseCrashReporting.framework in Frameworks */,
 				C1B2100C1BFC4D2A002C72E9 /* Bolts.framework in Frameworks */,
+				05C8CA32C397ED5A8E7A8CA0 /* Pods_BodyMetrics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +196,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		41C4D4BB5E2D489C51EAD5B8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3E2E0F2B41546CA659394006 /* Pods-BodyMetrics.debug.xcconfig */,
+				A47138EF96DC9527A779C96B /* Pods-BodyMetrics.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C1B20F851BFBE9A7002C72E9 = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +212,8 @@
 				C1B20FA51BFBE9A7002C72E9 /* BodyMetricsTests */,
 				C1B20FB01BFBE9A7002C72E9 /* BodyMetricsUITests */,
 				C1B20F8F1BFBE9A7002C72E9 /* Products */,
+				41C4D4BB5E2D489C51EAD5B8 /* Pods */,
+				D914D408DD77C11C63975D37 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -390,6 +406,14 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
+		D914D408DD77C11C63975D37 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED0F968D1D78EB81FBA6BB6B /* Pods_BodyMetrics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -397,9 +421,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C1B20FB61BFBE9A7002C72E9 /* Build configuration list for PBXNativeTarget "BodyMetrics" */;
 			buildPhases = (
+				4EBA17CAB209C0F60C5828C3 /* Check Pods Manifest.lock */,
 				C1B20F8A1BFBE9A7002C72E9 /* Sources */,
 				C1B20F8B1BFBE9A7002C72E9 /* Frameworks */,
 				C1B20F8C1BFBE9A7002C72E9 /* Resources */,
+				5F9AD0E2F894CD450811677F /* Embed Pods Frameworks */,
+				659DFA37200D34475459A3C0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -530,6 +557,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4EBA17CAB209C0F60C5828C3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5F9AD0E2F894CD450811677F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		659DFA37200D34475459A3C0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C1B20F8A1BFBE9A7002C72E9 /* Sources */ = {
@@ -701,6 +776,7 @@
 		};
 		C1B20FB71BFBE9A7002C72E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E2E0F2B41546CA659394006 /* Pods-BodyMetrics.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -716,6 +792,7 @@
 		};
 		C1B20FB81BFBE9A7002C72E9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A47138EF96DC9527A779C96B /* Pods-BodyMetrics.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (

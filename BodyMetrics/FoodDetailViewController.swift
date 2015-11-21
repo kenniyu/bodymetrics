@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 import QuartzCore
+import Alamofire
+import SDWebImage
 
 public class NutritionKeys {
     public static let kFatKey = "Total lipid (fat)"
@@ -18,6 +20,7 @@ public class NutritionKeys {
 
 public
 class FoodDetailViewController: UIViewController {
+    public static let googleImageSearchUrl = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
 
     @IBOutlet weak var foodImageView: UIImageView!
     @IBOutlet weak var foodNameLabel: UILabel!
@@ -64,6 +67,7 @@ class FoodDetailViewController: UIViewController {
 
     private static let kMeterHeight: CGFloat = 50
     private static let kPieChartContainerViewHeight: CGFloat = 140
+    private static let kFoodImageViewHeight: CGFloat = 200
 
     private static let kLabelFont = Styles.Fonts.MediumMedium!
     private static let kFoodNameFont = Styles.Fonts.BookLarge!
@@ -112,8 +116,6 @@ class FoodDetailViewController: UIViewController {
     public override func viewDidLayoutSubviews() {
         setupScrollView()
         updateMeters()
-
-//        setupImageGradient()
     }
 
     private func setBackButton() {
@@ -194,8 +196,53 @@ class FoodDetailViewController: UIViewController {
             setupSegmentControl()
             setupPieChart()
             setupBreakdownData()
+            setupImageView()
         }
         didLoadData = true
+    }
+
+    private func setupImageView() {
+        // fetch image based on name
+        if let foodItem = foodItem {
+            let foodName = foodItem.objectForKey("name") as! String
+            if let imageUrls = foodItem.objectForKey("imageUrls") as? [String] {
+                // there are image urls, so we render them
+                let imageIndex = foodItem.objectForKey("preferredImageIndex") as! Int
+                let imageUrl = imageUrls[imageIndex]
+                self.foodImageView.sd_setImageWithURL(NSURL(string: imageUrl))
+                return
+            }
+
+            // If we're here, we don't have any saved images, so query google
+            let imageSearchUrl = FoodDetailViewController.googleImageSearchUrl + foodName.URLencode()
+            Alamofire.request(.GET, imageSearchUrl).responseJSON { response in
+                if let jsonData = response.result.value {
+                    if let responseData = jsonData.valueForKey("responseData") as? NSDictionary, images = responseData.valueForKey("results") as? NSArray {
+                        let imageUrls = images.map({ (imageData) -> String in
+                            if let url = imageData.valueForKey("url") as? String {
+                                return url
+                            }
+                            return ""
+                        }).filter {$0.isEmpty == false}
+                        foodItem["imageUrls"] = imageUrls
+                        foodItem["preferredImageIndex"] = 0
+                        foodItem.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            if let error = error {
+                                print("Error saving image urls: \(error)")
+                            } else {
+                                print("Successfully saved image urls")
+                            }
+                        })
+                        // save urls to parse
+                        if let imageData = images.firstObject as? NSDictionary,
+                            url = imageData.valueForKey("url") as? String {
+                            self.foodImageView.sd_setImageWithURL(NSURL(string: url))
+                            // save url to parse
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private func setupBreakdownData() {
@@ -463,9 +510,9 @@ extension FoodDetailViewController: MDRotatingPieChartDelegate, MDRotatingPieCha
 
 extension FoodDetailViewController: UIScrollViewDelegate {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-        // TODO: wtf are these magic numbers
-        foodImageView.alpha = min(1, 1 - min(1, scrollView.contentOffset.y / 200))
-        let imageHeight = max(264, 264 - scrollView.contentOffset.y)
+        foodImageView.alpha = min(1, 1 - min(1, scrollView.contentOffset.y / FoodDetailViewController.kFoodImageViewHeight))
+        let imageHeight = max(FoodDetailViewController.kFoodImageViewHeight,
+            FoodDetailViewController.kFoodImageViewHeight - scrollView.contentOffset.y)
         foodImageView.height = imageHeight
     }
 }

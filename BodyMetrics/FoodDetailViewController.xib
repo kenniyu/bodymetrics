@@ -40,13 +40,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fruit-loops.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ylU-56-Yfv">
-                    <rect key="frame" x="0.0" y="0.0" width="400" height="264"/>
+                    <rect key="frame" x="0.0" y="64" width="400" height="200"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="264" id="EOg-no-0tP"/>
+                        <constraint firstAttribute="height" constant="200" id="EOg-no-0tP"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWx-zf-b4y">
-                    <rect key="frame" x="0.0" y="0.0" width="400" height="264"/>
+                    <rect key="frame" x="0.0" y="64" width="400" height="200"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="400" placeholderIntrinsicHeight="762" showsHorizontalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="30t-CK-gmB">
@@ -284,7 +284,7 @@
                 <constraint firstItem="30t-CK-gmB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="eeA-OV-GBq"/>
                 <constraint firstAttribute="trailing" secondItem="30t-CK-gmB" secondAttribute="trailing" id="fLg-hd-qX0"/>
                 <constraint firstItem="ylU-56-Yfv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gjK-cj-gdB"/>
-                <constraint firstItem="ylU-56-Yfv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="m4I-Wc-ufH"/>
+                <constraint firstItem="ylU-56-Yfv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="m4I-Wc-ufH"/>
                 <constraint firstAttribute="trailing" secondItem="ylU-56-Yfv" secondAttribute="trailing" id="nEI-JR-skP"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

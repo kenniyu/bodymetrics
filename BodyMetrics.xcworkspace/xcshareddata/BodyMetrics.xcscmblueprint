@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "70546081AABCF1E4AD81E1A25FB1E4C1E3F16824",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "70546081AABCF1E4AD81E1A25FB1E4C1E3F16824" : 0,
+    "C8ADA251DFCC9DB4E144A434C0909B6B90E0D54B" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A05F8448-81B6-4D42-A8FF-D76135376338",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "70546081AABCF1E4AD81E1A25FB1E4C1E3F16824" : "BodyMetrics\/",
+    "C8ADA251DFCC9DB4E144A434C0909B6B90E0D54B" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BodyMetrics",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BodyMetrics.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kenniyu\/bodymetrics.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "70546081AABCF1E4AD81E1A25FB1E4C1E3F16824"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/kenniyu\/wtfeatnow.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C8ADA251DFCC9DB4E144A434C0909B6B90E0D54B"
+    }
+  ]
+}
