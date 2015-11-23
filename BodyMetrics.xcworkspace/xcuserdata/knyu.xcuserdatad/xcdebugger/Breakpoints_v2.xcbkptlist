@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/FoodDetailViewController.swift"
-            timestampString = "469775869.351258"
+            timestampString = "469993670.562832"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "setupImageView()"
             landmarkType = "5">
          </BreakpointContent>
@@ -48,6 +48,102 @@
             startingLineNumber = "229"
             endingLineNumber = "229"
             landmarkName = "setupImageView()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BodyMetrics.FoodDetailViewController.((setupImageView in _22A1A003F09E43F7B70C032F77938AF8) (BodyMetrics.FoodDetailViewController) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "BodyMetrics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
+                  timestampString = "469999328.237613"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "229"
+                  endingLineNumber = "229"
+                  offsetFromSymbolStart = "1902">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BodyMetrics.FoodDetailViewController.((setupImageView in _22A1A003F09E43F7B70C032F77938AF8) (BodyMetrics.FoodDetailViewController) -&gt; () -&gt; ()).(closure #1).(closure #3)"
+                  moduleName = "BodyMetrics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
+                  timestampString = "469999328.238008"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "230"
+                  endingLineNumber = "230"
+                  offsetFromSymbolStart = "23">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
+            timestampString = "469999239.581265"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "getAddedMacro(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
+            timestampString = "469999239.581265"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "done()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
+            timestampString = "469999239.581265"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "done()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
+            timestampString = "469999239.581265"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "done()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

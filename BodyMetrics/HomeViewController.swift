@@ -23,6 +23,12 @@ public protocol NutritionDelegate: class {
     func didUpdateMacros(fat: CGFloat, carbs: CGFloat, protein: CGFloat)
 }
 
+public class MacroKeys {
+    public static let kFatKey = "MACRO_FAT"
+    public static let kCarbsKey = "MACRO_CARBS"
+    public static let kProteinKey = "MACRO_PROTEIN"
+}
+
 public class HomeViewController: UIViewController {
 
     @IBOutlet weak var caloriesMeterView: MeterView!
@@ -35,6 +41,7 @@ public class HomeViewController: UIViewController {
     private static let maxProtein: CGFloat = 400
 
     @IBOutlet weak var eatButton: UIButton!
+    @IBOutlet weak var manualEntryButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,9 +62,9 @@ public class HomeViewController: UIViewController {
         let calories = gramsFat * 9 + gramsCarbs * 4 + gramsProtein * 4
 
         caloriesMeterView.setup("Calories", current: calories, max: maxCalories)
-        fatMeterView.setup("Fat", current: 20, max: HomeViewController.maxFat)
-        carbsMeterView.setup("Carbs", current: 44, max: HomeViewController.maxCarbs)
-        proteinMeterView.setup("Protein", current: 120, max: HomeViewController.maxProtein)
+        fatMeterView.setup("Fat", current: 0, max: HomeViewController.maxFat)
+        carbsMeterView.setup("Carbs", current: 0, max: HomeViewController.maxCarbs)
+        proteinMeterView.setup("Protein", current: 0, max: HomeViewController.maxProtein)
 
         setupStyles()
     }
@@ -77,8 +84,10 @@ public class HomeViewController: UIViewController {
     private func setupStyles() {
         eatButton.titleLabel?.font = Styles.Fonts.BookLarge
         resetButton.titleLabel?.font = Styles.Fonts.BookLarge
+        manualEntryButton.titleLabel?.font = Styles.Fonts.BookLarge
 
         eatButton.tintColor = Styles.Colors.DataVisLightTeal
+        manualEntryButton.tintColor = Styles.Colors.DataVisLightTeal
         resetButton.tintColor = Styles.Colors.DataVisLightRed
     }
 
@@ -98,6 +107,14 @@ public class HomeViewController: UIViewController {
         presentViewController(navigationController, animated: true) { () -> Void in
         }
     }
+
+    @IBAction func manualEntry(sender: UIButton) {
+        let manualMacroEntryViewController = ManualMacroEntryViewController()
+        let navigationController = UINavigationController(rootViewController: manualMacroEntryViewController)
+        manualMacroEntryViewController.nutritionDelegate = self
+        presentViewController(navigationController, animated: true) { () -> Void in
+        }
+    }
 }
 
 extension HomeViewController: NutritionDelegate {
@@ -107,6 +124,14 @@ extension HomeViewController: NutritionDelegate {
         proteinMeterView.meterCurrent = protein
 
         updateCalories()
+        storeMacros(fat, carbs: carbs, protein: protein)
+    }
+
+    public func storeMacros(fat: CGFloat, carbs: CGFloat, protein: CGFloat) {
+        NSUserDefaults.standardUserDefaults().setObject(fat, forKey: MacroKeys.kFatKey)
+        NSUserDefaults.standardUserDefaults().setObject(carbs, forKey: MacroKeys.kCarbsKey)
+        NSUserDefaults.standardUserDefaults().setObject(protein, forKey: MacroKeys.kProteinKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
 
     public func getMaxCalories() -> CGFloat {

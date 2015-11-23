@@ -233,11 +233,9 @@ class FoodDetailViewController: UIViewController {
                                 print("Successfully saved image urls")
                             }
                         })
-                        // save urls to parse
                         if let imageData = images.firstObject as? NSDictionary,
                             url = imageData.valueForKey("url") as? String {
                             self.foodImageView.sd_setImageWithURL(NSURL(string: url))
-                            // save url to parse
                         }
                     }
                 }

@@ -11,6 +11,7 @@
                 <outlet property="carbsMeterView" destination="W3x-AF-g1Q" id="LYd-s2-eNO"/>
                 <outlet property="eatButton" destination="vBY-6y-HUe" id="qim-jj-E5r"/>
                 <outlet property="fatMeterView" destination="1uK-Va-ch6" id="Qqq-pH-dtA"/>
+                <outlet property="manualEntryButton" destination="DAG-fl-mXo" id="swc-HV-BWE"/>
                 <outlet property="proteinMeterView" destination="uW5-iH-iKv" id="kUe-KY-xnX"/>
                 <outlet property="resetButton" destination="bx1-cl-EYD" id="waX-3G-e1X"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -72,16 +73,27 @@
                         <action selector="eat:" destination="-1" eventType="touchUpInside" id="e7N-D8-JFD"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DAG-fl-mXo">
+                    <rect key="frame" x="20" y="450" width="560" height="30"/>
+                    <state key="normal" title="Manual Entry"/>
+                    <connections>
+                        <action selector="manualEntry:" destination="-1" eventType="touchUpInside" id="Y6A-lI-tlH"/>
+                    </connections>
+                </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.020870812786077726" green="0.18733231247128321" blue="0.26284327651515149" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="uW5-iH-iKv" firstAttribute="trailing" secondItem="W3x-AF-g1Q" secondAttribute="trailing" id="56H-FX-7k9"/>
                 <constraint firstItem="1uK-Va-ch6" firstAttribute="trailing" secondItem="LRU-J1-S71" secondAttribute="trailing" id="6cL-RS-qjF"/>
                 <constraint firstAttribute="bottom" secondItem="bx1-cl-EYD" secondAttribute="bottom" constant="20" id="BGL-zo-9HD"/>
                 <constraint firstItem="vBY-6y-HUe" firstAttribute="height" secondItem="bx1-cl-EYD" secondAttribute="height" id="BUa-KU-PK5"/>
+                <constraint firstItem="DAG-fl-mXo" firstAttribute="leading" secondItem="vBY-6y-HUe" secondAttribute="leading" id="Bpu-sO-ZYd"/>
+                <constraint firstItem="DAG-fl-mXo" firstAttribute="trailing" secondItem="vBY-6y-HUe" secondAttribute="trailing" id="CDe-1Z-mq0"/>
+                <constraint firstItem="vBY-6y-HUe" firstAttribute="top" secondItem="DAG-fl-mXo" secondAttribute="bottom" constant="20" id="HKG-h3-My8"/>
                 <constraint firstItem="1uK-Va-ch6" firstAttribute="top" secondItem="LRU-J1-S71" secondAttribute="bottom" constant="20" id="I8i-8f-7pR"/>
                 <constraint firstItem="bx1-cl-EYD" firstAttribute="top" secondItem="vBY-6y-HUe" secondAttribute="bottom" constant="20" id="ILy-hS-S4l"/>
                 <constraint firstAttribute="trailing" secondItem="bx1-cl-EYD" secondAttribute="trailing" constant="20" id="Nhf-bi-pSf"/>
+                <constraint firstItem="DAG-fl-mXo" firstAttribute="height" secondItem="vBY-6y-HUe" secondAttribute="height" id="Ppe-VW-Aol"/>
                 <constraint firstItem="LRU-J1-S71" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="QwM-qq-CcI"/>
                 <constraint firstAttribute="trailing" secondItem="LRU-J1-S71" secondAttribute="trailing" constant="20" id="T8n-KD-C5W"/>
                 <constraint firstItem="LRU-J1-S71" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="ZLx-Ax-eP8"/>
