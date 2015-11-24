@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         setupNavBar()
         setupSegmentedControls()
+        setupPickerViews()
 
         // Override point for customization after application launch.
 //        let homeViewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
@@ -69,6 +70,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let attr = [NSFontAttributeName: Styles.Fonts.MediumMedium!]
         UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: .Normal)
         UISegmentedControl.appearance().tintColor = Styles.Colors.AppLightGray
+    }
+
+    private func setupPickerViews() {
+        UIPickerView.appearance().backgroundColor = UIColor.whiteColor()
+
     }
 
     private func setupNavBar() {

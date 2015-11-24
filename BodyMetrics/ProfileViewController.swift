@@ -8,10 +8,23 @@
 
 import UIKit
 
+public class CellType {
+    public static let kFormSegmentControl = "SegmentControl"
+    public static let kFormTextField = "TextField"
+    public static let kFormPickerView = "PickerView"
+}
+
 public class ProfileForm {
     public static let kGenderLabel = "Gender"
+    public static let kGenderLabelMale = "Male"
+    public static let kGenderLabelFemale = "Female"
     public static let kGenderValueMale = "M"
     public static let kGenderValueFemale = "F"
+}
+
+public class HeightPickerForm {
+    public static let kFootComponent = 0
+    public static let kInchComponent = 1
 }
 
 public
@@ -26,6 +39,11 @@ class ProfileViewController: UIViewController {
     private var currentCarbs: CGFloat = 0
 
     public var nutritionDelegate: NutritionDelegate?
+    private let pickerModalViewController = PickerModalViewController()
+
+    private var heights = [
+        [2, 3, 4, 5, 6, 7, 8, 9, 10], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    ]
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +63,7 @@ class ProfileViewController: UIViewController {
 
         registerCells()
 
+        setupGestureRecognizers()
         updateFeedModels()
     }
 
@@ -62,7 +81,10 @@ class ProfileViewController: UIViewController {
 
     private func updateFeedModels() {
         viewModels = [
-            ["name": ProfileForm.kGenderLabel, "value": ProfileForm.kGenderValueMale]
+            ["cellType": CellType.kFormSegmentControl, "name": ProfileForm.kGenderLabel, "value": ProfileForm.kGenderValueMale],
+            ["cellType": CellType.kFormTextField, "name": "Weight (lbs)", "placeholder": "eg. 150"],
+            ["cellType": CellType.kFormPickerView, "name": "Height (ft' in\")"],
+            ["cellType": CellType.kFormTextField, "name": "Age", "placeholder": "eg. 28"]
         ]
         profileSettingsCollectionView.reloadData()
     }
@@ -74,31 +96,54 @@ class ProfileViewController: UIViewController {
     private func setupCollectionView() {
         profileSettingsCollectionView.backgroundColor = UIColor.whiteColor()
         profileSettingsCollectionView.scrollsToTop = true
+        profileSettingsCollectionView.alwaysBounceVertical = true
     }
 
     public func registerCells(collectionView: UICollectionView) {
         profileSettingsCollectionView.registerNib(FormWithTextFieldCollectionViewCell.nib, forCellWithReuseIdentifier: FormWithTextFieldCollectionViewCell.reuseId)
         profileSettingsCollectionView.registerNib(FormWithSegmentControlCollectionViewCell.nib, forCellWithReuseIdentifier: FormWithSegmentControlCollectionViewCell.reuseId)
+        profileSettingsCollectionView.registerNib(FormWithPickerViewCollectionViewCell.nib, forCellWithReuseIdentifier: FormWithPickerViewCollectionViewCell.reuseId)
+
     }
 
-//    public override func done() {
-//        let newFat = currentFat + getAddedMacro(MacroKeys.kFatKey)
-//        let newCarbs = currentCarbs + getAddedMacro(MacroKeys.kCarbsKey)
-//        let newProtein = currentProtein + getAddedMacro(MacroKeys.kProteinKey)
-//        dismissViewControllerAnimated(true) { () -> Void in
-//            self.nutritionDelegate?.didUpdateMacros(newFat, carbs: newCarbs, protein: newProtein)
-//        }
-//    }
+    private func setupGestureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "collectionViewTapped:")
+//        profileSettingsCollectionView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    public func collectionViewTapped(sender: UITapGestureRecognizer) {
+    }
 }
 
 extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if let cell = profileSettingsCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithSegmentControlCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithSegmentControlCollectionViewCell {
-            let viewModel = viewModels[indexPath.row]
-            let genders = ["Male", "Female"]
-            cell.segments = genders
-            cell.setup(viewModel)
-            return cell
+        let viewModel = viewModels[indexPath.row]
+        if let cellType = viewModel["cellType"] as? String {
+            switch cellType {
+            case CellType.kFormSegmentControl:
+                if let cell = profileSettingsCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithSegmentControlCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithSegmentControlCollectionViewCell {
+                    let viewModel = viewModels[indexPath.row]
+                    let genderLabels = [["name": ProfileForm.kGenderLabelMale], ["name": ProfileForm.kGenderLabelFemale]]
+                    cell.segments = genderLabels
+                    cell.setup(viewModel)
+                    return cell
+                }
+            case CellType.kFormTextField:
+                if let cell = profileSettingsCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithTextFieldCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithTextFieldCollectionViewCell {
+                    let viewModel = viewModels[indexPath.row]
+                    cell.setup(viewModel)
+                    return cell
+                }
+            case CellType.kFormPickerView:
+                if let cell = profileSettingsCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithPickerViewCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithPickerViewCollectionViewCell {
+                    let viewModel = viewModels[indexPath.row]
+//                    self.view.addSubview(pickerView)
+                    cell.setup(viewModel)
+                    return cell
+                }
+            default:
+                break
+            }
         }
         return UICollectionViewCell()
     }
@@ -108,6 +153,7 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
         // do some shared shit
         // show details about this item
         //        let foodItem = feedModels[indexPath.row]
@@ -117,6 +163,40 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
         //            foodDetailViewController.nutritionDelegate = nutritionDelegate
         //            self.navigationController?.pushViewController(foodDetailViewController, animated: true)
         //        }
+        let viewModel = viewModels[indexPath.row]
+        if let cellType = viewModel["cellType"] as? String {
+            switch cellType {
+            case CellType.kFormPickerView:
+                if let cell = profileSettingsCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithPickerViewCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithPickerViewCollectionViewCell {
+                    // show picker view
+//                    pickerModalView.hidden = !pickerModalView.hidden
+                    pickerModalViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                    pickerModalViewController.pickerModalViewDelegate = self
+                    presentViewController(pickerModalViewController, animated: true, completion: nil)
+                }
+            default:
+                break
+            }
+        }
+
+        // loop through all cells
+//        for (index, viewModel) in viewModels.enumerate() {
+//            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+//            if let cellType = viewModel["cellType"] as? String {
+//                switch cellType {
+//                case CellType.kFormTextField:
+//                    if let cell = profileSettingsCollectionView.cellForItemAtIndexPath(indexPath) as? FormWithTextFieldCollectionViewCell {
+//                        cell.formTextField.resignFirstResponder()
+//                    }
+//                    //                case CellType.kFormPickerView:
+//                    //                    if let cell = profileSettingsCollectionView.cellForItemAtIndexPath(indexPath) as? FormWithPickerViewCollectionViewCell {
+//                    //                        cell.pickerTextField.resignFirstResponder()
+//                    //                    }
+//                default:
+//                    break
+//                }
+//            }
+//        }
     }
 }
 
@@ -141,5 +221,72 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSizeZero
+    }
+}
+
+    //    public func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+    //
+    //        var pickerLabel = view as? UILabel;
+    //
+    //        if (pickerLabel == nil) {
+    //            pickerLabel = UILabel()
+    //
+    //            pickerLabel?.font = UIFont(name: "Montserrat", size: 16)
+    //            pickerLabel?.textAlignment = NSTextAlignment.Center
+    //        }
+    //
+    //        pickerLabel?.text = "hahaha"
+    //        
+    //        return pickerLabel!;
+    //    }
+
+extension ProfileViewController: PickerModalViewDelegate {
+    public func didTapCancel() {
+        pickerModalViewController.dismissViewControllerAnimated(true, completion: nil)
+        return
+    }
+
+    public func didTapDone() {
+        // get height, store height
+        let footIndex = pickerModalViewController.pickerModalView.pickerView.selectedRowInComponent(HeightPickerForm.kFootComponent)
+        let inchIndex = pickerModalViewController.pickerModalView.pickerView.selectedRowInComponent(HeightPickerForm.kInchComponent)
+        let selectedFoot = heights[HeightPickerForm.kFootComponent][footIndex]
+        let selectedInch = heights[HeightPickerForm.kInchComponent][inchIndex]
+
+        pickerModalViewController.dismissViewControllerAnimated(true) { () -> Void in
+            // update UI to say correct height
+            // grab cell at index
+            if let cell = self.profileSettingsCollectionView.cellForItemAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as? FormWithPickerViewCollectionViewCell {
+                cell.pickerTextField.text = "\(selectedFoot)\' \(selectedInch)\""
+            }
+        }
+        return
+    }
+
+    public func titleLabel() -> String {
+        return "Height"
+    }
+
+    public func titleForRow(row: Int, forComponent component: Int) -> String {
+        let inches = heights[component] as [Int]
+        let number = inches[row]
+        switch component {
+        case 0:
+            return "\(number)'"
+        case 1:
+            return "\(number)\""
+        default:
+            break
+        }
+        return ""
+    }
+
+    public func numberOfComponents() -> Int {
+        return 2
+    }
+
+    public func numberOfRowsInComponent(component: Int) -> Int {
+        let rows = heights[component] as [Int]
+        return rows.count
     }
 }

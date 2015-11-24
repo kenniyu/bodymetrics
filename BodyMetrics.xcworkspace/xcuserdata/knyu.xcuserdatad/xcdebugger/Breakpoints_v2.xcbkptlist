@@ -58,7 +58,7 @@
                   moduleName = "BodyMetrics"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
-                  timestampString = "470016234.051076"
+                  timestampString = "470100693.24844"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "229"
@@ -73,7 +73,7 @@
                   moduleName = "BodyMetrics"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
-                  timestampString = "470016234.051285"
+                  timestampString = "470100693.2489"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "230"
@@ -160,6 +160,22 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "prepareForReuse()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BodyMetrics/ProfileViewController.swift"
+            timestampString = "470101148.564487"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "titleLabel()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

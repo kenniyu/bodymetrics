@@ -5,4 +5,5 @@ target 'BodyMetrics' do
   pod 'SDWebImage', '~>3.7'
   pod 'Alamofire', '~>3.0'
   pod 'IDMPhotoBrowser'
+  pod 'pop', '~> 1.0'
 end

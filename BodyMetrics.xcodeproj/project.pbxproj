@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		05C8CA32C397ED5A8E7A8CA0 /* Pods_BodyMetrics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED0F968D1D78EB81FBA6BB6B /* Pods_BodyMetrics.framework */; };
+		C155956D1C051D71002D6DB5 /* PickerModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C155956B1C051D71002D6DB5 /* PickerModalViewController.swift */; };
+		C155956E1C051D71002D6DB5 /* PickerModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C155956C1C051D71002D6DB5 /* PickerModalViewController.xib */; };
 		C15682DA1C038E00000479B0 /* ManualMacroEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15682D81C038E00000479B0 /* ManualMacroEntryViewController.swift */; };
 		C15682DB1C038E00000479B0 /* ManualMacroEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15682D91C038E00000479B0 /* ManualMacroEntryViewController.xib */; };
 		C15682DE1C038ECF000479B0 /* FormCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15682DC1C038ECF000479B0 /* FormCollectionViewCell.swift */; };
@@ -84,6 +86,10 @@
 		C1DEF3121C03D68100DFB7F0 /* FormWithSegmentControlCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1DEF3101C03D68100DFB7F0 /* FormWithSegmentControlCollectionViewCell.xib */; };
 		C1DEF3151C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEF3131C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.swift */; };
 		C1DEF3161C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1DEF3141C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.xib */; };
+		C1DEF3191C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEF3171C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.swift */; };
+		C1DEF31A1C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1DEF3181C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib */; };
+		C1DEF31C1C05137000DFB7F0 /* PickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEF31B1C05137000DFB7F0 /* PickerModalView.swift */; };
+		C1DEF31E1C05138100DFB7F0 /* PickerModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1DEF31D1C05138100DFB7F0 /* PickerModalView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +112,8 @@
 /* Begin PBXFileReference section */
 		3E2E0F2B41546CA659394006 /* Pods-BodyMetrics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyMetrics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics.debug.xcconfig"; sourceTree = "<group>"; };
 		A47138EF96DC9527A779C96B /* Pods-BodyMetrics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyMetrics.release.xcconfig"; path = "Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics.release.xcconfig"; sourceTree = "<group>"; };
+		C155956B1C051D71002D6DB5 /* PickerModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerModalViewController.swift; sourceTree = "<group>"; };
+		C155956C1C051D71002D6DB5 /* PickerModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerModalViewController.xib; sourceTree = "<group>"; };
 		C15682D81C038E00000479B0 /* ManualMacroEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualMacroEntryViewController.swift; sourceTree = "<group>"; };
 		C15682D91C038E00000479B0 /* ManualMacroEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualMacroEntryViewController.xib; sourceTree = "<group>"; };
 		C15682DC1C038ECF000479B0 /* FormCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -188,6 +196,10 @@
 		C1DEF3101C03D68100DFB7F0 /* FormWithSegmentControlCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormWithSegmentControlCollectionViewCell.xib; sourceTree = "<group>"; };
 		C1DEF3131C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormWithTextFieldCollectionViewCell.swift; sourceTree = "<group>"; };
 		C1DEF3141C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormWithTextFieldCollectionViewCell.xib; sourceTree = "<group>"; };
+		C1DEF3171C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormWithPickerViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		C1DEF3181C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormWithPickerViewCollectionViewCell.xib; sourceTree = "<group>"; };
+		C1DEF31B1C05137000DFB7F0 /* PickerModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerModalView.swift; sourceTree = "<group>"; };
+		C1DEF31D1C05138100DFB7F0 /* PickerModalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerModalView.xib; sourceTree = "<group>"; };
 		ED0F968D1D78EB81FBA6BB6B /* Pods_BodyMetrics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BodyMetrics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -422,6 +434,10 @@
 				C1DEF30E1C03D63800DFB7F0 /* Cells */,
 				C1B2102E1BFE45E0002C72E9 /* CustomNavigationController.swift */,
 				C1DEF2F61C03C5D400DFB7F0 /* MainTabBarController.swift */,
+				C1DEF31B1C05137000DFB7F0 /* PickerModalView.swift */,
+				C1DEF31D1C05138100DFB7F0 /* PickerModalView.xib */,
+				C155956B1C051D71002D6DB5 /* PickerModalViewController.swift */,
+				C155956C1C051D71002D6DB5 /* PickerModalViewController.xib */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -477,6 +493,8 @@
 				C1DEF3101C03D68100DFB7F0 /* FormWithSegmentControlCollectionViewCell.xib */,
 				C1DEF3131C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.swift */,
 				C1DEF3141C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.xib */,
+				C1DEF3171C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.swift */,
+				C1DEF3181C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -603,6 +621,7 @@
 				C1B20F991BFBE9A7002C72E9 /* Assets.xcassets in Resources */,
 				C1B210001BFBED69002C72E9 /* BlenderPro-BookItalic.otf in Resources */,
 				C1B20F971BFBE9A7002C72E9 /* Main.storyboard in Resources */,
+				C1DEF31A1C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib in Resources */,
 				C1DEF3001C03D29100DFB7F0 /* SettingsTableViewCell.xib in Resources */,
 				C15682DB1C038E00000479B0 /* ManualMacroEntryViewController.xib in Resources */,
 				C1B20FFE1BFBED69002C72E9 /* BlenderPro-BoldItalic.otf in Resources */,
@@ -611,6 +630,7 @@
 				C1B210051BFBED69002C72E9 /* BlenderPro-ThinItalic.otf in Resources */,
 				C1B210011BFBED69002C72E9 /* BlenderPro-Heavy.otf in Resources */,
 				C1B20FC21BFBE9E5002C72E9 /* HomeViewController.xib in Resources */,
+				C155956E1C051D71002D6DB5 /* PickerModalViewController.xib in Resources */,
 				C1DEF30D1C03D62B00DFB7F0 /* ProfileViewController.xib in Resources */,
 				C1B2102C1BFD0757002C72E9 /* SearchResultsCollectionViewCell.xib in Resources */,
 				C15682DF1C038ECF000479B0 /* FormCollectionViewCell.xib in Resources */,
@@ -621,6 +641,7 @@
 				C1B210041BFBED69002C72E9 /* BlenderPro-Thin.otf in Resources */,
 				C1DEF2FC1C03C62100DFB7F0 /* SettingsViewController.xib in Resources */,
 				C1B210341BFE4702002C72E9 /* FoodDetailViewController.xib in Resources */,
+				C1DEF31E1C05138100DFB7F0 /* PickerModalView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +723,7 @@
 				C1B20FDA1BFBEA54002C72E9 /* Styles.swift in Sources */,
 				C1B20FCE1BFBEA31002C72E9 /* UIImage+.swift in Sources */,
 				C1B2102F1BFE45E0002C72E9 /* CustomNavigationController.swift in Sources */,
+				C155956D1C051D71002D6DB5 /* PickerModalViewController.swift in Sources */,
 				C1B20FD41BFBEA31002C72E9 /* String+.swift in Sources */,
 				C1B20FD61BFBEA31002C72E9 /* UITextField+.swift in Sources */,
 				C1B20FD31BFBEA31002C72E9 /* CGRect+.swift in Sources */,
@@ -723,10 +745,12 @@
 				C1DEF2FB1C03C62100DFB7F0 /* SettingsViewController.swift in Sources */,
 				C1B20FEE1BFBEC32002C72E9 /* KeyboardObserver.swift in Sources */,
 				C1B210271BFD0574002C72E9 /* FoodSearchViewController.swift in Sources */,
+				C1DEF31C1C05137000DFB7F0 /* PickerModalView.swift in Sources */,
 				C1B20F921BFBE9A7002C72E9 /* AppDelegate.swift in Sources */,
 				C1B20FC11BFBE9E5002C72E9 /* HomeViewController.swift in Sources */,
 				C1B20FF01BFBEC32002C72E9 /* PlaceholderTextView.swift in Sources */,
 				C1DEF3111C03D68100DFB7F0 /* FormWithSegmentControlCollectionViewCell.swift in Sources */,
+				C1DEF3191C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.swift in Sources */,
 				C1B2102B1BFD0757002C72E9 /* SearchResultsCollectionViewCell.swift in Sources */,
 				C1DEF3041C03D2CC00DFB7F0 /* SettingsDataManager.swift in Sources */,
 			);
