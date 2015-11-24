@@ -8,52 +8,69 @@
 import UIKit
 import Parse
 
-public protocol FormCollectionViewCellDelegate: class {
-    func tapped(cell: FormCollectionViewCell)
+public protocol FormWithSegmentControlCollectionViewCellDelegate: class {
+    func tapped(cell: FormWithSegmentControlCollectionViewCell)
 }
 
-public class FormCollectionViewCell: UICollectionViewCell {
-//    static let kNib = UINib(nibName: kClassName, bundle: NSBundle(forClass: FormCollectionViewCell.self))
+public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
 
-    static let kCellContainerPadding: CGFloat = 12
-    static let kTitleLabelFontStyle: UIFont = Styles.Fonts.MediumSmall!
-    static let kFormTextFieldFontStyle: UIFont = Styles.Fonts.ThinMedium!
-    static let kFontColor: UIColor = Styles.Colors.DataVisLightTeal
-//    static let kBorderViewHeight: CGFloat = 8
-    static let kFormCellHeight: CGFloat = 50
+    static let kClassName = "FormWithSegmentControlCollectionViewCell"
+    static let kReuseIdentifier = "FormWithSegmentControlCollectionViewCell"
+    static let kNib = UINib(nibName: kClassName, bundle: NSBundle(forClass: FormWithSegmentControlCollectionViewCell.self))
 
-    @IBOutlet weak var containerView: UIView!
+    static let kBorderViewHeight: CGFloat = 8
 
-    @IBOutlet weak var formLabel: UILabel!
+    public var segments: [String]? = nil
+
+    @IBOutlet weak var formSegmentControl: UISegmentedControl!
 
 
-    public var viewModel: [String: AnyObject]!
-    public var formCollectionViewCellDelegate: FormCollectionViewCellDelegate?
+
+    public var formWithSegmentCollectionViewCellDelegate: FormWithSegmentControlCollectionViewCellDelegate?
+
+    public class var nib: UINib {
+        get {
+            return FormWithSegmentControlCollectionViewCell.kNib
+        }
+    }
 
     public override func prepareForReuse() {
         super.prepareForReuse()
     }
 
-    public override func awakeFromNib() {
-        super.awakeFromNib()
+    public class var reuseId: String {
+        get {
+            return FormWithSegmentControlCollectionViewCell.kClassName
+        }
     }
 
-    public func setup(formModel: [String: AnyObject]) {
-        // override
-//        self.viewModel = formModel
-        self.backgroundColor = UIColor.clearColor()
-        self.containerView.backgroundColor = UIColor.clearColor()
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        //        likeButton.setTitle("Like", forState: .Normal)
+        //        commentButton.setTitle("Comment", forState: .Normal)
+        //        followButton.setTitle("Follow", forState: .Normal)
+    }
 
-        formLabel.font = FormCollectionViewCell.kTitleLabelFontStyle
-        formLabel.textColor = FormCollectionViewCell.kFontColor
-//
-//        loadDataIntoViews(viewModel)
-//        hideUnhideViews()
+    public override func setup(formModel: [String: AnyObject]) {
+        super.setup(formModel)
+        self.viewModel = formModel
+
+        // setup segment values
+        if let segmentValues = segments {
+            formSegmentControl.removeAllSegments()
+            for (index, segmentName) in segmentValues.enumerate() {
+                formSegmentControl.insertSegmentWithTitle(segmentName, atIndex: index, animated: false)
+            }
+            formSegmentControl.selectedSegmentIndex = 0
+        }
+
+        loadDataIntoViews(viewModel)
+        hideUnhideViews()
 //        setupA11yIdentifiers()
-//        //        setupGestureRecognizers()
-//        //        setupControlIdentifiers()
-//
-//        setNeedsLayout()
+        //        setupGestureRecognizers()
+        //        setupControlIdentifiers()
+
+        setNeedsLayout()
     }
 
     public override func layoutSubviews() {
@@ -64,43 +81,25 @@ public class FormCollectionViewCell: UICollectionViewCell {
 
         containerView.frame = bounds
         containerView.backgroundColor = UIColor.clearColor()
-        // HACK: to avoid unnecessary maintenance of clipping view color, setting the color to be cell.backgroundColor
-        // or cell.superview.backgroundcolor (collectionView background color). This would produce corner radius effect
-        // with clipping
-        //        cellContainerView.clippingView.color = {
-        //            if self.backgroundColor != UIColor.clearColor() {
-        //                return self.backgroundColor
-        //            } else if let superview = self.superview {
-        //                return superview.backgroundColor
-        //            }
-        //
-        //            return UIColor.redColor()
-        //            }()
 
         setSubviewFrames()
     }
 
-    public class func size(boundingWidth: CGFloat, viewModel: [String: AnyObject]) -> CGSize {
-        //        // add cell spacing
-//        cellHeight += 2 * SearchResultsCollectionViewCell.kCellContainerPadding
-//        // add title label height
-//        let titleLabelHeight = SearchResultsCollectionViewCell.titleLabelHeight(boundingWidth - 2 * SearchResultsCollectionViewCell.kCellContainerPadding, viewModel: viewModel)
-//        cellHeight += titleLabelHeight
-//        cellHeight += 2 * SearchResultsCollectionViewCell.kCellContainerPadding
-        return CGSizeMake(boundingWidth, FormCollectionViewCell.kFormCellHeight)
+    public override class func size(boundingWidth: CGFloat, viewModel: [String: AnyObject]) -> CGSize {
+        return CGSizeMake(boundingWidth, FormWithSegmentControlCollectionViewCell.kFormCellHeight)
     }
 
-    public func setSubviewFrames() {
-//        let titleLabelHeight = FormCollectionViewCell.titleLabelHeight(containerView.width - 2 * FormCollectionViewCell.kCellContainerPadding, viewModel: viewModel)
-        formLabel.top = FormCollectionViewCell.kCellContainerPadding
-        formLabel.left = FormCollectionViewCell.kCellContainerPadding
-        formLabel.width = containerView.width/2 - FormCollectionViewCell.kCellContainerPadding
-        formLabel.height = FormCollectionViewCell.kFormCellHeight - 2 * FormCollectionViewCell.kCellContainerPadding
+    public override func setSubviewFrames() {
+        //        let titleLabelHeight = FormCollectionViewCell.titleLabelHeight(containerView.width - 2 * FormCollectionViewCell.kCellContainerPadding, viewModel: viewModel)
+        formLabel.top = FormWithSegmentControlCollectionViewCell.kCellContainerPadding
+        formLabel.left = FormWithSegmentControlCollectionViewCell.kCellContainerPadding
+        formLabel.width = containerView.width/2 - FormWithSegmentControlCollectionViewCell.kCellContainerPadding
+        formLabel.height = FormWithSegmentControlCollectionViewCell.kFormCellHeight - 2 * FormWithSegmentControlCollectionViewCell.kCellContainerPadding
 
-//        formTextField.top = FormCollectionViewCell.kCellContainerPadding
-//        formTextField.left = formLabel.left + formLabel.width
-//        formTextField.width = formLabel.width
-//        formTextField.height = formLabel.height
+        formSegmentControl.top = FormWithSegmentControlCollectionViewCell.kCellContainerPadding
+        formSegmentControl.left = formLabel.left + formLabel.width
+        formSegmentControl.width = formLabel.width
+        formSegmentControl.height = formLabel.height
 
         //        activityTitle.top = actorImageView.top
         //        activityTitle.left = actorImageView.left + actorImageView.width + SearchResultsCollectionViewCell.kCellContainerPadding
@@ -162,23 +161,11 @@ public class FormCollectionViewCell: UICollectionViewCell {
         //        bottomBorderView.top = socialActionsView.bottom + SearchResultsCollectionViewCell.kCellContainerPadding
     }
 
-//    public class func titleLabelHeight(boundingWidth: CGFloat, viewModel: PFObject) -> CGFloat {
-//        if let title = viewModel.objectForKey("name") as? String {
-//            let textHeight = TextUtils.textHeight(title, font: SearchResultsCollectionViewCell.kTitleLabelFontStyle, boundingWidth: boundingWidth)
-//            return textHeight
-//        }
-//        return 0
-//    }
 
-//    public func setupA11yIdentifiers() {
-//        // setup accessibility
-//    }
-
-    public func loadDataIntoViews(formModel: [String: AnyObject]) {
-        // OVERRIDE
-//        if let labelName = formModel["name"] as? String {
-//            formLabel.text = labelName.uppercaseString
-//        }
+    public override  func loadDataIntoViews(formModel: [String: AnyObject]) {
+        if let labelName = formModel["name"] as? String {
+            formLabel.text = labelName.uppercaseString
+        }
 
         //        if let tradeDescription = viewModel.objectForKey("description") as? String {
         //            tradeDescriptionTextView.text = tradeDescription
@@ -212,30 +199,11 @@ public class FormCollectionViewCell: UICollectionViewCell {
         //        followButton.setTitle("Followers", forState: .Normal)
     }
 
-    public func hideUnhideViews() {
+    public override func hideUnhideViews() {
         //        topBorderView.hidden = !style.showTopBorder
     }
 
-    //    public func didTapTextView(sender: UITapGestureRecognizer) {
-    //        searchResultsCellDelegate?.tapped(self)
-    //    }
-
-    //    public func didTapImageView(sender: UITapGestureRecognizer) {
-    //        searchResultsCellDelegate?.tappedImage(self, imageView: articleImageView)
-    //    }
-    
-    //    public func didTapActorPhoto(sender: UITapGestureRecognizer) {
-    //        searchResultsCellDelegate?.tappedActorPhoto(self)
-    //    }
-    //
-    //    public func setupGestureRecognizers() {
-    //        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "didTapTextView:")
-    //        tradeDescriptionTextView.addGestureRecognizer(tapGestureRecognizer)
-    //        
-    //        let imageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "didTapImageView:")
-    //        articleImageView.addGestureRecognizer(imageTapGestureRecognizer)
-    //        
-    //        let actorPhotoTapGesture = UITapGestureRecognizer(target: self, action: "didTapActorPhoto:")
-    //        actorImageView.addGestureRecognizer(actorPhotoTapGesture)
-    //    }
+    @IBAction func segmentSelected(sender: UISegmentedControl) {
+        print("GOt here")
+    }
 }

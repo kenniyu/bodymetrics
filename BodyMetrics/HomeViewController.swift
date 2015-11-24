@@ -61,12 +61,27 @@ public class HomeViewController: UIViewController {
         let gramsProtein: CGFloat = 40
         let calories = gramsFat * 9 + gramsCarbs * 4 + gramsProtein * 4
 
-        caloriesMeterView.setup("Calories", current: calories, max: maxCalories)
+
+        caloriesMeterView.setup("Calories", current: 0, max: maxCalories)
+
         fatMeterView.setup("Fat", current: 0, max: HomeViewController.maxFat)
         carbsMeterView.setup("Carbs", current: 0, max: HomeViewController.maxCarbs)
         proteinMeterView.setup("Protein", current: 0, max: HomeViewController.maxProtein)
 
         setupStyles()
+
+        loadCurrentMacros()
+    }
+
+    private func loadCurrentMacros() {
+        let currentFat = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(MacroKeys.kFatKey))
+        let currentCarbs = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(MacroKeys.kCarbsKey))
+        let currentProtein = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(MacroKeys.kProteinKey))
+
+        fatMeterView.setup("Fat", current: currentFat, max: HomeViewController.maxFat)
+        carbsMeterView.setup("Carbs", current: currentCarbs, max: HomeViewController.maxCarbs)
+        proteinMeterView.setup("Protein", current: currentProtein, max: HomeViewController.maxProtein)
+        updateCalories()
     }
 
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -109,7 +124,7 @@ public class HomeViewController: UIViewController {
     }
 
     @IBAction func manualEntry(sender: UIButton) {
-        let manualMacroEntryViewController = ManualMacroEntryViewController()
+        let manualMacroEntryViewController = ManualMacroEntryViewController(fat: fatMeterView.meterCurrent, carbs: carbsMeterView.meterCurrent, protein: proteinMeterView.meterCurrent)
         let navigationController = UINavigationController(rootViewController: manualMacroEntryViewController)
         manualMacroEntryViewController.nutritionDelegate = self
         presentViewController(navigationController, animated: true) { () -> Void in

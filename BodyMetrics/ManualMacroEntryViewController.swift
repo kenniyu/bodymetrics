@@ -31,6 +31,7 @@ class ManualMacroEntryViewController: UIViewController {
     public func setup() {
         // add done button
         addRightBarButtons([createDoneButton()])
+        addCloseButton()
         title = "Manual Entry"
 
         manualEntryCollectionView.backgroundColor = Styles.Colors.AppDarkBlue
@@ -83,7 +84,7 @@ class ManualMacroEntryViewController: UIViewController {
     }
 
     public func registerCells(collectionView: UICollectionView) {
-        manualEntryCollectionView.registerNib(FormCollectionViewCell.nib, forCellWithReuseIdentifier: FormCollectionViewCell.reuseId)
+        manualEntryCollectionView.registerNib(FormWithTextFieldCollectionViewCell.nib, forCellWithReuseIdentifier: FormWithTextFieldCollectionViewCell.reuseId)
     }
 
     public override func done() {
@@ -98,7 +99,7 @@ class ManualMacroEntryViewController: UIViewController {
 
 extension ManualMacroEntryViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if let cell = manualEntryCollectionView.dequeueReusableCellWithReuseIdentifier(FormCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormCollectionViewCell {
+        if let cell = manualEntryCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithTextFieldCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithTextFieldCollectionViewCell {
             let viewModel = feedModels[indexPath.row]
             cell.setup(viewModel)
             return cell
@@ -126,7 +127,7 @@ extension ManualMacroEntryViewController: UICollectionViewDataSource, UICollecti
         for (index, feedModel) in feedModels.enumerate() {
             if let macroKeyValue = feedModel["macroKey"] as? String where macroKeyValue == macroKey {
                 let indexPath = NSIndexPath(forRow: index, inSection: 0)
-                if let cell = manualEntryCollectionView.cellForItemAtIndexPath(indexPath) as? FormCollectionViewCell {
+                if let cell = manualEntryCollectionView.cellForItemAtIndexPath(indexPath) as? FormWithTextFieldCollectionViewCell {
                     if let formText = cell.formTextField.text {
                         return CGFloat(formText.floatValue)
                     }
@@ -142,7 +143,7 @@ extension ManualMacroEntryViewController: UICollectionViewDataSource, UICollecti
 extension ManualMacroEntryViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let foodItem = feedModels[indexPath.row]
-        return FormCollectionViewCell.size(manualEntryCollectionView.bounds.width, viewModel: foodItem)
+        return FormWithTextFieldCollectionViewCell.size(manualEntryCollectionView.bounds.width, viewModel: foodItem)
     }
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {

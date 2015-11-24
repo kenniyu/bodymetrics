@@ -7,41 +7,46 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FormCollectionViewCell" id="gTV-IL-0wX" customClass="FormCollectionViewCell" customModule="BodyMetrics" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="FormWithSegmentControlCollectionViewCell" customModule="BodyMetrics" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
                 <subviews>
-                    <view contentMode="scaleToFill" id="zFe-GS-qSz">
+                    <view contentMode="scaleToFill" id="dAX-kD-hjW">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fat (g)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="n4b-Hg-LNL" userLabel="Form Label">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TtN-Mq-5qP" userLabel="Form Label">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="eg. 10.5" textAlignment="right" minimumFontSize="17" id="VP0-cO-3Ht">
-                                <rect key="frame" x="200" y="0.0" width="200" height="50"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="0UJ-Af-uaV">
+                                <rect key="frame" x="271" y="8" width="121" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <segments>
+                                    <segment title="Male"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentSelected:" destination="gTV-IL-0wX" eventType="valueChanged" id="wfg-sT-nq5"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <size key="customSize" width="452" height="63"/>
             <connections>
-                <outlet property="containerView" destination="zFe-GS-qSz" id="ogM-Yv-cae"/>
-                <outlet property="formLabel" destination="n4b-Hg-LNL" id="jin-Yq-ZUB"/>
+                <outlet property="containerView" destination="dAX-kD-hjW" id="X1b-hr-dQp"/>
+                <outlet property="formLabel" destination="TtN-Mq-5qP" id="SM9-iD-1wa"/>
+                <outlet property="formSegmentControl" destination="0UJ-Af-uaV" id="Rrg-eq-ZeF"/>
             </connections>
-            <point key="canvasLocation" x="322" y="346.5"/>
+            <point key="canvasLocation" x="333" y="390"/>
         </collectionViewCell>
     </objects>
 </document>

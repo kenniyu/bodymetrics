@@ -7,24 +7,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FormCollectionViewCell" id="gTV-IL-0wX" customClass="FormCollectionViewCell" customModule="BodyMetrics" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="FormWithTextFieldCollectionViewCell" customModule="BodyMetrics" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
                 <subviews>
-                    <view contentMode="scaleToFill" id="zFe-GS-qSz">
+                    <view contentMode="scaleToFill" id="8Ce-O7-cfE">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fat (g)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="n4b-Hg-LNL" userLabel="Form Label">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fat (g)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BSA-a0-Jfc" userLabel="Form Label">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="eg. 10.5" textAlignment="right" minimumFontSize="17" id="VP0-cO-3Ht">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="eg. 10.5" textAlignment="right" minimumFontSize="17" id="F97-wd-3JC">
                                 <rect key="frame" x="200" y="0.0" width="200" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -36,12 +36,12 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <size key="customSize" width="452" height="63"/>
             <connections>
-                <outlet property="containerView" destination="zFe-GS-qSz" id="ogM-Yv-cae"/>
-                <outlet property="formLabel" destination="n4b-Hg-LNL" id="jin-Yq-ZUB"/>
+                <outlet property="containerView" destination="8Ce-O7-cfE" id="vWb-Cg-9XQ"/>
+                <outlet property="formLabel" destination="BSA-a0-Jfc" id="hMj-yh-NRS"/>
+                <outlet property="formTextField" destination="F97-wd-3JC" id="sAO-df-1Ye"/>
             </connections>
-            <point key="canvasLocation" x="322" y="346.5"/>
+            <point key="canvasLocation" x="139.5" y="388.5"/>
         </collectionViewCell>
     </objects>
 </document>

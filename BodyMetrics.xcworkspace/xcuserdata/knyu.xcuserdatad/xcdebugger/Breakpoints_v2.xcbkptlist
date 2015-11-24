@@ -58,7 +58,7 @@
                   moduleName = "BodyMetrics"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
-                  timestampString = "469999328.237613"
+                  timestampString = "470016234.051076"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "229"
@@ -73,7 +73,7 @@
                   moduleName = "BodyMetrics"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
-                  timestampString = "469999328.238008"
+                  timestampString = "470016234.051285"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "230"
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
-            timestampString = "469999239.581265"
+            timestampString = "469999757.904825"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "getAddedMacro(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,7 +106,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
-            timestampString = "469999239.581265"
+            timestampString = "469999757.904825"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "done()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
+            timestampString = "469999757.904825"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "91"
@@ -122,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
-            timestampString = "469999239.581265"
+            timestampString = "469999757.904825"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "done()"
             landmarkType = "5">
          </BreakpointContent>
@@ -134,16 +150,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BodyMetrics/ManualMacroEntryViewController.swift"
-            timestampString = "469999239.581265"
+            filePath = "BodyMetrics/FormCollectionViewCell.swift"
+            timestampString = "470016191.138177"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "done()"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "prepareForReuse()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

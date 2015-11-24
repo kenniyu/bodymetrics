@@ -33,11 +33,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupSegmentedControls()
 
         // Override point for customization after application launch.
-        let homeViewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
-        let navigationController = UINavigationController(rootViewController: homeViewController)
-        window!.rootViewController = navigationController
+//        let homeViewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
+//        let navigationController = UINavigationController(rootViewController: homeViewController)
+        window!.rootViewController = UIViewController()
         window!.makeKeyAndVisible()
+
+        let mainTabBarController = createMainTabBarController()
+        let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+        rootViewController?.presentViewController(mainTabBarController, animated: true, completion: nil)
         return true
+    }
+
+    private func createMainTabBarController() -> MainTabBarController {
+        // add feed view controller and settings view controller
+        let homeViewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
+        let homeNavigationViewController = UINavigationController(rootViewController: homeViewController)
+        homeNavigationViewController.tabBarItem.image = UIImage(named: "dashboard-icon-white.png")
+        homeNavigationViewController.title = "Dashboard"
+
+        // add settings view controller
+        let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
+        let settingsNavigationController = UINavigationController(rootViewController: settingsViewController)
+        settingsNavigationController.tabBarItem.image = UIImage(named: "settings-icon-white.png")
+        settingsNavigationController.title = "Settings"
+
+        let tabBarControllers = [homeNavigationViewController, settingsNavigationController]
+
+        let mainTabBarController = MainTabBarController()
+        mainTabBarController.viewControllers = tabBarControllers
+
+        return mainTabBarController
     }
 
     private func setupSegmentedControls() {
