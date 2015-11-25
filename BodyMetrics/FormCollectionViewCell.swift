@@ -27,7 +27,7 @@ public class FormCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var formLabel: UILabel!
 
 
-    public var viewModel: [String: AnyObject]!
+    public var viewModel: [String: AnyObject?]!
     public var formCollectionViewCellDelegate: FormCollectionViewCellDelegate?
 
     public override func prepareForReuse() {
@@ -38,7 +38,7 @@ public class FormCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
 
-    public func setup(formModel: [String: AnyObject]) {
+    public func setup(formModel: [String: AnyObject?]) {
         // override
 //        self.viewModel = formModel
         self.backgroundColor = UIColor.clearColor()
@@ -80,7 +80,7 @@ public class FormCollectionViewCell: UICollectionViewCell {
         setSubviewFrames()
     }
 
-    public class func size(boundingWidth: CGFloat, viewModel: [String: AnyObject]) -> CGSize {
+    public class func size(boundingWidth: CGFloat, viewModel: [String: AnyObject?]) -> CGSize {
         //        // add cell spacing
 //        cellHeight += 2 * SearchResultsCollectionViewCell.kCellContainerPadding
 //        // add title label height
@@ -174,7 +174,7 @@ public class FormCollectionViewCell: UICollectionViewCell {
 //        // setup accessibility
 //    }
 
-    public func loadDataIntoViews(formModel: [String: AnyObject]) {
+    public func loadDataIntoViews(formModel: [String: AnyObject?]) {
         // OVERRIDE
 //        if let labelName = formModel["name"] as? String {
 //            formLabel.text = labelName.uppercaseString
@@ -214,6 +214,11 @@ public class FormCollectionViewCell: UICollectionViewCell {
 
     public func hideUnhideViews() {
         //        topBorderView.hidden = !style.showTopBorder
+    }
+
+    public func currentViewModel() -> [String: AnyObject?]? {
+        // TODO
+        return nil
     }
 
     //    public func didTapTextView(sender: UITapGestureRecognizer) {

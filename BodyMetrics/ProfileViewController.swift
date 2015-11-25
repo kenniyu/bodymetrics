@@ -27,11 +27,19 @@ public class HeightPickerForm {
     public static let kInchComponent = 1
 }
 
+public class FormDataType {
+    public static let kFormDataTypeKey = "formDataType"
+    public static let kGender = "GENDER"
+    public static let kAge = "AGE"
+    public static let kHeight = "HEIGHT"
+    public static let kWeight = "WEIGHT"
+}
+
 public
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var profileSettingsCollectionView: UICollectionView!
-    var viewModels: [[String: AnyObject]] = []
+    var viewModels: [[String: AnyObject?]] = []
     public static let kNibName = "ProfileViewController"
 
     private var currentFat: CGFloat = 0
@@ -63,7 +71,6 @@ class ProfileViewController: UIViewController {
 
         registerCells()
 
-        setupGestureRecognizers()
         updateFeedModels()
     }
 
@@ -80,11 +87,16 @@ class ProfileViewController: UIViewController {
     }
 
     private func updateFeedModels() {
+        let gender = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kGenderKey)
+        let age = NSUserDefaults.standardUserDefaults().integerForKey(ProfileKeys.kAgeKey)
+        let height = NSUserDefaults.standardUserDefaults().integerForKey(ProfileKeys.kHeightKey)
+        let weight = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(ProfileKeys.kWeightKey))
+
         viewModels = [
-            ["cellType": CellType.kFormSegmentControl, "name": ProfileForm.kGenderLabel, "value": ProfileForm.kGenderValueMale],
-            ["cellType": CellType.kFormTextField, "name": "Weight (lbs)", "placeholder": "eg. 150"],
-            ["cellType": CellType.kFormPickerView, "name": "Height (ft' in\")"],
-            ["cellType": CellType.kFormTextField, "name": "Age", "placeholder": "eg. 28"]
+            ["cellType": CellType.kFormSegmentControl, "name": ProfileForm.kGenderLabel, "value": gender, FormDataType.kFormDataTypeKey: FormDataType.kGender],
+            ["cellType": CellType.kFormTextField, "name": "Weight (lbs)", "placeholder": "eg. 150", "value": weight, FormDataType.kFormDataTypeKey: FormDataType.kWeight],
+            ["cellType": CellType.kFormPickerView, "name": "Height (ft' in\")", "value": height, FormDataType.kFormDataTypeKey: FormDataType.kHeight],
+            ["cellType": CellType.kFormTextField, "name": "Age", "placeholder": "eg. 28", "value": age, FormDataType.kFormDataTypeKey: FormDataType.kAge]
         ]
         profileSettingsCollectionView.reloadData()
     }
@@ -106,12 +118,35 @@ class ProfileViewController: UIViewController {
 
     }
 
-    private func setupGestureRecognizers() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "collectionViewTapped:")
-//        profileSettingsCollectionView.addGestureRecognizer(tapGestureRecognizer)
-    }
+    public override func done() {
+        // save all shit to user default
+        for viewModel in viewModels {
+            // grab value from viewModel
+            if let formDataType = viewModel[FormDataType.kFormDataTypeKey] as? String {
+                switch formDataType {
+                case FormDataType.kAge:
+                    if let viewModelValue = viewModel["value"] as? Int {
+                        NSUserDefaults.standardUserDefaults().setInteger(viewModelValue, forKey: ProfileKeys.kAgeKey)
+                    }
+                case FormDataType.kGender:
+                    if let viewModelValue = viewModel["value"] as? String {
+                        NSUserDefaults.standardUserDefaults().setObject(viewModelValue, forKey: ProfileKeys.kGenderKey)
+                    }
+                case FormDataType.kWeight:
+                    if let viewModelValue = viewModel["value"] as? CGFloat {
+                        NSUserDefaults.standardUserDefaults().setObject(viewModelValue, forKey: ProfileKeys.kWeightKey)
+                    }
+                case FormDataType.kHeight:
+                    if let viewModelValue = viewModel["value"] as? Int {
+                        NSUserDefaults.standardUserDefaults().setInteger(viewModelValue, forKey: ProfileKeys.kHeightKey)
+                    }
+                default:
+                    break
+                }
 
-    public func collectionViewTapped(sender: UITapGestureRecognizer) {
+            }
+        }
+        navigationController?.popViewControllerAnimated(true)
     }
 }
 
@@ -123,8 +158,8 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
             case CellType.kFormSegmentControl:
                 if let cell = profileSettingsCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithSegmentControlCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithSegmentControlCollectionViewCell {
                     let viewModel = viewModels[indexPath.row]
-                    let genderLabels = [["name": ProfileForm.kGenderLabelMale], ["name": ProfileForm.kGenderLabelFemale]]
-                    cell.segments = genderLabels
+                    let genderSegments = [["name": ProfileForm.kGenderLabelMale, "value": ProfileForm.kGenderValueMale], ["name": ProfileForm.kGenderLabelFemale, "value": ProfileForm.kGenderValueFemale]]
+                    cell.segments = genderSegments
                     cell.setup(viewModel)
                     return cell
                 }
@@ -137,7 +172,6 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
             case CellType.kFormPickerView:
                 if let cell = profileSettingsCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithPickerViewCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithPickerViewCollectionViewCell {
                     let viewModel = viewModels[indexPath.row]
-//                    self.view.addSubview(pickerView)
                     cell.setup(viewModel)
                     return cell
                 }
@@ -153,23 +187,11 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-
-        // do some shared shit
-        // show details about this item
-        //        let foodItem = feedModels[indexPath.row]
-        //
-        //        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-        //            let foodDetailViewController = FoodDetailViewController(foodItem: foodItem)
-        //            foodDetailViewController.nutritionDelegate = nutritionDelegate
-        //            self.navigationController?.pushViewController(foodDetailViewController, animated: true)
-        //        }
         let viewModel = viewModels[indexPath.row]
         if let cellType = viewModel["cellType"] as? String {
             switch cellType {
             case CellType.kFormPickerView:
                 if let cell = profileSettingsCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithPickerViewCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithPickerViewCollectionViewCell {
-                    // show picker view
-//                    pickerModalView.hidden = !pickerModalView.hidden
                     pickerModalViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                     pickerModalViewController.pickerModalViewDelegate = self
                     presentViewController(pickerModalViewController, animated: true, completion: nil)
@@ -178,25 +200,6 @@ extension ProfileViewController: UICollectionViewDataSource, UICollectionViewDel
                 break
             }
         }
-
-        // loop through all cells
-//        for (index, viewModel) in viewModels.enumerate() {
-//            let indexPath = NSIndexPath(forRow: index, inSection: 0)
-//            if let cellType = viewModel["cellType"] as? String {
-//                switch cellType {
-//                case CellType.kFormTextField:
-//                    if let cell = profileSettingsCollectionView.cellForItemAtIndexPath(indexPath) as? FormWithTextFieldCollectionViewCell {
-//                        cell.formTextField.resignFirstResponder()
-//                    }
-//                    //                case CellType.kFormPickerView:
-//                    //                    if let cell = profileSettingsCollectionView.cellForItemAtIndexPath(indexPath) as? FormWithPickerViewCollectionViewCell {
-//                    //                        cell.pickerTextField.resignFirstResponder()
-//                    //                    }
-//                default:
-//                    break
-//                }
-//            }
-//        }
     }
 }
 
@@ -258,6 +261,9 @@ extension ProfileViewController: PickerModalViewDelegate {
             // grab cell at index
             if let cell = self.profileSettingsCollectionView.cellForItemAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as? FormWithPickerViewCollectionViewCell {
                 cell.pickerTextField.text = "\(selectedFoot)\' \(selectedInch)\""
+                var heightViewModel = self.viewModels[2]
+                heightViewModel["value"] = selectedFoot * 12 + selectedInch
+                print(heightViewModel)
             }
         }
         return

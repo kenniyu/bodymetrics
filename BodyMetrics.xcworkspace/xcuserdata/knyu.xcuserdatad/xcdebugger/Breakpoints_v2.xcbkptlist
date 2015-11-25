@@ -170,13 +170,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/ProfileViewController.swift"
-            timestampString = "470101148.564487"
+            timestampString = "470171935.554575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "titleLabel()"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BodyMetrics.ProfileViewController.didTapCancel (BodyMetrics.ProfileViewController)() -&gt; ()"
+                  moduleName = "BodyMetrics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/ProfileViewController.swift"
+                  timestampString = "470101472.559656"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "245"
+                  endingLineNumber = "245"
+                  offsetFromSymbolStart = "15">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "protocol witness for BodyMetrics.PickerModalViewDelegate.didTapCancel &lt;A where A: BodyMetrics.PickerModalViewDelegate&gt; (A)() -&gt; () in conformance BodyMetrics.ProfileViewController : BodyMetrics.PickerModalViewDelegate in BodyMetrics"
+                  moduleName = "BodyMetrics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/ProfileViewController.swift"
+                  timestampString = "470101472.560672"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "244"
+                  endingLineNumber = "244"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "dynamic BodyMetrics.ProfileViewController.didTapCancel (BodyMetrics.ProfileViewController)() -&gt; ()"
+                  moduleName = "BodyMetrics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/ProfileViewController.swift"
+                  timestampString = "470101472.561513"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "244"
+                  endingLineNumber = "244"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

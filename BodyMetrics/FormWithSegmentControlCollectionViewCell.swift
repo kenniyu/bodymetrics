@@ -51,7 +51,11 @@ public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
         //        followButton.setTitle("Follow", forState: .Normal)
     }
 
-    public override func setup(formModel: [String: AnyObject]) {
+    public override func currentViewModel() -> [String : AnyObject?]? {
+        return self.viewModel
+    }
+
+    public override func setup(formModel: [String: AnyObject?]) {
         super.setup(formModel)
         self.viewModel = formModel
 
@@ -69,9 +73,6 @@ public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
 
         loadDataIntoViews(viewModel)
         hideUnhideViews()
-//        setupA11yIdentifiers()
-        //        setupGestureRecognizers()
-        //        setupControlIdentifiers()
 
         setNeedsLayout()
     }
@@ -88,7 +89,7 @@ public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
         setSubviewFrames()
     }
 
-    public override class func size(boundingWidth: CGFloat, viewModel: [String: AnyObject]) -> CGSize {
+    public override class func size(boundingWidth: CGFloat, viewModel: [String: AnyObject?]) -> CGSize {
         return CGSizeMake(boundingWidth, FormWithSegmentControlCollectionViewCell.kFormCellHeight)
     }
 
@@ -106,7 +107,7 @@ public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
     }
 
 
-    public override  func loadDataIntoViews(formModel: [String: AnyObject]) {
+    public override  func loadDataIntoViews(formModel: [String: AnyObject?]) {
         if let labelName = formModel["name"] as? String {
             formLabel.text = labelName.uppercaseString
         }
@@ -117,6 +118,11 @@ public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
     }
 
     @IBAction func segmentSelected(sender: UISegmentedControl) {
-        print("GOt here")
+        let selectedIndex = sender.selectedSegmentIndex
+        if let segments = segments, segment = segments[selectedIndex] as? [String: AnyObject] {
+            if let segmentValue = segment["value"] as? String {
+                self.viewModel["value"] = segmentValue
+            }
+        }
     }
 }

@@ -48,11 +48,15 @@ public class FormWithTextFieldCollectionViewCell: FormCollectionViewCell {
         }
     }
 
+    public override func currentViewModel() -> [String : AnyObject?]? {
+        return self.viewModel
+    }
+
     public override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    public override func setup(formModel: [String: AnyObject]) {
+    public override func setup(formModel: [String: AnyObject?]) {
         super.setup(formModel)
         self.viewModel = formModel
 
@@ -79,7 +83,7 @@ public class FormWithTextFieldCollectionViewCell: FormCollectionViewCell {
         setSubviewFrames()
     }
 
-    public override class func size(boundingWidth: CGFloat, viewModel: [String: AnyObject]) -> CGSize {
+    public override class func size(boundingWidth: CGFloat, viewModel: [String: AnyObject?]) -> CGSize {
         return CGSizeMake(boundingWidth, FormWithTextFieldCollectionViewCell.kFormCellHeight)
     }
 
@@ -96,7 +100,7 @@ public class FormWithTextFieldCollectionViewCell: FormCollectionViewCell {
         formTextField.height = formLabel.height
     }
 
-    public override func loadDataIntoViews(formModel: [String: AnyObject]) {
+    public override func loadDataIntoViews(formModel: [String: AnyObject?]) {
         if let labelName = formModel["name"] as? String {
             formLabel.text = labelName.uppercaseString
         }
@@ -104,5 +108,16 @@ public class FormWithTextFieldCollectionViewCell: FormCollectionViewCell {
 
     public override func hideUnhideViews() {
         //        topBorderView.hidden = !style.showTopBorder
+    }
+}
+
+extension FormWithTextFieldCollectionViewCell: UITextFieldDelegate {
+    @IBAction func textFieldChanged(sender: UITextField) {
+        if let text = sender.text {
+            self.viewModel["value"] = text
+        } else {
+            self.viewModel["value"] = ""
+        }
+        print(self.viewModel)
     }
 }

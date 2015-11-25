@@ -29,6 +29,13 @@ public class MacroKeys {
     public static let kProteinKey = "MACRO_PROTEIN"
 }
 
+public class ProfileKeys {
+    public static let kGenderKey = "PROFILE_GENDER"
+    public static let kHeightKey = "PROFILE_HEIGHT"
+    public static let kWeightKey = "PROFILE_WEIGHT"
+    public static let kAgeKey = "PROFILE_AGE"
+}
+
 public class HomeViewController: UIViewController {
 
     @IBOutlet weak var caloriesMeterView: MeterView!
