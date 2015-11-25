@@ -65,6 +65,11 @@ public class FormWithTextFieldCollectionViewCell: FormCollectionViewCell {
         formTextField.keyboardType = .DecimalPad
         formTextField.setPlaceholder("eg. 10", withColor: Styles.Colors.AppLightGray)
 
+        if let currentValue = viewModel["value"] as? String {
+            print(currentValue)
+            formTextField.text = currentValue
+        }
+
         loadDataIntoViews(viewModel)
         hideUnhideViews()
 

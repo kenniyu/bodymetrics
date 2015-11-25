@@ -88,9 +88,9 @@ class ProfileViewController: UIViewController {
 
     private func updateFeedModels() {
         let gender = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kGenderKey)
-        let age = NSUserDefaults.standardUserDefaults().integerForKey(ProfileKeys.kAgeKey)
-        let height = NSUserDefaults.standardUserDefaults().integerForKey(ProfileKeys.kHeightKey)
-        let weight = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(ProfileKeys.kWeightKey))
+        let age = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kAgeKey) ?? ""
+        let height = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kHeightKey)
+        let weight = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kWeightKey) ?? ""
 
         viewModels = [
             ["cellType": CellType.kFormSegmentControl, "name": ProfileForm.kGenderLabel, "value": gender, FormDataType.kFormDataTypeKey: FormDataType.kGender],
@@ -120,32 +120,46 @@ class ProfileViewController: UIViewController {
 
     public override func done() {
         // save all shit to user default
-        for viewModel in viewModels {
-            // grab value from viewModel
-            if let formDataType = viewModel[FormDataType.kFormDataTypeKey] as? String {
-                switch formDataType {
-                case FormDataType.kAge:
-                    if let viewModelValue = viewModel["value"] as? Int {
-                        NSUserDefaults.standardUserDefaults().setInteger(viewModelValue, forKey: ProfileKeys.kAgeKey)
+        print(self.viewModels)
+        for (index, viewModel) in viewModels.enumerate() {
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            if let cell = profileSettingsCollectionView.cellForItemAtIndexPath(indexPath) as? FormCollectionViewCell,
+                cellViewModel = cell.currentViewModel() {
+                print(cellViewModel)
+                // grab value from viewModel
+                if let formDataType = cellViewModel[FormDataType.kFormDataTypeKey] as? String {
+                    switch formDataType {
+                    case FormDataType.kAge:
+                        if let viewModelValue = cellViewModel["value"] as? String {
+                            NSUserDefaults.standardUserDefaults().setObject(viewModelValue, forKey: ProfileKeys.kAgeKey)
+                        } else {
+                            NSUserDefaults.standardUserDefaults().removeObjectForKey(ProfileKeys.kAgeKey)
+                        }
+                    case FormDataType.kGender:
+                        if let viewModelValue = cellViewModel["value"] as? String {
+                            NSUserDefaults.standardUserDefaults().setObject(viewModelValue, forKey: ProfileKeys.kGenderKey)
+                        } else {
+                            NSUserDefaults.standardUserDefaults().removeObjectForKey(ProfileKeys.kGenderKey)
+                        }
+                    case FormDataType.kWeight:
+                        if let viewModelValue = cellViewModel["value"] as? String {
+                            NSUserDefaults.standardUserDefaults().setObject(viewModelValue, forKey: ProfileKeys.kWeightKey)
+                        } else {
+                            NSUserDefaults.standardUserDefaults().removeObjectForKey(ProfileKeys.kWeightKey)
+                        }
+                    case FormDataType.kHeight:
+                        if let viewModelValue = cellViewModel["value"] as? String {
+                            NSUserDefaults.standardUserDefaults().setObject(viewModelValue, forKey: ProfileKeys.kHeightKey)
+                        } else {
+                            NSUserDefaults.standardUserDefaults().removeObjectForKey(ProfileKeys.kHeightKey)
+                        }
+                    default:
+                        break
                     }
-                case FormDataType.kGender:
-                    if let viewModelValue = viewModel["value"] as? String {
-                        NSUserDefaults.standardUserDefaults().setObject(viewModelValue, forKey: ProfileKeys.kGenderKey)
-                    }
-                case FormDataType.kWeight:
-                    if let viewModelValue = viewModel["value"] as? CGFloat {
-                        NSUserDefaults.standardUserDefaults().setObject(viewModelValue, forKey: ProfileKeys.kWeightKey)
-                    }
-                case FormDataType.kHeight:
-                    if let viewModelValue = viewModel["value"] as? Int {
-                        NSUserDefaults.standardUserDefaults().setInteger(viewModelValue, forKey: ProfileKeys.kHeightKey)
-                    }
-                default:
-                    break
                 }
-
             }
         }
+        NSUserDefaults.standardUserDefaults().synchronize()
         navigationController?.popViewControllerAnimated(true)
     }
 }
@@ -261,9 +275,7 @@ extension ProfileViewController: PickerModalViewDelegate {
             // grab cell at index
             if let cell = self.profileSettingsCollectionView.cellForItemAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as? FormWithPickerViewCollectionViewCell {
                 cell.pickerTextField.text = "\(selectedFoot)\' \(selectedInch)\""
-                var heightViewModel = self.viewModels[2]
-                heightViewModel["value"] = selectedFoot * 12 + selectedInch
-                print(heightViewModel)
+                cell.viewModel["value"] = String(selectedFoot * 12 + selectedInch)
             }
         }
         return

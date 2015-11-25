@@ -66,6 +66,13 @@ public class FormWithPickerViewCollectionViewCell: FormCollectionViewCell {
         pickerTextField.enabled = false
 //        formPickerViewTextField.inputView = formPickerView
 
+        if let initialValue = self.viewModel["value"] as? String {
+            if let height = Int(initialValue) {
+                let text = "\(height/12)' \(height%12)\""
+                pickerTextField.text = text
+            }
+        }
+
         loadDataIntoViews(viewModel)
         hideUnhideViews()
         setNeedsLayout()

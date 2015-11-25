@@ -60,15 +60,23 @@ public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
         self.viewModel = formModel
 
         // setup segment values
+        var selectedSegmentIndex = 0
         if let segmentValues = segments {
             formSegmentControl.removeAllSegments()
             for (index, segmentObject) in segmentValues.enumerate() {
                 if let segmentObject = segmentObject as? [String: String] {
                     let segmentName = segmentObject["name"]?.uppercaseString
                     formSegmentControl.insertSegmentWithTitle(segmentName, atIndex: index, animated: false)
+
+                    if let selectedValue = viewModel["value"] as? String, segmentValue = segmentObject["value"] {
+                        if selectedValue == segmentValue {
+                            // this should be the selected index
+                            selectedSegmentIndex = index
+                        }
+                    }
                 }
             }
-            formSegmentControl.selectedSegmentIndex = 0
+            formSegmentControl.selectedSegmentIndex = selectedSegmentIndex
         }
 
         loadDataIntoViews(viewModel)
@@ -121,6 +129,7 @@ public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
         let selectedIndex = sender.selectedSegmentIndex
         if let segments = segments, segment = segments[selectedIndex] as? [String: AnyObject] {
             if let segmentValue = segment["value"] as? String {
+                print("updated segment value")
                 self.viewModel["value"] = segmentValue
             }
         }
