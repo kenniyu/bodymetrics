@@ -36,6 +36,14 @@ public class ProfileKeys {
     public static let kAgeKey = "PROFILE_AGE"
 }
 
+public class ActivityLevel {
+    public static let kSedentary: CGFloat = 1.2
+    public static let kLight: CGFloat = 1.375
+    public static let kModerate: CGFloat = 1.55
+    public static let kActive: CGFloat = 1.725
+    public static let kExtreme: CGFloat = 1.9
+}
+
 public class HomeViewController: UIViewController {
 
     @IBOutlet weak var caloriesMeterView: MeterView!
@@ -46,6 +54,10 @@ public class HomeViewController: UIViewController {
     private static let maxFat: CGFloat = 80
     private static let maxCarbs: CGFloat = 400
     private static let maxProtein: CGFloat = 400
+
+    private static let kDefaultRatioFat: CGFloat = 0.2
+    private static let kDefaultRatioCarbs: CGFloat = 0.4
+    private static let kDefaultRatioProtein: CGFloat = 0.4
 
     @IBOutlet weak var eatButton: UIButton!
     @IBOutlet weak var manualEntryButton: UIButton!
@@ -60,35 +72,27 @@ public class HomeViewController: UIViewController {
     private func setup() {
         title = "Dashboard"
         view.backgroundColor = Styles.Colors.AppDarkBlue
-
-        let maxCalories: CGFloat = HomeViewController.maxFat * 9 + HomeViewController.maxCarbs * 4 + HomeViewController.maxProtein * 4
-
-        let gramsFat: CGFloat = 20
-        let gramsCarbs: CGFloat = 40
-        let gramsProtein: CGFloat = 40
-        let calories = gramsFat * 9 + gramsCarbs * 4 + gramsProtein * 4
-
-
-        caloriesMeterView.setup("Calories", current: 0, max: maxCalories)
-
-        fatMeterView.setup("Fat", current: 0, max: HomeViewController.maxFat)
-        carbsMeterView.setup("Carbs", current: 0, max: HomeViewController.maxCarbs)
-        proteinMeterView.setup("Protein", current: 0, max: HomeViewController.maxProtein)
-
+        setupBars()
         setupStyles()
-
-        loadCurrentMacros()
     }
 
-    private func loadCurrentMacros() {
+    private func setupBars() {
+        let (maxCalories, maxFat, maxCarbs, maxProtein) = getSuggestedMaxMacros()
+        caloriesMeterView.setup("Calories", current: 0, max: maxCalories)
+        fatMeterView.setup("Fat", current: 0, max: maxFat)
+        carbsMeterView.setup("Carbs", current: 0, max: maxCarbs)
+        proteinMeterView.setup("Protein", current: 0, max: maxProtein)
+    }
+
+    private func loadCurrentMacros(maxCalories: CGFloat, maxFat: CGFloat, maxCarbs: CGFloat, maxProtein: CGFloat) {
         let currentFat = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(MacroKeys.kFatKey))
         let currentCarbs = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(MacroKeys.kCarbsKey))
         let currentProtein = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(MacroKeys.kProteinKey))
 
-        fatMeterView.setup("Fat", current: currentFat, max: HomeViewController.maxFat)
-        carbsMeterView.setup("Carbs", current: currentCarbs, max: HomeViewController.maxCarbs)
-        proteinMeterView.setup("Protein", current: currentProtein, max: HomeViewController.maxProtein)
-        updateCalories()
+        fatMeterView.setup("Fat", current: currentFat, max: maxFat)
+        carbsMeterView.setup("Carbs", current: currentCarbs, max: maxCarbs)
+        proteinMeterView.setup("Protein", current: currentProtein, max: maxProtein)
+        updateCalories(maxCalories)
     }
 
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -113,13 +117,19 @@ public class HomeViewController: UIViewController {
         resetButton.tintColor = Styles.Colors.DataVisLightRed
     }
 
-    private func updateCalories() {
+    private func updateCalories(meterMax: CGFloat? = nil) {
         let newFat = fatMeterView.meterCurrent
         let newCarbs = carbsMeterView.meterCurrent
         let newProtein = proteinMeterView.meterCurrent
 
+        if let meterMax = meterMax {
+            caloriesMeterView.meterMax = meterMax
+        }
         let newCalories: CGFloat = newFat * 9 + newCarbs * 4 + newProtein * 4
         caloriesMeterView.meterCurrent = newCalories
+
+        // every time calories change, update macros
+        storeMacros()
     }
 
     @IBAction func eat(sender: UIButton) {
@@ -137,6 +147,45 @@ public class HomeViewController: UIViewController {
         presentViewController(navigationController, animated: true) { () -> Void in
         }
     }
+
+    private func getSuggestedMaxMacros() -> (CGFloat, CGFloat, CGFloat, CGFloat) {
+        let gender = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kGenderKey) ?? ProfileForm.kGenderValueMale
+        let age = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kAgeKey) ?? "24"
+        let height = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kHeightKey) ?? "68"
+        let weight = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kWeightKey) ?? "188"
+
+        var bmr: CGFloat = 0
+        if gender == ProfileForm.kGenderValueFemale {
+            bmr = 655 + (4.35 * CGFloat(weight.floatValue)) + (4.7 * CGFloat(height.floatValue)) - (4.7 * CGFloat(age.floatValue))
+        } else {
+            bmr = 66 + (6.23 * CGFloat(weight.floatValue)) + (12.7 * CGFloat(height.floatValue)) - (6.8 * CGFloat(age.floatValue))
+        }
+        bmr *= ActivityLevel.kModerate
+
+        let suggestedCalories = bmr
+        let suggestedFatCalories = suggestedCalories * HomeViewController.kDefaultRatioFat
+        let suggestedCarbsCalories = suggestedCalories * HomeViewController.kDefaultRatioCarbs
+        let suggestedProteinCalories = suggestedCalories * HomeViewController.kDefaultRatioProtein
+
+        let suggestedFatGrams = CGFloat(Int(suggestedFatCalories/9))
+        let suggestedCarbsGrams = CGFloat(Int(suggestedCarbsCalories/4))
+        let suggestedProteinGrams = CGFloat(Int(suggestedProteinCalories/4))
+
+        let roundedCalories = suggestedFatGrams * 9 + suggestedCarbsGrams * 4 + suggestedProteinGrams * 4
+        return (roundedCalories, suggestedFatGrams, suggestedCarbsGrams, suggestedProteinGrams)
+    }
+
+    public override func viewWillAppear(animated: Bool) {
+        let (maxCalories, maxFat, maxCarbs, maxProtein) = getSuggestedMaxMacros()
+        loadCurrentMacros(maxCalories, maxFat: maxFat, maxCarbs: maxCarbs, maxProtein: maxProtein)
+    }
+
+    public func storeMacros() {
+        NSUserDefaults.standardUserDefaults().setObject(fatMeterView.meterCurrent, forKey: MacroKeys.kFatKey)
+        NSUserDefaults.standardUserDefaults().setObject(carbsMeterView.meterCurrent, forKey: MacroKeys.kCarbsKey)
+        NSUserDefaults.standardUserDefaults().setObject(proteinMeterView.meterCurrent, forKey: MacroKeys.kProteinKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
 }
 
 extension HomeViewController: NutritionDelegate {
@@ -146,14 +195,6 @@ extension HomeViewController: NutritionDelegate {
         proteinMeterView.meterCurrent = protein
 
         updateCalories()
-        storeMacros(fat, carbs: carbs, protein: protein)
-    }
-
-    public func storeMacros(fat: CGFloat, carbs: CGFloat, protein: CGFloat) {
-        NSUserDefaults.standardUserDefaults().setObject(fat, forKey: MacroKeys.kFatKey)
-        NSUserDefaults.standardUserDefaults().setObject(carbs, forKey: MacroKeys.kCarbsKey)
-        NSUserDefaults.standardUserDefaults().setObject(protein, forKey: MacroKeys.kProteinKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
     }
 
     public func getMaxCalories() -> CGFloat {

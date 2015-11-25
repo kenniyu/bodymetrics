@@ -58,7 +58,7 @@
                   moduleName = "BodyMetrics"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
-                  timestampString = "470175588.299609"
+                  timestampString = "470179639.821088"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "229"
@@ -73,7 +73,7 @@
                   moduleName = "BodyMetrics"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
-                  timestampString = "470175588.299799"
+                  timestampString = "470179639.82132"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "230"
@@ -257,6 +257,69 @@
             endingLineNumber = "151"
             landmarkName = "done()"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BodyMetrics/HomeViewController.swift"
+            timestampString = "470179849.757593"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BodyMetrics.HomeViewController.didUpdateMacros (BodyMetrics.HomeViewController)(CoreGraphics.CGFloat, carbs : CoreGraphics.CGFloat, protein : CoreGraphics.CGFloat) -&gt; ()"
+                  moduleName = "BodyMetrics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/HomeViewController.swift"
+                  timestampString = "470179849.76009"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "183"
+                  endingLineNumber = "183"
+                  offsetFromSymbolStart = "37">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "protocol witness for BodyMetrics.NutritionDelegate.didUpdateMacros &lt;A where A: BodyMetrics.NutritionDelegate&gt; (A)(CoreGraphics.CGFloat, carbs : CoreGraphics.CGFloat, protein : CoreGraphics.CGFloat) -&gt; () in conformance BodyMetrics.HomeViewController : BodyMetrics.NutritionDelegate in BodyMetrics"
+                  moduleName = "BodyMetrics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/HomeViewController.swift"
+                  timestampString = "470179849.760412"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "182"
+                  endingLineNumber = "182"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "dynamic BodyMetrics.HomeViewController.didUpdateMacros (BodyMetrics.HomeViewController)(CoreGraphics.CGFloat, carbs : CoreGraphics.CGFloat, protein : CoreGraphics.CGFloat) -&gt; ()"
+                  moduleName = "BodyMetrics"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/HomeViewController.swift"
+                  timestampString = "470179849.760722"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "182"
+                  endingLineNumber = "182"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
