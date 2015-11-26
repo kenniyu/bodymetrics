@@ -27,8 +27,13 @@ class SettingsViewController: UIViewController {
         super.viewDidAppear(animated)
     }
 
-    private func setup() {
+    private func styleTableView() {
         tableView.tableFooterView = UIView()
+        tableView.separatorColor = Styles.Colors.BarLabel
+    }
+
+    private func setup() {
+        styleTableView()
         registerCells()
     }
 
@@ -112,11 +117,11 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if cell.respondsToSelector("setSeparatorInset:") {
-            cell.separatorInset = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector("setLayoutMargins:") {
-            cell.layoutMargins = UIEdgeInsetsZero
-        }
+//        if cell.respondsToSelector("setSeparatorInset:") {
+//            cell.separatorInset = UIEdgeInsetsMake(0, Styles.Dimensions.kItemSpacingDim3, 0, 30)
+//        }
+////        if cell.respondsToSelector("setLayoutMargins:") {
+////            cell.layoutMargins = UIEdgeInsetsMake(0, Styles.Dimensions.kItemSpacingDim3, 0, Styles.Dimensions.kItemSpacingDim3)
+////        }
     }
 }

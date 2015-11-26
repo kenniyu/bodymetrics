@@ -15,7 +15,8 @@ class SettingsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var containerView: UIView!
 
-    public static let kCellContainerPadding: CGFloat = 12
+    public static let kCellContainerVerticalPadding: CGFloat = Styles.Dimensions.kItemSpacingDim5
+    public static let kCellContainerHorizontalPadding: CGFloat = Styles.Dimensions.kItemSpacingDim3
 
     private var dataModel: SettingsCellDataModel!
     static let kTitleLabelFontStyle: UIFont = Styles.Fonts.MediumMedium!
@@ -99,14 +100,14 @@ class SettingsTableViewCell: UITableViewCell {
     public class func size(boundingWidth: CGFloat, viewModel: SettingsCellDataModel) -> CGSize {
         //        // add cell spacing
         var cellHeight: CGFloat = 0
-        cellHeight += SettingsTableViewCell.kCellContainerPadding
+        cellHeight += SettingsTableViewCell.kCellContainerVerticalPadding
                 // add title label height
-        let titleLabelHeight = SettingsTableViewCell.titleLabelHeight(boundingWidth - 2 * SettingsTableViewCell.kCellContainerPadding, viewModel: viewModel)
+        let titleLabelHeight = SettingsTableViewCell.titleLabelHeight(boundingWidth - 2 * SettingsTableViewCell.kCellContainerHorizontalPadding, viewModel: viewModel)
         cellHeight += titleLabelHeight
-        cellHeight += Styles.Dimensions.kItemSpacingDim2
-        let subtitleLabelHeight = SettingsTableViewCell.subtitleLabelHeight(boundingWidth - 2 * SettingsTableViewCell.kCellContainerPadding, viewModel: viewModel)
+        cellHeight += Styles.Dimensions.kItemSpacingDim3
+        let subtitleLabelHeight = SettingsTableViewCell.subtitleLabelHeight(boundingWidth - 2 * SettingsTableViewCell.kCellContainerHorizontalPadding, viewModel: viewModel)
         cellHeight += subtitleLabelHeight
-        cellHeight += SettingsTableViewCell.kCellContainerPadding
+        cellHeight += SettingsTableViewCell.kCellContainerVerticalPadding
         return CGSizeMake(boundingWidth, cellHeight)
     }
 
@@ -124,19 +125,19 @@ class SettingsTableViewCell: UITableViewCell {
     }
 
     public func setSubviewFrames() {
-        titleLabel.top = FormCollectionViewCell.kCellContainerPadding
-        titleLabel.left = FormCollectionViewCell.kCellContainerPadding
-        titleLabel.width = containerView.width/2 - SettingsTableViewCell.kCellContainerPadding
+        titleLabel.top = SettingsTableViewCell.kCellContainerVerticalPadding
+        titleLabel.left = SettingsTableViewCell.kCellContainerHorizontalPadding
+        titleLabel.width = containerView.width/2 - SettingsTableViewCell.kCellContainerHorizontalPadding
         titleLabel.height = SettingsTableViewCell.titleLabelHeight(titleLabel.width, viewModel: self.dataModel)
 
-        subtitleLabel.top = titleLabel.top + titleLabel.height + Styles.Dimensions.kItemSpacingDim2
+        subtitleLabel.top = titleLabel.top + titleLabel.height + Styles.Dimensions.kItemSpacingDim3
         subtitleLabel.left = titleLabel.left
         subtitleLabel.width = titleLabel.width
         subtitleLabel.height = SettingsTableViewCell.subtitleLabelHeight(subtitleLabel.width, viewModel: self.dataModel)
     }
 
     public func loadDataIntoViews(dataModel: SettingsCellDataModel) {
-        titleLabel.text = dataModel.title
+        titleLabel.text = dataModel.title.uppercaseString
         subtitleLabel.text = dataModel.detail
     }
 }

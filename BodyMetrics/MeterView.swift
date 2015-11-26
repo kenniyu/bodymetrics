@@ -87,7 +87,7 @@ class MeterView : UIView {
         super.awakeFromNib()
         self.backgroundColor = UIColor.clearColor()
 
-        meterLabel.textColor = Styles.Colors.BarLabel
+        meterLabel.textColor = Styles.Colors.BarNumber
         meterLabel.font = Styles.Fonts.MediumMedium
         numberLabel.textColor = Styles.Colors.BarNumber
         numberLabel.font = Styles.Fonts.ThinSmall

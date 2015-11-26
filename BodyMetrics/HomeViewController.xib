@@ -23,28 +23,28 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LRU-J1-S71" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
-                    <rect key="frame" x="20" y="80" width="560" height="50"/>
+                    <rect key="frame" x="12" y="80" width="576" height="50"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="5yp-Zy-Uuz"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uK-Va-ch6" userLabel="Fat Meter View" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
-                    <rect key="frame" x="20" y="150" width="560" height="50"/>
+                    <rect key="frame" x="12" y="150" width="576" height="50"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="wb2-CM-ytW"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3x-AF-g1Q" userLabel="Carbs Meter View" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
-                    <rect key="frame" x="20" y="220" width="560" height="50"/>
+                    <rect key="frame" x="12" y="220" width="576" height="50"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="TFm-rd-f2K"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uW5-iH-iKv" userLabel="Protein Meter View" customClass="MeterView" customModule="BodyMetrics" customModuleProvider="target">
-                    <rect key="frame" x="20" y="290" width="560" height="50"/>
+                    <rect key="frame" x="12" y="290" width="576" height="50"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="GBd-oc-Oox"/>
@@ -94,8 +94,8 @@
                 <constraint firstItem="bx1-cl-EYD" firstAttribute="top" secondItem="vBY-6y-HUe" secondAttribute="bottom" constant="20" id="ILy-hS-S4l"/>
                 <constraint firstAttribute="trailing" secondItem="bx1-cl-EYD" secondAttribute="trailing" constant="20" id="Nhf-bi-pSf"/>
                 <constraint firstItem="DAG-fl-mXo" firstAttribute="height" secondItem="vBY-6y-HUe" secondAttribute="height" id="Ppe-VW-Aol"/>
-                <constraint firstItem="LRU-J1-S71" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="QwM-qq-CcI"/>
-                <constraint firstAttribute="trailing" secondItem="LRU-J1-S71" secondAttribute="trailing" constant="20" id="T8n-KD-C5W"/>
+                <constraint firstItem="LRU-J1-S71" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="12" id="QwM-qq-CcI"/>
+                <constraint firstAttribute="trailing" secondItem="LRU-J1-S71" secondAttribute="trailing" constant="12" id="T8n-KD-C5W"/>
                 <constraint firstItem="LRU-J1-S71" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="ZLx-Ax-eP8"/>
                 <constraint firstItem="W3x-AF-g1Q" firstAttribute="trailing" secondItem="1uK-Va-ch6" secondAttribute="trailing" id="aDP-Hm-XFa"/>
                 <constraint firstItem="1uK-Va-ch6" firstAttribute="leading" secondItem="LRU-J1-S71" secondAttribute="leading" id="caJ-dN-GW7"/>
