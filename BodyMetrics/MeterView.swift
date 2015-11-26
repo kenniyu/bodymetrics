@@ -28,6 +28,7 @@ class MeterView : UIView {
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var barTotal: UIView!
     @IBOutlet weak var barCurrent: UIView!
+    @IBOutlet weak var barOverlay: UIImageView!
     @IBOutlet weak var barCurrentWidthConstraint: NSLayoutConstraint!
 
     @IBInspectable public var meterCurrent: CGFloat = 0 {
@@ -87,7 +88,7 @@ class MeterView : UIView {
         self.backgroundColor = UIColor.clearColor()
 
         meterLabel.textColor = Styles.Colors.BarLabel
-        meterLabel.font = Styles.Fonts.MediumSmall
+        meterLabel.font = Styles.Fonts.MediumMedium
         numberLabel.textColor = Styles.Colors.BarNumber
         numberLabel.font = Styles.Fonts.ThinSmall
         barTotal.backgroundColor = Styles.Colors.BarBackground
@@ -101,13 +102,13 @@ class MeterView : UIView {
         updateBar()
     }
 
-
     public func updateBar() {
         meterLabel.text = meterName.uppercaseString
         numberLabel.text = "\(Int(meterCurrent))/\(Int(meterMax))"
         let pctWidth = min(1, meterCurrent/meterMax)
         let newWidth = barTotal.width * pctWidth
         barCurrentWidthConstraint.constant = newWidth
+//        barOverlayWidthConstraint.constant = newWidth
 
         if meterCurrent > meterMax {
             numberLabel.textColor = Styles.Colors.Red
@@ -118,13 +119,15 @@ class MeterView : UIView {
         let color = getColor(newWidth/barTotal.width)
         UIView.animateWithDuration(0.8, animations: { () -> Void in
             self.barCurrent.backgroundColor = color
+//            self.barOverlay.backgroundColor = UIColor.clearColor()
+//            self.barOverlay.layoutIfNeeded()
             self.view.layoutIfNeeded()
             }) { (completed) -> Void in
         }
     }
 
     private func getColor(percent: CGFloat) -> UIColor {
-        return Styles.Colors.DataVisLightTeal
+        return Styles.Colors.AppBlue
         // for now, we're restricted to hues of 0 to 0.3
         let hue:        CGFloat = 0.3 * percent
         let saturation: CGFloat = 1

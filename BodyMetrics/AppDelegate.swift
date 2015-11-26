@@ -50,13 +50,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let homeViewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
         let homeNavigationViewController = UINavigationController(rootViewController: homeViewController)
         homeNavigationViewController.tabBarItem.image = UIImage(named: "dashboard-icon-white.png")
-        homeNavigationViewController.title = "Dashboard"
+        homeNavigationViewController.title = "Dashboard".uppercaseString
 
         // add settings view controller
         let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
         let settingsNavigationController = UINavigationController(rootViewController: settingsViewController)
         settingsNavigationController.tabBarItem.image = UIImage(named: "settings-icon-white.png")
-        settingsNavigationController.title = "Settings"
+        settingsNavigationController.title = "Settings".uppercaseString
 
         let tabBarControllers = [homeNavigationViewController, settingsNavigationController]
 
@@ -79,12 +79,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupNavBar() {
         let topBarTextAttributes = [
-            NSForegroundColorAttributeName: Styles.Colors.AppLightGray,
-            NSFontAttributeName: Styles.Fonts.BookLarge!
+            NSForegroundColorAttributeName: Styles.Colors.BarNumber,
+            NSFontAttributeName: Styles.Fonts.MediumLarge!
         ]
 
         let navigationBarAppearance = UINavigationBar.appearance()
-        navigationBarAppearance.tintColor = Styles.Colors.AppLightGray
+        navigationBarAppearance.tintColor = Styles.Colors.BarNumber
         navigationBarAppearance.barTintColor = Styles.Colors.AppDarkBlue
 
         navigationBarAppearance.titleTextAttributes = topBarTextAttributes

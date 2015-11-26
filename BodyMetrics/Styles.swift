@@ -48,7 +48,7 @@ struct Styles {
         static let DataVisTeal = UIColor(red: 17/255.0, green: 178/255.0, blue: 198/255.0, alpha: 1.0)
         static let DataVisLightTeal = UIColor(red: 140/255.0, green: 210/255.0, blue: 224/255.0, alpha: 1.0)
         static let DataVisGreen = UIColor(red: 34/255.0, green: 148/255.0, blue: 26/255.0, alpha: 1.0)
-        static let DataVisLightGreen = UIColor(red: 135/255.0, green: 221/255.0, blue: 115/255.0, alpha: 1.0)
+        static let DataVisLightGreen = UIColor(red: 124/255.0, green: 226/255.0, blue: 0/255.0, alpha: 1.0)
         static let DataVisOrange = UIColor(red: 255/255.0, green: 106/255.0, blue: 0/255.0, alpha: 1.0)
         static let DataVisLightOrange = UIColor(red: 255/255.0, green: 176/255.0, blue: 96/255.0, alpha: 1.0)
         static let DataVisPurple = UIColor(red: 129/255.0, green: 75/255.0, blue: 178/255.0, alpha: 1.0)
@@ -92,5 +92,20 @@ struct Styles {
         static let BoldLarge = UIFont(name: "BlenderPro-Bold", size: 42.0)
         static let BoldXLarge = UIFont(name: "BlenderPro-Bold", size: 52.0)
         static let BoldXXLarge = UIFont(name: "BlenderPro-Bold", size: 62.0)
+    }
+
+    struct Dimensions {
+        static let kItemSpacingDim1: CGFloat = 4
+        static let kItemSpacingDim2: CGFloat = 8
+        static let kItemSpacingDim3: CGFloat = 12
+        static let kItemSpacingDim4: CGFloat = 16
+        static let kItemSpacingDim5: CGFloat = 20
+        static let kItemSpacingDim6: CGFloat = 24
+        static let kItemSpacingDim7: CGFloat = 28
+        static let kItemSpacingDim8: CGFloat = 32
+        static let kItemSpacingDim9: CGFloat = 36
+        static let kItemSpacingDim10: CGFloat = 40
+        static let kItemSpacingDim11: CGFloat = 44
+        static let kItemSpacingDim12: CGFloat = 48
     }
 }

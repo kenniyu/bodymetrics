@@ -52,19 +52,6 @@ class FoodDetailViewController: UIViewController {
     private var didLoadData = false
     private var didSetupTapGesture = false
 
-    private static let kItemSpacingDim1: CGFloat = 4
-    private static let kItemSpacingDim2: CGFloat = 8
-    private static let kItemSpacingDim3: CGFloat = 12
-    private static let kItemSpacingDim4: CGFloat = 16
-    private static let kItemSpacingDim5: CGFloat = 20
-    private static let kItemSpacingDim6: CGFloat = 24
-    private static let kItemSpacingDim7: CGFloat = 28
-    private static let kItemSpacingDim8: CGFloat = 32
-    private static let kItemSpacingDim9: CGFloat = 36
-    private static let kItemSpacingDim10: CGFloat = 40
-    private static let kItemSpacingDim11: CGFloat = 44
-    private static let kItemSpacingDim12: CGFloat = 48
-
     private static let kMeterHeight: CGFloat = 50
     private static let kPieChartContainerViewHeight: CGFloat = 140
     private static let kFoodImageViewHeight: CGFloat = 200
@@ -125,7 +112,7 @@ class FoodDetailViewController: UIViewController {
     }
 
     private func setupTopBar() {
-        title = "Adjust Quantity"
+        title = "Adjust Quantity".uppercaseString
         addRightBarButtons([createDoneButton()])
         setBackButton()
     }
@@ -140,33 +127,34 @@ class FoodDetailViewController: UIViewController {
         scrollView.delegate = self
 
         // calculate content size, starting with image height
-        var totalHeight = foodImageView.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim5
+        var totalHeight: CGFloat = 64 // height of nav bar
+        totalHeight += foodImageView.height
+        totalHeight += Styles.Dimensions.kItemSpacingDim5
 
         totalHeight += getFoodNameLabelHeight()
-        totalHeight += FoodDetailViewController.kItemSpacingDim5
+        totalHeight += Styles.Dimensions.kItemSpacingDim5
 
         totalHeight += unitSizeControl.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim5
+        totalHeight += Styles.Dimensions.kItemSpacingDim5
 
         totalHeight += quantityTextField.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim12
+        totalHeight += Styles.Dimensions.kItemSpacingDim12
 
         totalHeight += caloricBreakdownLabel.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim4
+        totalHeight += Styles.Dimensions.kItemSpacingDim4
 
         totalHeight += FoodDetailViewController.kPieChartContainerViewHeight
-        totalHeight += FoodDetailViewController.kItemSpacingDim3
+        totalHeight += Styles.Dimensions.kItemSpacingDim3
 
         totalHeight += fatPctLabel.height
         totalHeight += fatNameLabel.height
-        totalHeight += FoodDetailViewController.kItemSpacingDim12
+        totalHeight += Styles.Dimensions.kItemSpacingDim12
 
         totalHeight += projectedDailyTotalsLabel.height
 
         totalHeight += 3 * FoodDetailViewController.kMeterHeight
-        totalHeight += 2 * FoodDetailViewController.kItemSpacingDim2
-        totalHeight += FoodDetailViewController.kItemSpacingDim5
+        totalHeight += 2 * Styles.Dimensions.kItemSpacingDim2
+        totalHeight += Styles.Dimensions.kItemSpacingDim5
 
         scrollView.contentSize = CGSizeMake(view.size.width, totalHeight)
         setupTapGesture()
@@ -273,7 +261,7 @@ class FoodDetailViewController: UIViewController {
     private func getFoodNameLabelHeight() -> CGFloat {
         let foodName = self.foodNameLabel.text
         if let foodName = foodName {
-            let foodNameLabelHeight = TextUtils.textHeight(foodName, font: FoodDetailViewController.kFoodNameFont, boundingWidth: scrollView.bounds.width - 2 * FoodDetailViewController.kItemSpacingDim5)
+            let foodNameLabelHeight = TextUtils.textHeight(foodName, font: FoodDetailViewController.kFoodNameFont, boundingWidth: scrollView.bounds.width - 2 * Styles.Dimensions.kItemSpacingDim5)
             return foodNameLabelHeight
         }
         return 0

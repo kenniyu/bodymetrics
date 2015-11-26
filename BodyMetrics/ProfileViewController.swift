@@ -33,6 +33,9 @@ public class FormDataType {
     public static let kAge = "AGE"
     public static let kHeight = "HEIGHT"
     public static let kWeight = "WEIGHT"
+    public static let kFatRatio = "FAT_RATIO"
+    public static let kCarbsRatio = "CARBS_RATIO"
+    public static let kProteinRatio = "PROTEIN_RATIO"
 }
 
 public
@@ -63,7 +66,7 @@ class ProfileViewController: UIViewController {
     public func setup() {
         // add done button
         addRightBarButtons([createDoneButton()])
-        title = "Edit Profile"
+        title = "Edit Profile".uppercaseString
 
         profileSettingsCollectionView.backgroundColor = Styles.Colors.AppDarkBlue
         profileSettingsCollectionView.delegate = self
@@ -91,12 +94,18 @@ class ProfileViewController: UIViewController {
         let age = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kAgeKey) ?? ""
         let height = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kHeightKey)
         let weight = NSUserDefaults.standardUserDefaults().stringForKey(ProfileKeys.kWeightKey) ?? ""
+        let fatRatio = NSUserDefaults.standardUserDefaults().stringForKey(MacroRatioKeys.kFatRatioKey) ?? ""
+        let carbsRatio = NSUserDefaults.standardUserDefaults().stringForKey(MacroRatioKeys.kCarbsRatioKey) ?? ""
+        let proteinRatio = NSUserDefaults.standardUserDefaults().stringForKey(MacroRatioKeys.kProteinRatioKey) ?? ""
 
         viewModels = [
             ["cellType": CellType.kFormSegmentControl, "name": ProfileForm.kGenderLabel, "value": gender, FormDataType.kFormDataTypeKey: FormDataType.kGender],
             ["cellType": CellType.kFormTextField, "name": "Weight (lbs)", "placeholder": "eg. 150", "value": weight, FormDataType.kFormDataTypeKey: FormDataType.kWeight],
             ["cellType": CellType.kFormPickerView, "name": "Height (ft' in\")", "value": height, FormDataType.kFormDataTypeKey: FormDataType.kHeight],
-            ["cellType": CellType.kFormTextField, "name": "Age", "placeholder": "eg. 28", "value": age, FormDataType.kFormDataTypeKey: FormDataType.kAge]
+            ["cellType": CellType.kFormTextField, "name": "Age", "placeholder": "eg. 28", "value": age, FormDataType.kFormDataTypeKey: FormDataType.kAge],
+            ["cellType": CellType.kFormTextField, "name": "Fat Ratio (%)", "placeholder": "eg. 20", "value": fatRatio, FormDataType.kFormDataTypeKey: FormDataType.kFatRatio],
+            ["cellType": CellType.kFormTextField, "name": "Carbs Ratio (%)", "placeholder": "eg. 45", "value": carbsRatio, FormDataType.kFormDataTypeKey: FormDataType.kCarbsRatio],
+            ["cellType": CellType.kFormTextField, "name": "Protein Ratio (%)", "placeholder": "eg. 35", "value": proteinRatio, FormDataType.kFormDataTypeKey: FormDataType.kProteinRatio]
         ]
         profileSettingsCollectionView.reloadData()
     }
@@ -120,12 +129,13 @@ class ProfileViewController: UIViewController {
 
     public override func done() {
         // save all shit to user default
-        print(self.viewModels)
+        var fatRatio: String? = nil
+        var carbsRatio: String? = nil
+        var proteinRatio: String? = nil
         for (index, viewModel) in viewModels.enumerate() {
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             if let cell = profileSettingsCollectionView.cellForItemAtIndexPath(indexPath) as? FormCollectionViewCell,
                 cellViewModel = cell.currentViewModel() {
-                print(cellViewModel)
                 // grab value from viewModel
                 if let formDataType = cellViewModel[FormDataType.kFormDataTypeKey] as? String {
                     switch formDataType {
@@ -153,11 +163,31 @@ class ProfileViewController: UIViewController {
                         } else {
                             NSUserDefaults.standardUserDefaults().removeObjectForKey(ProfileKeys.kHeightKey)
                         }
+                    case FormDataType.kCarbsRatio:
+                        if let viewModelValue = cellViewModel["value"] as? String {
+                            carbsRatio = viewModelValue
+                        }
+                    case FormDataType.kFatRatio:
+                        if let viewModelValue = cellViewModel["value"] as? String {
+                            fatRatio = viewModelValue
+                        }
+                    case FormDataType.kProteinRatio:
+                        if let viewModelValue = cellViewModel["value"] as? String {
+                            proteinRatio = viewModelValue
+                        }
                     default:
                         break
                     }
                 }
             }
+        }
+
+        if let carbsRatio = carbsRatio, fatRatio = fatRatio, proteinRatio = proteinRatio
+            where carbsRatio.floatValue + fatRatio.floatValue + proteinRatio.floatValue == 100 {
+                print("Succses")
+                NSUserDefaults.standardUserDefaults().setObject(carbsRatio, forKey: MacroRatioKeys.kCarbsRatioKey)
+                NSUserDefaults.standardUserDefaults().setObject(fatRatio, forKey: MacroRatioKeys.kFatRatioKey)
+                NSUserDefaults.standardUserDefaults().setObject(proteinRatio, forKey: MacroRatioKeys.kProteinRatioKey)
         }
         NSUserDefaults.standardUserDefaults().synchronize()
         navigationController?.popViewControllerAnimated(true)

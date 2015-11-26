@@ -18,7 +18,7 @@ public class FormCollectionViewCell: UICollectionViewCell {
     static let kCellContainerPadding: CGFloat = 12
     static let kTitleLabelFontStyle: UIFont = Styles.Fonts.MediumSmall!
     static let kFormTextFieldFontStyle: UIFont = Styles.Fonts.ThinMedium!
-    static let kFontColor: UIColor = Styles.Colors.DataVisLightTeal
+    static let kFontColor: UIColor = Styles.Colors.BarLabel
 //    static let kBorderViewHeight: CGFloat = 8
     static let kFormCellHeight: CGFloat = 50
 

@@ -36,6 +36,12 @@ public class ProfileKeys {
     public static let kAgeKey = "PROFILE_AGE"
 }
 
+public class MacroRatioKeys {
+    public static let kFatRatioKey = "MACRO_RATIO_FAT"
+    public static let kCarbsRatioKey = "MACRO_RATIO_CARBS"
+    public static let kProteinRatioKey = "MACRO_RATIO_PROTEIN"
+}
+
 public class ActivityLevel {
     public static let kSedentary: CGFloat = 1.2
     public static let kLight: CGFloat = 1.375
@@ -70,7 +76,7 @@ public class HomeViewController: UIViewController {
     }
 
     private func setup() {
-        title = "Dashboard"
+        title = "Dashboard".uppercaseString
         view.backgroundColor = Styles.Colors.AppDarkBlue
         setupBars()
         setupStyles()
@@ -108,9 +114,13 @@ public class HomeViewController: UIViewController {
     }
 
     private func setupStyles() {
-        eatButton.titleLabel?.font = Styles.Fonts.BookLarge
-        resetButton.titleLabel?.font = Styles.Fonts.BookLarge
-        manualEntryButton.titleLabel?.font = Styles.Fonts.BookLarge
+        eatButton.titleLabel?.font = Styles.Fonts.MediumMedium
+        resetButton.titleLabel?.font = Styles.Fonts.MediumMedium
+        manualEntryButton.titleLabel?.font = Styles.Fonts.MediumMedium
+
+        eatButton.setTitle(eatButton.titleLabel?.text?.uppercaseString, forState: .Normal)
+        resetButton.setTitle(resetButton.titleLabel?.text?.uppercaseString, forState: .Normal)
+        manualEntryButton.setTitle(manualEntryButton.titleLabel?.text?.uppercaseString, forState: .Normal)
 
         eatButton.tintColor = Styles.Colors.DataVisLightTeal
         manualEntryButton.tintColor = Styles.Colors.DataVisLightTeal
@@ -128,7 +138,7 @@ public class HomeViewController: UIViewController {
         let newCalories: CGFloat = newFat * 9 + newCarbs * 4 + newProtein * 4
         caloriesMeterView.meterCurrent = newCalories
 
-        // every time calories change, update macros
+        // every time calories change, store macros
         storeMacros()
     }
 
@@ -162,10 +172,14 @@ public class HomeViewController: UIViewController {
         }
         bmr *= ActivityLevel.kModerate
 
+        let fatRatio = CGFloat((NSUserDefaults.standardUserDefaults().stringForKey(MacroRatioKeys.kFatRatioKey) ?? "20").floatValue)
+        let carbsRatio = CGFloat((NSUserDefaults.standardUserDefaults().stringForKey(MacroRatioKeys.kCarbsRatioKey) ?? "40").floatValue)
+        let proteinRatio = CGFloat((NSUserDefaults.standardUserDefaults().stringForKey(MacroRatioKeys.kProteinRatioKey) ?? "40").floatValue)
+
         let suggestedCalories = bmr
-        let suggestedFatCalories = suggestedCalories * HomeViewController.kDefaultRatioFat
-        let suggestedCarbsCalories = suggestedCalories * HomeViewController.kDefaultRatioCarbs
-        let suggestedProteinCalories = suggestedCalories * HomeViewController.kDefaultRatioProtein
+        let suggestedFatCalories = suggestedCalories * fatRatio / 100
+        let suggestedCarbsCalories = suggestedCalories * carbsRatio / 100
+        let suggestedProteinCalories = suggestedCalories * proteinRatio / 100
 
         let suggestedFatGrams = CGFloat(Int(suggestedFatCalories/9))
         let suggestedCarbsGrams = CGFloat(Int(suggestedCarbsCalories/4))
@@ -175,7 +189,7 @@ public class HomeViewController: UIViewController {
         return (roundedCalories, suggestedFatGrams, suggestedCarbsGrams, suggestedProteinGrams)
     }
 
-    public override func viewWillAppear(animated: Bool) {
+    public override func viewDidAppear(animated: Bool) {
         let (maxCalories, maxFat, maxCarbs, maxProtein) = getSuggestedMaxMacros()
         loadCurrentMacros(maxCalories, maxFat: maxFat, maxCarbs: maxCarbs, maxProtein: maxProtein)
     }

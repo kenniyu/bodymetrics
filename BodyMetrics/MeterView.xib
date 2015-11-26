@@ -30,14 +30,27 @@
                                 <constraint firstAttribute="width" id="Y8C-T4-RcI"/>
                             </constraints>
                         </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal-gradient" translatesAutoresizingMaskIntoConstraints="NO" id="dgP-pW-R6S">
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="2"/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="dgP-pW-R6S" firstAttribute="width" secondItem="lUi-ST-tog" secondAttribute="width" id="CHa-Fv-csp"/>
+                        <constraint firstItem="dgP-pW-R6S" firstAttribute="top" secondItem="Ai7-TA-87Q" secondAttribute="top" id="I1X-v3-qZj"/>
+                        <constraint firstAttribute="bottom" secondItem="dgP-pW-R6S" secondAttribute="bottom" id="NFz-JS-eA3"/>
                         <constraint firstItem="lUi-ST-tog" firstAttribute="leading" secondItem="Ai7-TA-87Q" secondAttribute="leading" id="W5v-GM-Vah"/>
+                        <constraint firstAttribute="trailing" secondItem="dgP-pW-R6S" secondAttribute="trailing" constant="480" id="a7O-Hv-NHJ"/>
+                        <constraint firstItem="dgP-pW-R6S" firstAttribute="leading" secondItem="Ai7-TA-87Q" secondAttribute="leading" id="kQD-pc-low"/>
                         <constraint firstAttribute="height" constant="2" id="uFz-cD-wuC"/>
                         <constraint firstItem="lUi-ST-tog" firstAttribute="top" secondItem="Ai7-TA-87Q" secondAttribute="top" id="us0-jQ-Iae"/>
                         <constraint firstAttribute="bottom" secondItem="lUi-ST-tog" secondAttribute="bottom" id="vJ9-uY-1LF"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="a7O-Hv-NHJ"/>
+                        </mask>
+                    </variation>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Calories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ww-2k-Je4">
                     <rect key="frame" x="0.0" y="8" width="62.5" height="72"/>
@@ -69,4 +82,7 @@
             <point key="canvasLocation" x="292" y="201"/>
         </view>
     </objects>
+    <resources>
+        <image name="horizontal-gradient" width="900" height="2"/>
+    </resources>
 </document>

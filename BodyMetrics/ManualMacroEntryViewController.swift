@@ -32,13 +32,14 @@ class ManualMacroEntryViewController: UIViewController {
         // add done button
         addRightBarButtons([createDoneButton()])
         addCloseButton()
-        title = "Manual Entry"
+        title = "Manual Entry".uppercaseString
 
         manualEntryCollectionView.backgroundColor = Styles.Colors.AppDarkBlue
         manualEntryCollectionView.delegate = self
         manualEntryCollectionView.dataSource = self
 
         registerCells()
+        updateFeedModels()
     }
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -56,10 +57,10 @@ class ManualMacroEntryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func viewDidLayoutSubviews() {
-        manualEntryCollectionView.setNeedsLayout()
-        updateFeedModels()
-    }
+//    public override func viewDidLayoutSubviews() {
+//        manualEntryCollectionView.setNeedsLayout()
+//        updateFeedModels()
+//    }
 
     private func updateFeedModels() {
         feedModels = []
@@ -81,6 +82,8 @@ class ManualMacroEntryViewController: UIViewController {
     private func setupCollectionView() {
         manualEntryCollectionView.backgroundColor = UIColor.whiteColor()
         manualEntryCollectionView.scrollsToTop = true
+        manualEntryCollectionView.alwaysBounceVertical = true
+        manualEntryCollectionView.bounces = true
     }
 
     public func registerCells(collectionView: UICollectionView) {

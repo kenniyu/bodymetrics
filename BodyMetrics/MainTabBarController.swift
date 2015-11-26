@@ -6,7 +6,7 @@ import UIKit
 
 public class MainTabBarController: UITabBarController {
 
-    public static let kTabBarControllerFont = Styles.Fonts.ThinSmall
+    public static let kTabBarControllerFont = Styles.Fonts.MediumSmall
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,7 @@ public class MainTabBarController: UITabBarController {
         let appearance = UITabBarItem.appearance()
         if let font: UIFont = MainTabBarController.kTabBarControllerFont {
             let selectedAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Styles.Colors.DataVisLightGreen]
-            let defaultAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Styles.Colors.DataVisLightBlue]
+            let defaultAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: Styles.Colors.BarLabel]
             appearance.setTitleTextAttributes(defaultAttributes, forState: UIControlState.Normal)
             appearance.setTitleTextAttributes(selectedAttributes, forState: UIControlState.Selected)
         } else {

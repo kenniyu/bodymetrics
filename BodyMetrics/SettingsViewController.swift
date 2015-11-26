@@ -9,20 +9,36 @@ public
 class SettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
-    public static let kCellTitleFont: UIFont = Styles.Fonts.MediumMedium!
+    public static let kCellTitleFont: UIFont = Styles.Fonts.MediumLarge!
     public static let kCellDetailFont: UIFont = Styles.Fonts.ThinMedium!
     public static let kCellHeight: CGFloat = 50
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Settings"
+        title = "Settings".uppercaseString
         tableView.backgroundColor = UIColor.clearColor()
         view.backgroundColor = Styles.Colors.AppDarkBlue
+
+        setup()
     }
 
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+    }
+
+    private func setup() {
+        tableView.tableFooterView = UIView()
+        registerCells()
+    }
+
+    private func registerCells() {
+        registerCells(tableView)
+    }
+
+
+    public func registerCells(tableView: UITableView) {
+        tableView.registerNib(SettingsTableViewCell.nib, forCellReuseIdentifier: SettingsTableViewCell.reuseId)
     }
 }
 
@@ -42,21 +58,25 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: nil)
-        var dataModels = SettingsDataManager.sharedInstance(self).allAppSettings()
-        let dataModel = dataModels[indexPath.row]
+        if let cell = tableView.dequeueReusableCellWithIdentifier(SettingsTableViewCell.reuseId, forIndexPath: indexPath) as? SettingsTableViewCell {
+            var dataModels = SettingsDataManager.sharedInstance(self).allAppSettings()
+            let dataModel = dataModels[indexPath.row]
 
-        cell.textLabel?.font = SettingsViewController.kCellTitleFont
-        cell.textLabel?.text = dataModel.title.uppercaseString
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.font = SettingsViewController.kCellDetailFont
-        cell.detailTextLabel?.text = dataModel.detail
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
+            cell.setup(dataModel)
+
+//            cell.textLabel?.font = SettingsViewController.kCellTitleFont
+//            cell.textLabel?.text = dataModel.title.uppercaseString
+//            cell.textLabel?.textColor = Styles.Colors.BarNumber
+//            cell.detailTextLabel?.font = SettingsViewController.kCellDetailFont
+//            cell.detailTextLabel?.text = dataModel.detail
+//            cell.detailTextLabel?.textColor = Styles.Colors.BarNumber
+//            cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
 
 
-        cell.backgroundColor = UIColor.clearColor()
-        return cell
+            cell.backgroundColor = UIColor.clearColor()
+            return cell
+        }
+        return UITableViewCell()
     }
 
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -86,6 +106,17 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return SettingsViewController.kCellHeight
+        let dataModels = SettingsDataManager.sharedInstance(self).allAppSettings()
+        let dataModel = dataModels[indexPath.row]
+        return SettingsTableViewCell.size(tableView.width, viewModel: dataModel).height
+    }
+
+    public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
     }
 }

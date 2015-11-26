@@ -63,7 +63,13 @@ public class FormWithTextFieldCollectionViewCell: FormCollectionViewCell {
         formTextField.font = FormWithTextFieldCollectionViewCell.kFormTextFieldFontStyle
         formTextField.textColor = FormWithTextFieldCollectionViewCell.kFontColor
         formTextField.keyboardType = .DecimalPad
-        formTextField.setPlaceholder("eg. 10", withColor: Styles.Colors.AppLightGray)
+
+        // set placeholder
+        if let placeholder = viewModel["placeholder"] as? String {
+            formTextField.setPlaceholder(placeholder, withColor: Styles.Colors.AppLightGray)
+        } else {
+            formTextField.setPlaceholder("eg. 10", withColor: Styles.Colors.AppLightGray)
+        }
 
         if let currentValue = viewModel["value"] as? String {
             print(currentValue)
