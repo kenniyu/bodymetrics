@@ -88,6 +88,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-BodyMetrics/Alamofire.framework"
   install_framework "Pods-BodyMetrics/DACircularProgress.framework"
   install_framework "Pods-BodyMetrics/IDMPhotoBrowser.framework"
+  install_framework "Pods-BodyMetrics/JTCalendar.framework"
   install_framework "Pods-BodyMetrics/SDWebImage.framework"
   install_framework "Pods-BodyMetrics/pop.framework"
 fi
@@ -96,6 +97,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-BodyMetrics/Alamofire.framework"
   install_framework "Pods-BodyMetrics/DACircularProgress.framework"
   install_framework "Pods-BodyMetrics/IDMPhotoBrowser.framework"
+  install_framework "Pods-BodyMetrics/JTCalendar.framework"
   install_framework "Pods-BodyMetrics/SDWebImage.framework"
   install_framework "Pods-BodyMetrics/pop.framework"
 fi

@@ -52,13 +52,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         homeNavigationViewController.tabBarItem.image = UIImage(named: "dashboard-icon-white.png")
         homeNavigationViewController.title = "Dashboard".uppercaseString
 
+        // add planner view controller
+        let plannerViewController = PlannerViewController(nibName: "PlannerViewController", bundle: nil)
+        let plannerNavigationController = UINavigationController(rootViewController: plannerViewController)
+        plannerNavigationController.tabBarItem.image = UIImage(named: "settings-icon-white.png")
+        plannerNavigationController.title = "Plan".uppercaseString
+        
         // add settings view controller
         let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
         let settingsNavigationController = UINavigationController(rootViewController: settingsViewController)
         settingsNavigationController.tabBarItem.image = UIImage(named: "settings-icon-white.png")
         settingsNavigationController.title = "Settings".uppercaseString
 
-        let tabBarControllers = [homeNavigationViewController, settingsNavigationController]
+        let tabBarControllers = [homeNavigationViewController, plannerNavigationController, settingsNavigationController]
 
         let mainTabBarController = MainTabBarController()
         mainTabBarController.viewControllers = tabBarControllers

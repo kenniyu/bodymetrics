@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9059"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlannerViewController" customModule="BodyMetrics" customModuleProvider="target">
+            <connections>
+                <outlet property="calendarContentView" destination="qlA-G0-Sfc" id="RSn-rs-Ojh"/>
+                <outlet property="calendarMenuView" destination="dbl-i2-jrJ" id="xte-gw-P0X"/>
+                <outlet property="calendarWeekDayView" destination="cnW-rJ-UNc" id="Pm1-ZZ-WTa"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbl-i2-jrJ" customClass="JTCalendarMenuView">
+                    <rect key="frame" x="0.0" y="64" width="600" height="40"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="sAB-Xc-GIr"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnW-rJ-UNc" customClass="JTCalendarWeekDayView">
+                    <rect key="frame" x="0.0" y="104" width="600" height="40"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="YUK-NC-7b7"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlA-G0-Sfc" customClass="JTVerticalCalendarView">
+                    <rect key="frame" x="0.0" y="144" width="600" height="228"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="YFg-k1-wVz"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="YFg-k1-wVz"/>
+                        </mask>
+                    </variation>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91T-ga-eHo">
+                    <rect key="frame" x="0.0" y="372" width="600" height="228"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="91T-ga-eHo" secondAttribute="bottom" id="BmT-Wm-fue"/>
+                <constraint firstItem="91T-ga-eHo" firstAttribute="height" secondItem="qlA-G0-Sfc" secondAttribute="height" id="Bxl-5x-P8C"/>
+                <constraint firstAttribute="bottom" secondItem="qlA-G0-Sfc" secondAttribute="bottom" id="FSb-qA-ceJ"/>
+                <constraint firstItem="91T-ga-eHo" firstAttribute="top" secondItem="qlA-G0-Sfc" secondAttribute="bottom" id="N60-6H-kuo"/>
+                <constraint firstItem="91T-ga-eHo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="NgM-b3-L1k"/>
+                <constraint firstAttribute="trailing" secondItem="dbl-i2-jrJ" secondAttribute="trailing" id="UmM-yy-8fS"/>
+                <constraint firstAttribute="trailing" secondItem="91T-ga-eHo" secondAttribute="trailing" id="WAy-AO-wmr"/>
+                <constraint firstItem="dbl-i2-jrJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XyN-6Z-75M"/>
+                <constraint firstItem="qlA-G0-Sfc" firstAttribute="top" secondItem="cnW-rJ-UNc" secondAttribute="bottom" id="fPH-Cq-8Bq"/>
+                <constraint firstAttribute="trailing" secondItem="cnW-rJ-UNc" secondAttribute="trailing" id="fTF-3A-80v"/>
+                <constraint firstItem="qlA-G0-Sfc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ktW-gV-XHU"/>
+                <constraint firstItem="qlA-G0-Sfc" firstAttribute="top" secondItem="dbl-i2-jrJ" secondAttribute="bottom" id="lKb-my-edQ"/>
+                <constraint firstItem="cnW-rJ-UNc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lcs-N6-ymo"/>
+                <constraint firstItem="dbl-i2-jrJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ld8-pZ-rlZ"/>
+                <constraint firstItem="cnW-rJ-UNc" firstAttribute="top" secondItem="dbl-i2-jrJ" secondAttribute="bottom" id="nGe-Aa-zhY"/>
+                <constraint firstAttribute="trailing" secondItem="qlA-G0-Sfc" secondAttribute="trailing" id="zaW-f4-151"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="FSb-qA-ceJ"/>
+                    <exclude reference="lKb-my-edQ"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JTCalendar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-BodyMetrics.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,22 +47,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>39B5CF86C5D5526023BFA614CD6D37DC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3DB37A7905C61E5D6BC08D0FDE563A92</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>4878C70B21CA37D7CB8A476BF986741B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6F731D3C308949AFADFD57CEF1DB61D4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8E498B437BC07BE881E3F8CB234102A1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -73,6 +78,11 @@
 			<true/>
 		</dict>
 		<key>E302B5BAE6B298CC94540449CC239363</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E56AC0D2B3E9987E8F43034CE3A76074</key>
 		<dict>
 			<key>primary</key>
 			<true/>

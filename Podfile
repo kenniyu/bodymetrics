@@ -6,4 +6,5 @@ target 'BodyMetrics' do
   pod 'Alamofire', '~>3.0'
   pod 'IDMPhotoBrowser'
   pod 'pop', '~> 1.0'
+  pod 'JTCalendar', '~> 2.0'
 end

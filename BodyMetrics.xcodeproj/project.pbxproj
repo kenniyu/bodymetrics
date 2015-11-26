@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		05C8CA32C397ED5A8E7A8CA0 /* Pods_BodyMetrics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED0F968D1D78EB81FBA6BB6B /* Pods_BodyMetrics.framework */; };
+		C128612A1C077CA400B1B5A2 /* PlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12861281C077CA400B1B5A2 /* PlannerViewController.swift */; };
+		C128612B1C077CA400B1B5A2 /* PlannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C12861291C077CA400B1B5A2 /* PlannerViewController.xib */; };
 		C155956D1C051D71002D6DB5 /* PickerModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C155956B1C051D71002D6DB5 /* PickerModalViewController.swift */; };
 		C155956E1C051D71002D6DB5 /* PickerModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C155956C1C051D71002D6DB5 /* PickerModalViewController.xib */; };
 		C15682DA1C038E00000479B0 /* ManualMacroEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15682D81C038E00000479B0 /* ManualMacroEntryViewController.swift */; };
@@ -113,12 +115,15 @@
 /* Begin PBXFileReference section */
 		3E2E0F2B41546CA659394006 /* Pods-BodyMetrics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyMetrics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics.debug.xcconfig"; sourceTree = "<group>"; };
 		A47138EF96DC9527A779C96B /* Pods-BodyMetrics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyMetrics.release.xcconfig"; path = "Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics.release.xcconfig"; sourceTree = "<group>"; };
+		C12861281C077CA400B1B5A2 /* PlannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlannerViewController.swift; sourceTree = "<group>"; };
+		C12861291C077CA400B1B5A2 /* PlannerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlannerViewController.xib; sourceTree = "<group>"; };
 		C155956B1C051D71002D6DB5 /* PickerModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerModalViewController.swift; sourceTree = "<group>"; };
 		C155956C1C051D71002D6DB5 /* PickerModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerModalViewController.xib; sourceTree = "<group>"; };
 		C15682D81C038E00000479B0 /* ManualMacroEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualMacroEntryViewController.swift; sourceTree = "<group>"; };
 		C15682D91C038E00000479B0 /* ManualMacroEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualMacroEntryViewController.xib; sourceTree = "<group>"; };
 		C15682DC1C038ECF000479B0 /* FormCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormCollectionViewCell.swift; sourceTree = "<group>"; };
 		C15682DD1C038ECF000479B0 /* FormCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormCollectionViewCell.xib; sourceTree = "<group>"; };
+		C184AFC11C0783FF003AB926 /* BodyMetricsBridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyMetricsBridging.h; sourceTree = "<group>"; };
 		C18BB7A41C06E1000071CB04 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		C18BB7A61C06F2D10071CB04 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		C18BB7A71C06F2D10071CB04 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
@@ -253,6 +258,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C12861271C077C5F00B1B5A2 /* Planner */ = {
+			isa = PBXGroup;
+			children = (
+				C12861281C077CA400B1B5A2 /* PlannerViewController.swift */,
+				C12861291C077CA400B1B5A2 /* PlannerViewController.xib */,
+			);
+			name = Planner;
+			sourceTree = "<group>";
+		};
 		C1B20F851BFBE9A7002C72E9 = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +292,7 @@
 		C1B20F901BFBE9A7002C72E9 /* BodyMetrics */ = {
 			isa = PBXGroup;
 			children = (
+				C12861271C077C5F00B1B5A2 /* Planner */,
 				C1DEF2F81C03C61100DFB7F0 /* Settings */,
 				C1B210301BFE46F5002C72E9 /* Food */,
 				C1B2102D1BFE45D0002C72E9 /* Common */,
@@ -371,6 +386,7 @@
 			children = (
 				C1B210351BFE8482002C72E9 /* Images */,
 				C1B20FF31BFBED5F002C72E9 /* Fonts */,
+				C184AFC11C0783FF003AB926 /* BodyMetricsBridging.h */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -639,6 +655,7 @@
 				C15682DF1C038ECF000479B0 /* FormCollectionViewCell.xib in Resources */,
 				C1DEF3161C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.xib in Resources */,
 				C1B20FFD1BFBED69002C72E9 /* BlenderPro-Bold.otf in Resources */,
+				C128612B1C077CA400B1B5A2 /* PlannerViewController.xib in Resources */,
 				C1B210021BFBED69002C72E9 /* BlenderPro-Medium.otf in Resources */,
 				C19911711BFBEE9F003C97D3 /* MeterView.xib in Resources */,
 				C1B210041BFBED69002C72E9 /* BlenderPro-Thin.otf in Resources */,
@@ -717,6 +734,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C128612A1C077CA400B1B5A2 /* PlannerViewController.swift in Sources */,
 				C1DEF2F71C03C5D400DFB7F0 /* MainTabBarController.swift in Sources */,
 				C1B20F941BFBE9A7002C72E9 /* ViewController.swift in Sources */,
 				C1B20FED1BFBEC32002C72E9 /* WebUrlRegularExpressionConstants.swift in Sources */,
@@ -907,6 +925,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ken.BodyMetrics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = BodyMetrics/BodyMetricsBridging.h;
 			};
 			name = Debug;
 		};
@@ -923,6 +942,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ken.BodyMetrics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = BodyMetrics/BodyMetricsBridging.h;
 			};
 			name = Release;
 		};

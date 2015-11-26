@@ -41,6 +41,10 @@ struct Styles {
         static let BarLabel = UIColor(red: 101/255.0, green: 120/255.0, blue: 130/255.0, alpha: 1.0)
         static let BarNumber = UIColor(red: 146/255.0, green: 159/255.0, blue: 175/255.0, alpha: 1.0)
 
+        static let CalendarMenu = UIColor(red: 18/255.0, green: 22/255.0, blue: 28/255.0, alpha: 1.0)
+        static let CalendarWeekDay = UIColor(red: 22/255.0, green: 27/255.0, blue: 35/255.0, alpha: 1.0)
+        static let CalendarContent = UIColor(red: 232/255.0, green: 239/255.0, blue: 243/255.0, alpha: 1.0)
+
         static let DataVisBlue = UIColor(red: 22/255.0, green: 96/255.0, blue: 167/255.0, alpha: 1.0)
         static let DataVisLightBlue = UIColor(red: 158/255.0, green: 185/255.0, blue: 228/255.0, alpha: 1.0)
         static let DataVisRed = UIColor(red: 205/255.0, green: 12/255.0, blue: 24/255.0, alpha: 1.0)
