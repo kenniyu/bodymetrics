@@ -16,6 +16,7 @@
 		C15682DB1C038E00000479B0 /* ManualMacroEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15682D91C038E00000479B0 /* ManualMacroEntryViewController.xib */; };
 		C15682DE1C038ECF000479B0 /* FormCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15682DC1C038ECF000479B0 /* FormCollectionViewCell.swift */; };
 		C15682DF1C038ECF000479B0 /* FormCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C15682DD1C038ECF000479B0 /* FormCollectionViewCell.xib */; };
+		C184AFC31C07B394003AB926 /* JTCalendarRingDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C184AFC21C07B394003AB926 /* JTCalendarRingDayView.swift */; };
 		C18BB7A51C06E1000071CB04 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18BB7A41C06E1000071CB04 /* GradientView.swift */; };
 		C18BB7A81C06F2D10071CB04 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18BB7A61C06F2D10071CB04 /* SettingsTableViewCell.swift */; };
 		C18BB7A91C06F2D10071CB04 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C18BB7A71C06F2D10071CB04 /* SettingsTableViewCell.xib */; };
@@ -78,6 +79,7 @@
 		C1B210371BFE8491002C72E9 /* fruit-loops.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C1B210361BFE8491002C72E9 /* fruit-loops.jpg */; };
 		C1B210391BFF95B0002C72E9 /* MDRotatingPieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210381BFF95B0002C72E9 /* MDRotatingPieChart.swift */; };
 		C1B210771BFFA8C4002C72E9 /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210761BFFA8C4002C72E9 /* Double+.swift */; };
+		C1B71C9B1C08017700282D3C /* PieChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B71C9A1C08017700282D3C /* PieChartData.swift */; };
 		C1DEF2F71C03C5D400DFB7F0 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEF2F61C03C5D400DFB7F0 /* MainTabBarController.swift */; };
 		C1DEF2FB1C03C62100DFB7F0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEF2F91C03C62100DFB7F0 /* SettingsViewController.swift */; };
 		C1DEF2FC1C03C62100DFB7F0 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1DEF2FA1C03C62100DFB7F0 /* SettingsViewController.xib */; };
@@ -124,6 +126,7 @@
 		C15682DC1C038ECF000479B0 /* FormCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormCollectionViewCell.swift; sourceTree = "<group>"; };
 		C15682DD1C038ECF000479B0 /* FormCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormCollectionViewCell.xib; sourceTree = "<group>"; };
 		C184AFC11C0783FF003AB926 /* BodyMetricsBridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BodyMetricsBridging.h; sourceTree = "<group>"; };
+		C184AFC21C07B394003AB926 /* JTCalendarRingDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JTCalendarRingDayView.swift; sourceTree = "<group>"; };
 		C18BB7A41C06E1000071CB04 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		C18BB7A61C06F2D10071CB04 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		C18BB7A71C06F2D10071CB04 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
@@ -192,6 +195,7 @@
 		C1B210361BFE8491002C72E9 /* fruit-loops.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "fruit-loops.jpg"; path = "images/fruit-loops.jpg"; sourceTree = "<group>"; };
 		C1B210381BFF95B0002C72E9 /* MDRotatingPieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDRotatingPieChart.swift; sourceTree = "<group>"; };
 		C1B210761BFFA8C4002C72E9 /* Double+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
+		C1B71C9A1C08017700282D3C /* PieChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartData.swift; sourceTree = "<group>"; };
 		C1DEF2F61C03C5D400DFB7F0 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		C1DEF2F91C03C62100DFB7F0 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C1DEF2FA1C03C62100DFB7F0 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -412,6 +416,8 @@
 			children = (
 				C1B210071BFBEE22002C72E9 /* MeterView.swift */,
 				C19911701BFBEE9F003C97D3 /* MeterView.xib */,
+				C184AFC21C07B394003AB926 /* JTCalendarRingDayView.swift */,
+				C1B71C9A1C08017700282D3C /* PieChartData.swift */,
 			);
 			name = Widgets;
 			sourceTree = "<group>";
@@ -749,6 +755,7 @@
 				C1B20FD31BFBEA31002C72E9 /* CGRect+.swift in Sources */,
 				C1B20FD21BFBEA31002C72E9 /* UIEdgeInsets+.swift in Sources */,
 				C1B20FD11BFBEA31002C72E9 /* UIView+.swift in Sources */,
+				C1B71C9B1C08017700282D3C /* PieChartData.swift in Sources */,
 				C1B20FEC1BFBEC32002C72E9 /* TextUtils.swift in Sources */,
 				C1B20FEF1BFBEC32002C72E9 /* KeyboardUtils.swift in Sources */,
 				C1DEF3151C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.swift in Sources */,
@@ -771,6 +778,7 @@
 				C1B20F921BFBE9A7002C72E9 /* AppDelegate.swift in Sources */,
 				C1B20FC11BFBE9E5002C72E9 /* HomeViewController.swift in Sources */,
 				C1B20FF01BFBEC32002C72E9 /* PlaceholderTextView.swift in Sources */,
+				C184AFC31C07B394003AB926 /* JTCalendarRingDayView.swift in Sources */,
 				C1DEF3111C03D68100DFB7F0 /* FormWithSegmentControlCollectionViewCell.swift in Sources */,
 				C1DEF3191C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.swift in Sources */,
 				C1B2102B1BFD0757002C72E9 /* SearchResultsCollectionViewCell.swift in Sources */,

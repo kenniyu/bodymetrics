@@ -16,6 +16,11 @@ class PlannerViewController: UIViewController {
     @IBOutlet weak var calendarMenuView: JTCalendarMenuView!
     @IBOutlet weak var calendarWeekDayView: JTCalendarWeekDayView!
 
+    @IBOutlet weak var zeroStateWrapperView: UIView!
+    @IBOutlet weak var zeroStateLabel: UILabel!
+    @IBOutlet weak var zeroStateButton: UIButton!
+
+
     private var calendarManager: JTCalendarManager?
     private var selectedDate: NSDate? = NSDate()
 
@@ -81,7 +86,21 @@ class PlannerViewController: UIViewController {
 
     private func setup() {
         self.title = "Plan".uppercaseString
+        self.view.backgroundColor = Styles.Colors.AppDarkBlue
         setupCalendar()
+        setupZeroStateViews()
+    }
+
+    private func setupZeroStateViews() {
+        zeroStateWrapperView.backgroundColor = UIColor.clearColor()
+        zeroStateWrapperView.hidden = false
+        zeroStateLabel.textColor = Styles.Colors.BarLabel
+        zeroStateLabel.text = zeroStateLabel.text?.uppercaseString
+        zeroStateLabel.font = Styles.Fonts.ThinMedium
+        zeroStateButton.tintColor = Styles.Colors.BarNumber
+        zeroStateButton.titleLabel?.text = zeroStateButton.titleLabel?.text?.uppercaseString
+        zeroStateButton.setTitle(zeroStateButton.titleLabel?.text?.uppercaseString, forState: .Normal)
+        zeroStateButton.titleLabel?.font = Styles.Fonts.MediumLarge
     }
 }
 
@@ -92,7 +111,7 @@ extension PlannerViewController: JTCalendarDelegate {
 
         // Test if the dayView is from another month than the page
         // Use only in month mode for indicate the day of the previous or next month
-        if let dayView = dayView as? JTCalendarDayView {
+        if let dayView = dayView as? JTCalendarRingDayView {
             if dayView.isFromAnotherMonth {
                 dayView.hidden = true
                 return
@@ -131,12 +150,12 @@ extension PlannerViewController: JTCalendarDelegate {
 //            else{
 //                dayView.dotView.hidden = YES;
 //            }
+//            dayView.refreshPieChart()
         }
     }
 
     /// this method is used to respond to a touch on a dayView. For exemple you can indicate to display another month if dayView is from another month.
     public func calendar(calendar: JTCalendarManager!, didTouchDayView dayView: UIView!) {
-        print("touched")
         if let dayView = dayView as? JTCalendarDayView {
             selectedDate = dayView.date
             calendarManager?.reload()
@@ -178,7 +197,7 @@ extension PlannerViewController: JTCalendarDelegate {
     }
 
     public func calendarBuildDayView(calendar: JTCalendarManager!) -> UIView! {
-        let view = JTCalendarDayView()
+        let view = JTCalendarRingDayView()
         view.textLabel.font = Styles.Fonts.MediumMedium
         view.textLabel.textColor = Styles.Colors.AppDarkBlue
 

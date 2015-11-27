@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlannerViewController" customModule="BodyMetrics" customModuleProvider="target">
@@ -11,6 +11,9 @@
                 <outlet property="calendarMenuView" destination="dbl-i2-jrJ" id="xte-gw-P0X"/>
                 <outlet property="calendarWeekDayView" destination="cnW-rJ-UNc" id="Pm1-ZZ-WTa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="zeroStateButton" destination="MyV-6K-DDn" id="cGx-6N-gxi"/>
+                <outlet property="zeroStateLabel" destination="Ue1-qU-qbu" id="Zl1-dP-zAm"/>
+                <outlet property="zeroStateWrapperView" destination="MTF-LH-S25" id="Z3C-nf-ywb"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -46,7 +49,41 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91T-ga-eHo">
                     <rect key="frame" x="0.0" y="372" width="600" height="228"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTF-LH-S25">
+                            <rect key="frame" x="0.0" y="78" width="600" height="72"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing planned here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue1-qU-qbu">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MyV-6K-DDn">
+                                    <rect key="frame" x="236" y="36" width="128" height="36"/>
+                                    <state key="normal" title="Create a Meal Plan"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Ue1-qU-qbu" secondAttribute="trailing" id="LgO-Bd-sFd"/>
+                                <constraint firstItem="MyV-6K-DDn" firstAttribute="height" secondItem="Ue1-qU-qbu" secondAttribute="height" id="P7P-GR-GtO"/>
+                                <constraint firstItem="MyV-6K-DDn" firstAttribute="top" secondItem="Ue1-qU-qbu" secondAttribute="bottom" id="gGI-GG-djS"/>
+                                <constraint firstItem="MyV-6K-DDn" firstAttribute="top" secondItem="Ue1-qU-qbu" secondAttribute="bottom" id="iK8-ac-eJu"/>
+                                <constraint firstAttribute="bottom" secondItem="MyV-6K-DDn" secondAttribute="bottom" id="iPe-lm-t91"/>
+                                <constraint firstItem="Ue1-qU-qbu" firstAttribute="leading" secondItem="MTF-LH-S25" secondAttribute="leading" id="jYz-ws-5EX"/>
+                                <constraint firstAttribute="height" constant="72" id="koX-f2-Di5"/>
+                                <constraint firstItem="Ue1-qU-qbu" firstAttribute="top" secondItem="MTF-LH-S25" secondAttribute="top" id="lF4-e0-ino"/>
+                                <constraint firstItem="MyV-6K-DDn" firstAttribute="centerX" secondItem="MTF-LH-S25" secondAttribute="centerX" id="oMe-xw-Crz"/>
+                            </constraints>
+                        </view>
+                    </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="MTF-LH-S25" firstAttribute="leading" secondItem="91T-ga-eHo" secondAttribute="leading" id="1XC-Q3-bcs"/>
+                        <constraint firstAttribute="trailing" secondItem="MTF-LH-S25" secondAttribute="trailing" id="dZz-Ox-NG9"/>
+                        <constraint firstItem="MTF-LH-S25" firstAttribute="centerY" secondItem="91T-ga-eHo" secondAttribute="centerY" id="wJf-6G-9Ft"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
