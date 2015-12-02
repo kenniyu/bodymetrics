@@ -38,10 +38,13 @@ class FoodDetailViewController: UIViewController {
 
     @IBOutlet weak var fatPctLabel: UILabel!
     @IBOutlet weak var fatNameLabel: UILabel!
+    @IBOutlet weak var fatGramsLabel: UILabel!
     @IBOutlet weak var carbsPctLabel: UILabel!
     @IBOutlet weak var carbsNameLabel: UILabel!
+    @IBOutlet weak var carbsGramsLabel: UILabel!
     @IBOutlet weak var proteinPctLabel: UILabel!
     @IBOutlet weak var proteinNameLabel: UILabel!
+    @IBOutlet weak var proteinGramsLabel: UILabel!
     @IBOutlet weak var caloricBreakdownLabel: UILabel!
 
     @IBOutlet weak var fatTheoMeter: MeterView!
@@ -62,6 +65,7 @@ class FoodDetailViewController: UIViewController {
     private static let kSubtitleFont = Styles.Fonts.BookLarge!
     private static let kStatsNameFont = Styles.Fonts.MediumMedium!
     private static let kStatsPctFont = Styles.Fonts.ThinXLarge!
+    private static let kStatsGramsFont = Styles.Fonts.MediumSmall!
 
     public var nutritionDelegate: NutritionDelegate?
     private var categorizedNutritions: [String: AnyObject] = [:]
@@ -148,6 +152,7 @@ class FoodDetailViewController: UIViewController {
 
         totalHeight += fatPctLabel.height
         totalHeight += fatNameLabel.height
+        totalHeight += fatGramsLabel.height
         totalHeight += Styles.Dimensions.kItemSpacingDim12
 
         totalHeight += projectedDailyTotalsLabel.height
@@ -244,6 +249,10 @@ class FoodDetailViewController: UIViewController {
         fatPctLabel.text = "\(fatPct)%"
         carbsPctLabel.text = "\(carbsPct)%"
         proteinPctLabel.text = "\(proteinPct)%"
+
+        fatGramsLabel.text = "\(Int(gramsFat))g"
+        carbsGramsLabel.text = "\(Int(gramsCarbs))g"
+        proteinGramsLabel.text = "\(Int(gramsProtein))g"
     }
 
     private func setupSegmentControl() {
@@ -290,6 +299,9 @@ class FoodDetailViewController: UIViewController {
         fatNameLabel.font = FoodDetailViewController.kStatsNameFont
         carbsNameLabel.font = FoodDetailViewController.kStatsNameFont
         proteinNameLabel.font = FoodDetailViewController.kStatsNameFont
+        fatGramsLabel.font = FoodDetailViewController.kStatsGramsFont
+        carbsGramsLabel.font = FoodDetailViewController.kStatsGramsFont
+        proteinGramsLabel.font = FoodDetailViewController.kStatsGramsFont
         fatPctLabel.font = FoodDetailViewController.kStatsPctFont
         carbsPctLabel.font = FoodDetailViewController.kStatsPctFont
         proteinPctLabel.font = FoodDetailViewController.kStatsPctFont
@@ -299,6 +311,9 @@ class FoodDetailViewController: UIViewController {
         fatNameLabel.textColor = Styles.Colors.DataVisLightRed
         carbsNameLabel.textColor = Styles.Colors.DataVisLightPurple
         proteinNameLabel.textColor = Styles.Colors.DataVisLightGreen
+        fatGramsLabel.textColor = Styles.Colors.DataVisLightRed
+        carbsGramsLabel.textColor = Styles.Colors.DataVisLightPurple
+        proteinGramsLabel.textColor = Styles.Colors.DataVisLightGreen
 
         fatNameLabel.text = fatNameLabel.text?.uppercaseString
         carbsNameLabel.text = carbsNameLabel.text?.uppercaseString
@@ -372,6 +387,7 @@ class FoodDetailViewController: UIViewController {
                 // determine diff types of servings
                 for nutrient in nutrients {
                     if let measures = nutrient.objectForKey("measures") as? [AnyObject], let name = nutrient.objectForKey("name") as? String {
+                        print(nutrient)
                         for measure in measures {
                             if let measureLabel = measure.objectForKey("label") as? String, let value = measure.objectForKey("value") as? String {
                                 if categorizedNutritions[measureLabel] == nil {

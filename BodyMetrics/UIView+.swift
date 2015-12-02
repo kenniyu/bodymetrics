@@ -240,4 +240,68 @@ extension UIView {
         gradientLayer.colors = [startColor.CGColor, endColor.CGColor]
         return gradientLayer
     }
+
+    func addTopBorderWithColor(color: UIColor, width: CGFloat) {
+        let view = UIView()
+        view.backgroundColor = color
+        view.frame = CGRectMake(0, 0, self.bounds.size.width, width)
+        self.addSubview(view)
+        view.setNeedsLayout()
+    }
+
+    func addRightBorderWithColor(color: UIColor, width: CGFloat) {
+        let view = UIView()
+        view.backgroundColor = color
+        view.frame = CGRectMake(self.bounds.size.width - width, 0, width, self.bounds.size.height)
+        self.addSubview(view)
+        view.setNeedsLayout()
+    }
+
+    func addBottomBorderWithColor(color: UIColor, width: CGFloat) {
+        let view = UIView()
+        view.backgroundColor = color
+        view.frame = CGRectMake(0, self.bounds.size.height - width, self.bounds.size.width, width)
+        self.addSubview(view)
+        view.setNeedsLayout()
+    }
+
+    func addLeftBorderWithColor(color: UIColor, width: CGFloat) {
+        let view = UIView()
+        view.backgroundColor = color
+        view.frame = CGRectMake(0, 0, width, self.bounds.size.height)
+        self.addSubview(view)
+        view.setNeedsLayout()
+    }
+
+    func addBottomBorderWithColor(color: UIColor, thickness: CGFloat = 1.0, insets: UIEdgeInsets? = nil) -> CALayer? {
+        let borderLayer = CALayer()
+        let frame: CGRect
+        if let insets = insets {
+            // Check if the view will be able to fit the bottom border
+            let y = layer.frame.height - thickness - insets.bottom
+            let width = layer.frame.width - insets.left - insets.right
+            if insets.left > layer.frame.width || y <= 0 || width <= 0 ||
+                thickness > layer.frame.height {
+                    return nil
+            }
+            frame = CGRect(x: insets.left,
+                y: y,
+                width: width,
+                height: thickness)
+        } else {
+            let y = layer.frame.height - thickness
+            let width = layer.frame.width
+            if y <= 0 || width <= 0 || thickness > layer.frame.height {
+                return nil
+            }
+            frame = CGRect(x: 0.0,
+                y: y,
+                width: width,
+                height: thickness)
+        }
+        borderLayer.frame = frame
+        borderLayer.backgroundColor = color.CGColor
+        layer.addSublayer(borderLayer)
+        return borderLayer
+    }
 }

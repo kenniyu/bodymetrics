@@ -11,8 +11,10 @@ import JTCalendar
 
 public class JTCalendarRingDayView: JTCalendarDayView {
     public var ringView: UIView!
-    var pieChart: MDRotatingPieChart!
+    var pieChart: MDRotatingPieChart? = nil
     var slicesData:Array<PieChartData> = Array<PieChartData>()
+    var completedMeals: Int = 0
+    var incompleteMeals: Int = 1
 
     public override func commonInit() {
         super.commonInit()
@@ -24,8 +26,6 @@ public class JTCalendarRingDayView: JTCalendarDayView {
         ringView.backgroundColor = UIColor.clearColor()
         ringView.layer.rasterizationScale = UIScreen.mainScreen().scale
         ringView.layer.shouldRasterize = true
-
-//        pieChart = MDRotatingPieChart()         // temporary
     }
 
     public override func layoutSubviews() {
@@ -36,26 +36,31 @@ public class JTCalendarRingDayView: JTCalendarDayView {
     }
 
     private func createPieChart(inContainerView containerView: UIView) {
+        // ensure we don't add more than necessary
+        if let pieChart = pieChart {
+            return
+        }
         pieChart = MDRotatingPieChart(frame: CGRectMake(0, 0, containerView.frame.width, containerView.frame.height))
+        let completedValue: CGFloat = 1
+        let pendingValue: CGFloat = 5
 
-        print(pieChart)
-        let fatCalories: CGFloat = 40 * 9
-        let carbsCalories: CGFloat = 200 * 4
-        let proteinCalories: CGFloat = 200 * 4
+        let totalValue = completedValue + pendingValue
+        let color = getColor(completedValue/totalValue)
 
         slicesData = [
-            PieChartData(myValue: fatCalories, myColor: Styles.Colors.DataVisLightRed, myLabel: "Fat"),
-            PieChartData(myValue: carbsCalories, myColor: Styles.Colors.DataVisLightPurple, myLabel: "Carbs"),
-            PieChartData(myValue: proteinCalories, myColor: Styles.Colors.DataVisLightGreen, myLabel: "Protein")]
+            PieChartData(myValue: completedValue, myColor: color, myLabel: "Done"),
+            PieChartData(myValue: pendingValue, myColor: Styles.Colors.AppLightGray, myLabel: "Pending")
+        ]
 
-        pieChart.delegate = self
-        pieChart.datasource = self
-        containerView.addSubview(pieChart)
+        pieChart!.delegate = self
+        pieChart!.datasource = self
+        pieChart!.userInteractionEnabled = false
+        containerView.addSubview(pieChart!)
 
         var properties = Properties()
-        properties.smallRadius = circleView.width / 2 + 4
-        properties.bigRadius = circleView.width / 2 + circleView.width/4 + 2
-        pieChart.properties = properties
+        properties.smallRadius = circleView.width / 2 + 5
+        properties.bigRadius = circleView.width / 2 + circleView.width / 4
+        pieChart!.properties = properties
         refreshPieChart()
     }
 }
@@ -98,6 +103,19 @@ extension JTCalendarRingDayView: MDRotatingPieChartDelegate, MDRotatingPieChartD
 
     /// This must be called to render the pie chart
     public func refreshPieChart()  {
-        pieChart.build()
+        pieChart?.build()
+    }
+
+    private func getColor(percent: CGFloat) -> UIColor {
+//        return Styles.Colors.AppBlue
+        // for now, we're restricted to hues of 0 to 0.3
+        let hue:        CGFloat = 0.3 * percent
+        let saturation: CGFloat = 1
+        let brightness: CGFloat = 0.85
+
+        let alpha:      CGFloat = 1
+
+        let color = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
+        return color
     }
 }

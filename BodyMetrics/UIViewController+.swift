@@ -22,6 +22,11 @@ extension UIViewController {
         return closeBtn
     }
 
+    public func createAddButton() -> UIBarButtonItem {
+        let closeBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "add")
+        return closeBtn
+    }
+
     public func addRightBarButtons(buttons: [UIBarButtonItem]) {
         let rightBarButtonItems = buttons
         navigationItem.rightBarButtonItems = rightBarButtonItems
@@ -33,6 +38,10 @@ extension UIViewController {
 
     public func done() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    public func add() {
+        // TO BE OVERRIDDEN
     }
 
     /**

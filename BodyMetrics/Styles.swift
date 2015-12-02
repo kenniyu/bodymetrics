@@ -36,7 +36,7 @@ struct Styles {
         static let AppYellow = UIColor(red: 226/255.0, green: 205/255.0, blue: 0/255.0, alpha: 1.0)
         static let AppOrange = UIColor(red: 229/255.0, green: 124/255.0, blue: 22/255.0, alpha: 1.0)
         static let AppBlue = UIColor(red: 0/255.0, green: 174/255.0, blue: 240/255.0, alpha: 1.0)
-        static let AppLightGray = UIColor(red: 181/255.0, green: 203/255.0, blue: 235/255.0, alpha: 1.0)
+        static let AppLightGray = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1.0)
         static let BarBackground = UIColor(red: 38/255.0, green: 42/255.0, blue: 48/255.0, alpha: 1.0)
         static let BarLabel = UIColor(red: 101/255.0, green: 120/255.0, blue: 130/255.0, alpha: 1.0)
         static let BarNumber = UIColor(red: 146/255.0, green: 159/255.0, blue: 175/255.0, alpha: 1.0)

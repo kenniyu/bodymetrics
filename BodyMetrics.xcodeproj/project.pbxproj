@@ -10,6 +10,19 @@
 		05C8CA32C397ED5A8E7A8CA0 /* Pods_BodyMetrics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED0F968D1D78EB81FBA6BB6B /* Pods_BodyMetrics.framework */; };
 		C128612A1C077CA400B1B5A2 /* PlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12861281C077CA400B1B5A2 /* PlannerViewController.swift */; };
 		C128612B1C077CA400B1B5A2 /* PlannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C12861291C077CA400B1B5A2 /* PlannerViewController.xib */; };
+		C13CDD251C0A7ACF00FA3BCF /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13CDD231C0A7ACF00FA3BCF /* InitialViewController.swift */; };
+		C13CDD261C0A7ACF00FA3BCF /* InitialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C13CDD241C0A7ACF00FA3BCF /* InitialViewController.xib */; };
+		C142CD5B1C0E569500141AE7 /* TabularDataRowCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C142CD5A1C0E569500141AE7 /* TabularDataRowCellModel.swift */; };
+		C142CD5E1C0E597100141AE7 /* TabularDataRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C142CD5C1C0E597100141AE7 /* TabularDataRowCell.swift */; };
+		C142CD5F1C0E597100141AE7 /* TabularDataRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C142CD5D1C0E597100141AE7 /* TabularDataRowCell.xib */; };
+		C142CD621C0E598B00141AE7 /* TabularDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C142CD601C0E598B00141AE7 /* TabularDataCell.swift */; };
+		C142CD631C0E598B00141AE7 /* TabularDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C142CD611C0E598B00141AE7 /* TabularDataCell.xib */; };
+		C142CD661C0E61AF00141AE7 /* TabularDataRowHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C142CD641C0E61AF00141AE7 /* TabularDataRowHeaderCell.swift */; };
+		C142CD671C0E61AF00141AE7 /* TabularDataRowHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C142CD651C0E61AF00141AE7 /* TabularDataRowHeaderCell.xib */; };
+		C142CD6A1C0E643B00141AE7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C142CD681C0E643B00141AE7 /* SignUpViewController.swift */; };
+		C142CD6B1C0E643B00141AE7 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C142CD691C0E643B00141AE7 /* SignUpViewController.xib */; };
+		C142CD6D1C0E6ABB00141AE7 /* TabularDataCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C142CD6C1C0E6ABB00141AE7 /* TabularDataCellModel.swift */; };
+		C142CD6F1C0EC67C00141AE7 /* TabularDataCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C142CD6E1C0EC67C00141AE7 /* TabularDataCollectionViewFlowLayout.swift */; };
 		C155956D1C051D71002D6DB5 /* PickerModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C155956B1C051D71002D6DB5 /* PickerModalViewController.swift */; };
 		C155956E1C051D71002D6DB5 /* PickerModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C155956C1C051D71002D6DB5 /* PickerModalViewController.xib */; };
 		C15682DA1C038E00000479B0 /* ManualMacroEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15682D81C038E00000479B0 /* ManualMacroEntryViewController.swift */; };
@@ -20,6 +33,8 @@
 		C18BB7A51C06E1000071CB04 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18BB7A41C06E1000071CB04 /* GradientView.swift */; };
 		C18BB7A81C06F2D10071CB04 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18BB7A61C06F2D10071CB04 /* SettingsTableViewCell.swift */; };
 		C18BB7A91C06F2D10071CB04 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C18BB7A71C06F2D10071CB04 /* SettingsTableViewCell.xib */; };
+		C18FA8B71C0D776500ACDF63 /* MealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18FA8B51C0D776500ACDF63 /* MealsViewController.swift */; };
+		C18FA8B81C0D776500ACDF63 /* MealsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C18FA8B61C0D776500ACDF63 /* MealsViewController.xib */; };
 		C19911711BFBEE9F003C97D3 /* MeterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C19911701BFBEE9F003C97D3 /* MeterView.xib */; };
 		C1B20F921BFBE9A7002C72E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B20F911BFBE9A7002C72E9 /* AppDelegate.swift */; };
 		C1B20F941BFBE9A7002C72E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B20F931BFBE9A7002C72E9 /* ViewController.swift */; };
@@ -119,6 +134,19 @@
 		A47138EF96DC9527A779C96B /* Pods-BodyMetrics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BodyMetrics.release.xcconfig"; path = "Pods/Target Support Files/Pods-BodyMetrics/Pods-BodyMetrics.release.xcconfig"; sourceTree = "<group>"; };
 		C12861281C077CA400B1B5A2 /* PlannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlannerViewController.swift; sourceTree = "<group>"; };
 		C12861291C077CA400B1B5A2 /* PlannerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlannerViewController.xib; sourceTree = "<group>"; };
+		C13CDD231C0A7ACF00FA3BCF /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		C13CDD241C0A7ACF00FA3BCF /* InitialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialViewController.xib; sourceTree = "<group>"; };
+		C142CD5A1C0E569500141AE7 /* TabularDataRowCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabularDataRowCellModel.swift; sourceTree = "<group>"; };
+		C142CD5C1C0E597100141AE7 /* TabularDataRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabularDataRowCell.swift; sourceTree = "<group>"; };
+		C142CD5D1C0E597100141AE7 /* TabularDataRowCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabularDataRowCell.xib; sourceTree = "<group>"; };
+		C142CD601C0E598B00141AE7 /* TabularDataCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabularDataCell.swift; sourceTree = "<group>"; };
+		C142CD611C0E598B00141AE7 /* TabularDataCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabularDataCell.xib; sourceTree = "<group>"; };
+		C142CD641C0E61AF00141AE7 /* TabularDataRowHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabularDataRowHeaderCell.swift; sourceTree = "<group>"; };
+		C142CD651C0E61AF00141AE7 /* TabularDataRowHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabularDataRowHeaderCell.xib; sourceTree = "<group>"; };
+		C142CD681C0E643B00141AE7 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		C142CD691C0E643B00141AE7 /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
+		C142CD6C1C0E6ABB00141AE7 /* TabularDataCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabularDataCellModel.swift; sourceTree = "<group>"; };
+		C142CD6E1C0EC67C00141AE7 /* TabularDataCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabularDataCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		C155956B1C051D71002D6DB5 /* PickerModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerModalViewController.swift; sourceTree = "<group>"; };
 		C155956C1C051D71002D6DB5 /* PickerModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerModalViewController.xib; sourceTree = "<group>"; };
 		C15682D81C038E00000479B0 /* ManualMacroEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualMacroEntryViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +158,8 @@
 		C18BB7A41C06E1000071CB04 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		C18BB7A61C06F2D10071CB04 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		C18BB7A71C06F2D10071CB04 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		C18FA8B51C0D776500ACDF63 /* MealsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsViewController.swift; sourceTree = "<group>"; };
+		C18FA8B61C0D776500ACDF63 /* MealsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MealsViewController.xib; sourceTree = "<group>"; };
 		C19911701BFBEE9F003C97D3 /* MeterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeterView.xib; sourceTree = "<group>"; };
 		C1B20F8E1BFBE9A7002C72E9 /* BodyMetrics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BodyMetrics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1B20F911BFBE9A7002C72E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -265,10 +295,40 @@
 		C12861271C077C5F00B1B5A2 /* Planner */ = {
 			isa = PBXGroup;
 			children = (
+				C18FA8B91C0D77F000ACDF63 /* Cells */,
 				C12861281C077CA400B1B5A2 /* PlannerViewController.swift */,
 				C12861291C077CA400B1B5A2 /* PlannerViewController.xib */,
+				C18FA8B51C0D776500ACDF63 /* MealsViewController.swift */,
+				C18FA8B61C0D776500ACDF63 /* MealsViewController.xib */,
+				C142CD6E1C0EC67C00141AE7 /* TabularDataCollectionViewFlowLayout.swift */,
 			);
 			name = Planner;
+			sourceTree = "<group>";
+		};
+		C13CDD221C0A7ABE00FA3BCF /* Initial */ = {
+			isa = PBXGroup;
+			children = (
+				C13CDD231C0A7ACF00FA3BCF /* InitialViewController.swift */,
+				C13CDD241C0A7ACF00FA3BCF /* InitialViewController.xib */,
+				C142CD681C0E643B00141AE7 /* SignUpViewController.swift */,
+				C142CD691C0E643B00141AE7 /* SignUpViewController.xib */,
+			);
+			name = Initial;
+			sourceTree = "<group>";
+		};
+		C18FA8B91C0D77F000ACDF63 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C142CD5A1C0E569500141AE7 /* TabularDataRowCellModel.swift */,
+				C142CD5C1C0E597100141AE7 /* TabularDataRowCell.swift */,
+				C142CD5D1C0E597100141AE7 /* TabularDataRowCell.xib */,
+				C142CD601C0E598B00141AE7 /* TabularDataCell.swift */,
+				C142CD611C0E598B00141AE7 /* TabularDataCell.xib */,
+				C142CD641C0E61AF00141AE7 /* TabularDataRowHeaderCell.swift */,
+				C142CD651C0E61AF00141AE7 /* TabularDataRowHeaderCell.xib */,
+				C142CD6C1C0E6ABB00141AE7 /* TabularDataCellModel.swift */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		C1B20F851BFBE9A7002C72E9 = {
@@ -296,6 +356,7 @@
 		C1B20F901BFBE9A7002C72E9 /* BodyMetrics */ = {
 			isa = PBXGroup;
 			children = (
+				C13CDD221C0A7ABE00FA3BCF /* Initial */,
 				C12861271C077C5F00B1B5A2 /* Planner */,
 				C1DEF2F81C03C61100DFB7F0 /* Settings */,
 				C1B210301BFE46F5002C72E9 /* Food */,
@@ -640,6 +701,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1DEF3121C03D68100DFB7F0 /* FormWithSegmentControlCollectionViewCell.xib in Resources */,
+				C18FA8B81C0D776500ACDF63 /* MealsViewController.xib in Resources */,
 				C1B20FFF1BFBED69002C72E9 /* BlenderPro-Book.otf in Resources */,
 				C1B20F9C1BFBE9A7002C72E9 /* LaunchScreen.storyboard in Resources */,
 				C1B210281BFD0574002C72E9 /* FoodSearchViewController.xib in Resources */,
@@ -648,14 +710,17 @@
 				C1B20F971BFBE9A7002C72E9 /* Main.storyboard in Resources */,
 				C1DEF31A1C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib in Resources */,
 				C15682DB1C038E00000479B0 /* ManualMacroEntryViewController.xib in Resources */,
+				C142CD5F1C0E597100141AE7 /* TabularDataRowCell.xib in Resources */,
 				C1B20FFE1BFBED69002C72E9 /* BlenderPro-BoldItalic.otf in Resources */,
 				C1B210031BFBED69002C72E9 /* BlenderPro-MediumItalic.otf in Resources */,
 				C1B210371BFE8491002C72E9 /* fruit-loops.jpg in Resources */,
 				C1B210051BFBED69002C72E9 /* BlenderPro-ThinItalic.otf in Resources */,
 				C1B210011BFBED69002C72E9 /* BlenderPro-Heavy.otf in Resources */,
 				C18BB7A91C06F2D10071CB04 /* SettingsTableViewCell.xib in Resources */,
+				C142CD671C0E61AF00141AE7 /* TabularDataRowHeaderCell.xib in Resources */,
 				C1B20FC21BFBE9E5002C72E9 /* HomeViewController.xib in Resources */,
 				C155956E1C051D71002D6DB5 /* PickerModalViewController.xib in Resources */,
+				C13CDD261C0A7ACF00FA3BCF /* InitialViewController.xib in Resources */,
 				C1DEF30D1C03D62B00DFB7F0 /* ProfileViewController.xib in Resources */,
 				C1B2102C1BFD0757002C72E9 /* SearchResultsCollectionViewCell.xib in Resources */,
 				C15682DF1C038ECF000479B0 /* FormCollectionViewCell.xib in Resources */,
@@ -665,6 +730,8 @@
 				C1B210021BFBED69002C72E9 /* BlenderPro-Medium.otf in Resources */,
 				C19911711BFBEE9F003C97D3 /* MeterView.xib in Resources */,
 				C1B210041BFBED69002C72E9 /* BlenderPro-Thin.otf in Resources */,
+				C142CD6B1C0E643B00141AE7 /* SignUpViewController.xib in Resources */,
+				C142CD631C0E598B00141AE7 /* TabularDataCell.xib in Resources */,
 				C1DEF2FC1C03C62100DFB7F0 /* SettingsViewController.xib in Resources */,
 				C1B210341BFE4702002C72E9 /* FoodDetailViewController.xib in Resources */,
 				C1DEF31E1C05138100DFB7F0 /* PickerModalView.xib in Resources */,
@@ -740,13 +807,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C142CD5E1C0E597100141AE7 /* TabularDataRowCell.swift in Sources */,
 				C128612A1C077CA400B1B5A2 /* PlannerViewController.swift in Sources */,
 				C1DEF2F71C03C5D400DFB7F0 /* MainTabBarController.swift in Sources */,
 				C1B20F941BFBE9A7002C72E9 /* ViewController.swift in Sources */,
+				C142CD6A1C0E643B00141AE7 /* SignUpViewController.swift in Sources */,
 				C1B20FED1BFBEC32002C72E9 /* WebUrlRegularExpressionConstants.swift in Sources */,
 				C1B210081BFBEE22002C72E9 /* MeterView.swift in Sources */,
 				C1B210331BFE4702002C72E9 /* FoodDetailViewController.swift in Sources */,
+				C142CD661C0E61AF00141AE7 /* TabularDataRowHeaderCell.swift in Sources */,
 				C1B20FDA1BFBEA54002C72E9 /* Styles.swift in Sources */,
+				C142CD5B1C0E569500141AE7 /* TabularDataRowCellModel.swift in Sources */,
+				C18FA8B71C0D776500ACDF63 /* MealsViewController.swift in Sources */,
 				C1B20FCE1BFBEA31002C72E9 /* UIImage+.swift in Sources */,
 				C1B2102F1BFE45E0002C72E9 /* CustomNavigationController.swift in Sources */,
 				C155956D1C051D71002D6DB5 /* PickerModalViewController.swift in Sources */,
@@ -757,6 +829,7 @@
 				C1B20FD11BFBEA31002C72E9 /* UIView+.swift in Sources */,
 				C1B71C9B1C08017700282D3C /* PieChartData.swift in Sources */,
 				C1B20FEC1BFBEC32002C72E9 /* TextUtils.swift in Sources */,
+				C142CD6F1C0EC67C00141AE7 /* TabularDataCollectionViewFlowLayout.swift in Sources */,
 				C1B20FEF1BFBEC32002C72E9 /* KeyboardUtils.swift in Sources */,
 				C1DEF3151C03D92C00DFB7F0 /* FormWithTextFieldCollectionViewCell.swift in Sources */,
 				C1B210771BFFA8C4002C72E9 /* Double+.swift in Sources */,
@@ -764,6 +837,7 @@
 				C1B210391BFF95B0002C72E9 /* MDRotatingPieChart.swift in Sources */,
 				C1DEF3021C03D2BB00DFB7F0 /* SettingsCellDataModel.swift in Sources */,
 				C15682DA1C038E00000479B0 /* ManualMacroEntryViewController.swift in Sources */,
+				C142CD6D1C0E6ABB00141AE7 /* TabularDataCellModel.swift in Sources */,
 				C18BB7A51C06E1000071CB04 /* GradientView.swift in Sources */,
 				C1B20FD01BFBEA31002C72E9 /* UILabelWithPadding.swift in Sources */,
 				C15682DE1C038ECF000479B0 /* FormCollectionViewCell.swift in Sources */,
@@ -775,8 +849,10 @@
 				C1B20FEE1BFBEC32002C72E9 /* KeyboardObserver.swift in Sources */,
 				C1B210271BFD0574002C72E9 /* FoodSearchViewController.swift in Sources */,
 				C1DEF31C1C05137000DFB7F0 /* PickerModalView.swift in Sources */,
+				C13CDD251C0A7ACF00FA3BCF /* InitialViewController.swift in Sources */,
 				C1B20F921BFBE9A7002C72E9 /* AppDelegate.swift in Sources */,
 				C1B20FC11BFBE9E5002C72E9 /* HomeViewController.swift in Sources */,
+				C142CD621C0E598B00141AE7 /* TabularDataCell.swift in Sources */,
 				C1B20FF01BFBEC32002C72E9 /* PlaceholderTextView.swift in Sources */,
 				C184AFC31C07B394003AB926 /* JTCalendarRingDayView.swift in Sources */,
 				C1DEF3111C03D68100DFB7F0 /* FormWithSegmentControlCollectionViewCell.swift in Sources */,

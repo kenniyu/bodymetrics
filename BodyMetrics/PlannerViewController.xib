@@ -29,14 +29,14 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnW-rJ-UNc" customClass="JTCalendarWeekDayView">
-                    <rect key="frame" x="0.0" y="104" width="600" height="40"/>
+                    <rect key="frame" x="0.0" y="104" width="600" height="24"/>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="YUK-NC-7b7"/>
+                        <constraint firstAttribute="height" constant="24" id="YUK-NC-7b7"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlA-G0-Sfc" customClass="JTVerticalCalendarView">
-                    <rect key="frame" x="0.0" y="144" width="600" height="228"/>
+                    <rect key="frame" x="0.0" y="128" width="600" height="236"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="200" id="YFg-k1-wVz"/>
@@ -48,10 +48,10 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91T-ga-eHo">
-                    <rect key="frame" x="0.0" y="372" width="600" height="228"/>
+                    <rect key="frame" x="0.0" y="364" width="600" height="236"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTF-LH-S25">
-                            <rect key="frame" x="0.0" y="78" width="600" height="72"/>
+                            <rect key="frame" x="0.0" y="82" width="600" height="72"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing planned here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue1-qU-qbu">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
@@ -60,8 +60,11 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MyV-6K-DDn">
-                                    <rect key="frame" x="236" y="36" width="128" height="36"/>
-                                    <state key="normal" title="Create a Meal Plan"/>
+                                    <rect key="frame" x="261.5" y="36" width="77" height="36"/>
+                                    <state key="normal" title="Add a Meal"/>
+                                    <connections>
+                                        <action selector="tapAddMeal:" destination="-1" eventType="touchUpInside" id="BPL-qS-R3g"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -87,8 +87,13 @@ class PlannerViewController: UIViewController {
     private func setup() {
         self.title = "Plan".uppercaseString
         self.view.backgroundColor = Styles.Colors.AppDarkBlue
+        setupNavBar()
         setupCalendar()
         setupZeroStateViews()
+    }
+
+    private func setupNavBar() {
+        addRightBarButtons([createAddButton()])
     }
 
     private func setupZeroStateViews() {
@@ -101,6 +106,17 @@ class PlannerViewController: UIViewController {
         zeroStateButton.titleLabel?.text = zeroStateButton.titleLabel?.text?.uppercaseString
         zeroStateButton.setTitle(zeroStateButton.titleLabel?.text?.uppercaseString, forState: .Normal)
         zeroStateButton.titleLabel?.font = Styles.Fonts.MediumLarge
+    }
+
+    public override func add() {
+        addMeal()
+    }
+
+    public func addMeal() {
+        print("Got here")
+        let mealsViewController = MealsViewController()
+        let navigationController = UINavigationController(rootViewController: mealsViewController)
+        presentViewController(navigationController, animated: true, completion: nil)
     }
 }
 
@@ -196,12 +212,14 @@ extension PlannerViewController: JTCalendarDelegate {
         }
     }
 
+    @IBAction func tapAddMeal(sender: UIButton) {
+        addMeal()
+    }
+
     public func calendarBuildDayView(calendar: JTCalendarManager!) -> UIView! {
         let view = JTCalendarRingDayView()
         view.textLabel.font = Styles.Fonts.MediumMedium
         view.textLabel.textColor = Styles.Colors.AppDarkBlue
-
-        view.circleView
         view.circleRatio = 0.6
         view.dotRatio = 1 / 0.9
 
