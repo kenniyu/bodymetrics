@@ -19,7 +19,7 @@ class TabularDataCell: UICollectionViewCell {
     static let kNib = UINib(nibName: kClassName, bundle: NSBundle(forClass: TabularDataCell.self))
 
     static let kCellContainerPadding: CGFloat = 12
-    static let kDataValueLabelFont: UIFont = Styles.Fonts.MediumLarge!
+    static let kDataValueLabelFont: UIFont = Styles.Fonts.MediumMedium!
     static let kFontColor: UIColor = Styles.Colors.DataVisLightTeal
     static let kImageHeight: CGFloat = 200
     static let kActorPhotoHeight: CGFloat = 50
@@ -27,7 +27,7 @@ class TabularDataCell: UICollectionViewCell {
     static let kSocialActionsButtonWidth: CGFloat = 80
     static let kBorderViewHeight: CGFloat = 8
     static let kCellHeight: CGFloat = 50
-    static let kCellWidth: CGFloat = 100
+    static let kCellWidth: CGFloat = 80
 
     @IBOutlet weak var containerView: UIView!
     /// row of tabular data cells
@@ -54,11 +54,8 @@ class TabularDataCell: UICollectionViewCell {
 
     public override func awakeFromNib() {
         super.awakeFromNib()
-        //        likeButton.setTitle("Like", forState: .Normal)
-        //        commentButton.setTitle("Comment", forState: .Normal)
-        //        followButton.setTitle("Follow", forState: .Normal)
 
-        dataValueLabel.textColor = UIColor.whiteColor()
+        dataValueLabel.textColor = Styles.Colors.BarNumber
         dataValueLabel.font = TabularDataCell.kDataValueLabelFont
     }
 

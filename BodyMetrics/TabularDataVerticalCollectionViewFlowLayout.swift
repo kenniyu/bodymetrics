@@ -1,5 +1,5 @@
 //
-//  TabularDataCollectionViewFlowLayout.swift
+//  TabularDataVerticalCollectionViewFlowLayout.swift
 //  BodyMetrics
 //
 //  Created by Ken Yu on 12/1/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TabularDataCollectionViewFlowLayout: UICollectionViewFlowLayout {
+class TabularDataVerticalCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let originalAttributes = super.layoutAttributesForElementsInRect(rect)

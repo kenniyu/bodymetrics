@@ -9,6 +9,7 @@
 import UIKit
 
 public protocol TabularDataRowCellDelegate: class {
+    func expandCollapse(cell: TabularDataRowCell)
 }
 
 public class TabularDataRowCell: UICollectionViewCell {
@@ -19,6 +20,7 @@ public class TabularDataRowCell: UICollectionViewCell {
 
     static let kCellContainerPadding: CGFloat = 12
     static let kTitleLabelFontStyle: UIFont = Styles.Fonts.BookLarge!
+    static let kHeaderLabelFontStyle: UIFont = Styles.Fonts.MediumMedium!
     static let kFontColor: UIColor = Styles.Colors.DataVisLightTeal
     static let kImageHeight: CGFloat = 200
     static let kActorPhotoHeight: CGFloat = 50
@@ -26,13 +28,22 @@ public class TabularDataRowCell: UICollectionViewCell {
     static let kSocialActionsButtonWidth: CGFloat = 80
     static let kBorderViewHeight: CGFloat = 8
     static let kCellHeight: CGFloat = 50
+    static let kCellWidth: CGFloat = 80
+    static let kHeaderCellWidth: CGFloat = 132
+    static let kExpandCollapseButtonWidth: CGFloat = 32
 
     @IBOutlet weak var containerView: UIView!
     /// this cell contains a row of tabular data cells
     @IBOutlet weak var tabularDataCollectionView: UICollectionView!
+    @IBOutlet weak var tabularDataHeaderView: UIView!
+    @IBOutlet weak var tabularDataHeaderLabel: UILabel!
+    @IBOutlet weak var tabularDataHeaderRightBorder: UIView!
+    @IBOutlet weak var tabularDataRowBottomBorder: UIView!
+
+    @IBOutlet weak var expandCollapseButton: UIButton!
 
     public var viewModel: TabularDataRowCellModel!
-    public var mealItemCellDelegate: TabularDataRowCellDelegate?
+    public var tabularDataRowCellDelegate: TabularDataRowCellDelegate?
     public var synchronizedCellsScrollViewDelegate: SynchronizedCellsScrollViewDelegate?
 
     public class var nib: UINib {
@@ -53,31 +64,57 @@ public class TabularDataRowCell: UICollectionViewCell {
 
     public override func awakeFromNib() {
         super.awakeFromNib()
-        //        likeButton.setTitle("Like", forState: .Normal)
-        //        commentButton.setTitle("Comment", forState: .Normal)
-        //        followButton.setTitle("Follow", forState: .Normal)
+
+        tabularDataHeaderLabel.font = TabularDataRowCell.kHeaderLabelFontStyle
+        tabularDataHeaderLabel.textColor = Styles.Colors.BarNumber
+        self.backgroundColor = Styles.Colors.AppDarkBlue
     }
 
     public func setup(viewModel: TabularDataRowCellModel) {
         self.viewModel = viewModel
-        self.backgroundColor = UIColor.clearColor()
-        self.containerView.backgroundColor = UIColor.clearColor()
+        setupStyles()
 
         loadDataIntoViews(viewModel)
-        hideUnhideViews()
         setupA11yIdentifiers()
         //        setupGestureRecognizers()
         //        setupControlIdentifiers()
         setupCollectionView()
-
         tabularDataCollectionView.reloadData()
         setNeedsLayout()
+    }
+
+    public func setupStyles() {
+        containerView.backgroundColor = UIColor.clearColor()
+        tabularDataRowBottomBorder.backgroundColor = Styles.Colors.BarLabel
+        tabularDataHeaderRightBorder.backgroundColor = Styles.Colors.BarLabel
+
+        // style
+        if viewModel.isSubRow {
+            backgroundColor = Styles.Colors.AppDarkBlueLighter
+        } else {
+            backgroundColor = Styles.Colors.AppDarkBlue
+        }
+        tabularDataHeaderView.backgroundColor = backgroundColor
+
+        expandCollapseButton.tintColor = Styles.Colors.BarNumber
+        if viewModel.isExpanded {
+            // show expanded button icon
+            expandCollapseButton.setImage(UIImage(named: "collapse-white.png"), forState: .Normal)
+        } else {
+            // show collapse button icon
+            expandCollapseButton.setImage(UIImage(named: "expand-white.png"), forState: .Normal)
+        }
+        hideUnhideViews()
     }
 
     public func setupCollectionView() {
         registerCells()
         tabularDataCollectionView.delegate = self
         tabularDataCollectionView.dataSource = self
+        tabularDataCollectionView.contentInset = UIEdgeInsetsMake(0, TabularDataRowCell.kHeaderCellWidth, 0, 0)
+        tabularDataCollectionView.backgroundColor = UIColor.clearColor()
+        tabularDataCollectionView.showsHorizontalScrollIndicator = false
+        tabularDataCollectionView.showsVerticalScrollIndicator = false
     }
 
     public override func layoutSubviews() {
@@ -114,6 +151,36 @@ public class TabularDataRowCell: UICollectionViewCell {
         tabularDataCollectionView.left = 0
         tabularDataCollectionView.width = containerView.width
         tabularDataCollectionView.height = containerView.height
+
+        tabularDataHeaderView.top = 0
+        tabularDataHeaderView.left = 0
+        tabularDataHeaderView.width = TabularDataRowCell.kHeaderCellWidth
+        tabularDataHeaderView.height = TabularDataRowCell.kCellHeight
+
+
+        expandCollapseButton.width = TabularDataRowCell.kExpandCollapseButtonWidth
+        expandCollapseButton.height = expandCollapseButton.width
+        expandCollapseButton.left = 0
+        expandCollapseButton.center.y = tabularDataHeaderView.center.y
+
+        var headerViewLeftMargin: CGFloat = 0
+        if viewModel.isSubRow {
+            headerViewLeftMargin = Styles.Dimensions.kItemSpacingDim2
+        }
+        tabularDataHeaderLabel.top = 0
+        tabularDataHeaderLabel.left = expandCollapseButton.left + expandCollapseButton.width + expandCollapseButton.left + headerViewLeftMargin
+        tabularDataHeaderLabel.width = tabularDataHeaderView.width - tabularDataHeaderLabel.left
+        tabularDataHeaderLabel.height = tabularDataHeaderView.height
+
+        tabularDataHeaderRightBorder.top = 0
+        tabularDataHeaderRightBorder.left = tabularDataHeaderView.width - 1
+        tabularDataHeaderRightBorder.width = 1
+        tabularDataHeaderRightBorder.height = tabularDataHeaderView.height
+
+        tabularDataRowBottomBorder.height = 1
+        tabularDataRowBottomBorder.width = tabularDataCollectionView.width
+        tabularDataRowBottomBorder.left = 0
+        tabularDataRowBottomBorder.top = tabularDataCollectionView.height - 1
     }
 
     public func setupA11yIdentifiers() {
@@ -124,10 +191,13 @@ public class TabularDataRowCell: UICollectionViewCell {
         // load collectionview
         // TabularDataRowCellModel has a field called cellModels: 
         // [TabularDataCellModel, TabularDataCellModel, TabularDataCellModel, TabularDataCellModel]
+        if let headerModel = viewModel.cellModels.first {
+            tabularDataHeaderLabel.text = String(headerModel.value)
+        }
     }
 
     public func hideUnhideViews() {
-        //        topBorderView.hidden = !style.showTopBorder
+        expandCollapseButton.hidden = viewModel.isSubRow || viewModel.isHeader || !viewModel.isExpandable
     }
 
 
@@ -137,6 +207,31 @@ public class TabularDataRowCell: UICollectionViewCell {
 
     public func registerCells(collectionView: UICollectionView) {
         tabularDataCollectionView.registerNib(TabularDataCell.nib, forCellWithReuseIdentifier: TabularDataCell.reuseId)
+        tabularDataCollectionView.registerClass(TabularDataCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: TabularDataCell.reuseId)
+        tabularDataCollectionView.registerNib(TabularDataCell.nib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: TabularDataCell.reuseId)
+    }
+
+    public func getHeaderCellViewModel() -> TabularDataCellModel {
+        if let headerCellModel = viewModel.cellModels.first {
+            return headerCellModel
+        } else {
+            let mealHeaderCellModel = TabularDataCellModel("mealName", value: "Meal 1")
+            return mealHeaderCellModel
+        }
+    }
+
+    public func highlight() {
+        tabularDataCollectionView.backgroundColor = UIColor.redColor()
+        self.backgroundColor = UIColor.redColor()
+    }
+
+    public func unhighlight() {
+        tabularDataCollectionView.backgroundColor = Styles.Colors.AppDarkBlue
+    }
+
+
+    @IBAction func expandCollapse(sender: UIButton) {
+        tabularDataRowCellDelegate?.expandCollapse(self)
     }
 }
 
@@ -144,7 +239,7 @@ public class TabularDataRowCell: UICollectionViewCell {
 extension TabularDataRowCell: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let cell = tabularDataCollectionView.dequeueReusableCellWithReuseIdentifier(TabularDataCell.kReuseIdentifier, forIndexPath: indexPath) as? TabularDataCell {
-            let tabularDataCellViewModel = viewModel.cellModels[indexPath.row]
+            let tabularDataCellViewModel = viewModel.cellModels[indexPath.row + 1]
             cell.setup(tabularDataCellViewModel)
             return cell
         }
@@ -152,7 +247,7 @@ extension TabularDataRowCell: UICollectionViewDataSource, UICollectionViewDelega
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.cellModels.count
+        return viewModel.cellModels.count - 1
     }
 
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -163,7 +258,11 @@ extension TabularDataRowCell: UICollectionViewDataSource, UICollectionViewDelega
 
 extension TabularDataRowCell: UICollectionViewDelegateFlowLayout {
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let tabularDataCellModel = viewModel.cellModels[indexPath.row]
+//        if indexPath.row == 0 {
+//            return CGSizeMake(TabularDataRowCell.kHeaderCellWidth, TabularDataRowCell.kCellHeight)
+//        }
+
+        let tabularDataCellModel = viewModel.cellModels[indexPath.row + 1]
         return TabularDataCell.size(tabularDataCollectionView.bounds.width, viewModel: tabularDataCellModel)
     }
 
@@ -172,7 +271,7 @@ extension TabularDataRowCell: UICollectionViewDelegateFlowLayout {
     }
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 0, 0, 0)
+        return UIEdgeInsetsZero
     }
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
@@ -182,17 +281,16 @@ extension TabularDataRowCell: UICollectionViewDelegateFlowLayout {
 //    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
 //        if kind == UICollectionElementKindSectionHeader {
 //            let cell = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: TabularDataCell.kReuseIdentifier, forIndexPath: indexPath) as! TabularDataCell
-//            if let viewModel = headerCellViewModel {
-//                cell.setup(viewModel)
-//                return cell
-//            }
+//            let viewModel = getHeaderCellViewModel()
+//            cell.setup(viewModel)
+//            return cell
 //        }
 //        // TODO: Generate the footer cell which would be sub totals
 //        return UICollectionViewCell()
 //    }
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSizeMake(tabularDataCollectionView.bounds.width, 50)
+//        return CGSizeMake(TabularDataCell.kCellWidth, 50)
         return CGSizeZero
     }
 }

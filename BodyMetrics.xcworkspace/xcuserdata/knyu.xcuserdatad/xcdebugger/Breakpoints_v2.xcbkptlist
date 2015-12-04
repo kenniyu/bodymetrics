@@ -58,12 +58,12 @@
                   moduleName = "BodyMetrics"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
-                  timestampString = "470730239.877764"
+                  timestampString = "470880431.629936"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "222"
                   endingLineNumber = "222"
-                  offsetFromSymbolStart = "1420">
+                  offsetFromSymbolStart = "1902">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -73,12 +73,12 @@
                   moduleName = "BodyMetrics"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/knyu/Documents/ios%20apps/BodyMetrics/BodyMetrics/FoodDetailViewController.swift"
-                  timestampString = "470730239.878039"
+                  timestampString = "470880431.630209"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "223"
                   endingLineNumber = "223"
-                  offsetFromSymbolStart = "24">
+                  offsetFromSymbolStart = "23">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -234,13 +234,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BodyMetrics/MealsViewController.swift"
-            timestampString = "470731759.358582"
+            timestampString = "470949334.02712"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
-            landmarkName = "collectionView(_:layout:referenceSizeForHeaderInSection:)"
-            landmarkType = "5">
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "MealsViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -336,6 +336,22 @@
             startingLineNumber = "105"
             endingLineNumber = "105"
             landmarkName = "didTapLogIn(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BodyMetrics/MealsViewController.swift"
+            timestampString = "470949334.02712"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
+            landmarkName = "expandCollapse(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

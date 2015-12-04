@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ej9-vZ-9cC">
-                    <rect key="frame" x="0.0" y="104" width="600" height="456"/>
+                    <rect key="frame" x="0.0" y="114" width="600" height="436"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vRu-UV-wRm">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -29,21 +29,24 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oT8-xX-jF5">
-                    <rect key="frame" x="60" y="0.0" width="540" height="40"/>
+                    <rect key="frame" x="60" y="0.0" width="540" height="50"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAD-UM-oQm">
-                    <rect key="frame" x="0.0" y="560" width="600" height="40"/>
+                    <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="We4-Lq-acC"/>
+                        <constraint firstAttribute="height" constant="50" id="We4-Lq-acC"/>
                     </constraints>
                     <state key="normal" title="Add Meal"/>
+                    <connections>
+                        <action selector="addMealTapped:" destination="-1" eventType="touchUpInside" id="1B3-XT-mBS"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fs-wp-HTu">
-                    <rect key="frame" x="12" y="64" width="36" height="40"/>
+                    <rect key="frame" x="12" y="64" width="36" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="KQc-qY-hTp"/>
+                        <constraint firstAttribute="height" constant="50" id="KQc-qY-hTp"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

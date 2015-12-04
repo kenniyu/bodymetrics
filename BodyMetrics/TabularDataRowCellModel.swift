@@ -10,8 +10,20 @@ import Foundation
 
 public class TabularDataRowCellModel {
     let cellModels: [TabularDataCellModel]
+    var uniqueId: String
+    var hidden: Bool
+    let isSubRow: Bool
+    var isExpanded: Bool
+    var isHeader: Bool
+    var isExpandable: Bool
 
-    public init(_ cellModels: [TabularDataCellModel]) {
+    public init(_ cellModels: [TabularDataCellModel], uniqueId: String, hidden: Bool, isSubRow: Bool = false, isExpanded: Bool = false, isHeader: Bool = false, isExpandable: Bool = false) {
+        self.uniqueId = uniqueId
         self.cellModels = cellModels
+        self.hidden = hidden
+        self.isSubRow = isSubRow
+        self.isExpanded = isExpanded
+        self.isHeader = isHeader
+        self.isExpandable = isExpandable
     }
 }

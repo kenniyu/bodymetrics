@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="409" height="82"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="none" id="T2d-xB-3ro">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" id="T2d-xB-3ro">
                                 <rect key="frame" x="0.0" y="0.0" width="409" height="82"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="t6Q-FH-UhE">
@@ -31,6 +31,39 @@
                                     <outlet property="delegate" destination="-1" id="UuI-6N-FAm"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" id="GhB-lZ-G2L">
+                                <rect key="frame" x="0.0" y="0.0" width="89" height="82"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="djA-26-Rfp">
+                                        <rect key="frame" x="5" y="34" width="12" height="12"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <connections>
+                                            <action selector="expandCollapse:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Shy-Gt-b7N"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" id="3SP-Mj-gGw">
+                                        <rect key="frame" x="99" y="0.0" width="1" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rg3-Ai-TL0">
+                                        <rect key="frame" x="0.0" y="0.0" width="89" height="82"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="wD4-bP-mX1">
+                                <rect key="frame" x="0.0" y="81" width="409" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -40,7 +73,12 @@
             <size key="customSize" width="409" height="82"/>
             <connections>
                 <outlet property="containerView" destination="Ha2-yv-FPP" id="zwI-eD-dPU"/>
+                <outlet property="expandCollapseButton" destination="djA-26-Rfp" id="8xU-pw-Uxd"/>
                 <outlet property="tabularDataCollectionView" destination="T2d-xB-3ro" id="0qV-XX-gJl"/>
+                <outlet property="tabularDataHeaderLabel" destination="rg3-Ai-TL0" id="xFT-ps-6Fi"/>
+                <outlet property="tabularDataHeaderRightBorder" destination="3SP-Mj-gGw" id="ech-Iz-S1R"/>
+                <outlet property="tabularDataHeaderView" destination="GhB-lZ-G2L" id="D3C-2f-1DP"/>
+                <outlet property="tabularDataRowBottomBorder" destination="wD4-bP-mX1" id="gZY-tY-i6e"/>
             </connections>
             <point key="canvasLocation" x="324.5" y="389"/>
         </collectionViewCell>

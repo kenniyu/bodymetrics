@@ -21,6 +21,7 @@ class MealsViewController: UIViewController {
 
     @IBOutlet weak var addMealButton: UIButton!
     var cellViewModels: [TabularDataRowCellModel] = []
+    var filteredCellViewModels: [TabularDataRowCellModel] = []
 
     public static let kNavHeight: CGFloat = 64
 
@@ -60,7 +61,6 @@ class MealsViewController: UIViewController {
 
         setupCollectionView()
 
-        // setup header data cell row model
         createCellModels()
 
         registerCells()
@@ -70,15 +70,26 @@ class MealsViewController: UIViewController {
 
     private func createCellModels() {
         for i in 1...15 {
-            let mealTitleCellModel = TabularDataCellModel("Meal \(i)", value: CGFloat(arc4random_uniform(6) + 1))
             let fatCellModel = TabularDataCellModel("fat", value: CGFloat(arc4random_uniform(6) + 1))
             let carbsCellModel = TabularDataCellModel("carbs", value: CGFloat(arc4random_uniform(6) + 1))
             let proteinCellModel = TabularDataCellModel("protein", value: CGFloat(arc4random_uniform(6) + 1))
             let caloriesCellModel = TabularDataCellModel("calories", value: CGFloat(arc4random_uniform(6) + 1))
+            var mealTitleCellModel = TabularDataCellModel("mealName", value: "Meal \(i)")
 
-            let firstViewModel = TabularDataRowCellModel([mealTitleCellModel, fatCellModel, carbsCellModel, proteinCellModel, caloriesCellModel])
+            var hidden = false
+            var isSubRow = false
+            if i > 1 && Int(arc4random_uniform(4) + 1) < 3 {
+                hidden = true
+                isSubRow = true
+                mealTitleCellModel = TabularDataCellModel("mealName", value: "Food Item \(i)")
+            }
+
+            let firstViewModel = TabularDataRowCellModel([mealTitleCellModel, fatCellModel, carbsCellModel, proteinCellModel, caloriesCellModel], uniqueId: "tabularDataRowCellModel\(i)", hidden: hidden, isSubRow: isSubRow)
             cellViewModels.append(firstViewModel)
         }
+
+        // filter out hidden ones
+        updateFilteredCellViewModels()
     }
 
     private func registerCells() {
@@ -90,7 +101,7 @@ class MealsViewController: UIViewController {
         mealsCollectionView.backgroundColor = Styles.Colors.AppDarkBlue
         mealsCollectionView.delegate = self
         mealsCollectionView.dataSource = self
-        mealsCollectionView.collectionViewLayout = TabularDataCollectionViewFlowLayout()
+        mealsCollectionView.collectionViewLayout = TabularDataVerticalCollectionViewFlowLayout()
     }
 
     public func registerCells(collectionView: UICollectionView) {
@@ -106,16 +117,43 @@ class MealsViewController: UIViewController {
         let proteinHeaderCellModel = TabularDataCellModel("protein", value: "protein")
         let caloriesHeaderCellModel = TabularDataCellModel("calories", value: "calories")
 
-        let headerCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel])
+        let headerCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModelHeader", hidden: false, isHeader: true)
         return headerCellViewModel
+    }
+
+    public func updateFilteredCellViewModels() {
+        for (index, cellViewModel) in cellViewModels.enumerate() {
+            // dip toe one index ahead to test if it's subrow, if so, then mark current as expandable
+            let nextRow = index + 1
+            let isExpandable = !cellViewModel.isSubRow && nextRow < cellViewModels.count && cellViewModels[nextRow].isSubRow
+            cellViewModel.isExpandable = isExpandable
+        }
+        filteredCellViewModels = cellViewModels.filter({!$0.hidden})
+    }
+
+    @IBAction func addMealTapped(sender: UIButton) {
+        let mealHeaderCellModel = TabularDataCellModel("mealName", value: "meal")
+        let fatHeaderCellModel = TabularDataCellModel("fat", value: 0)
+        let carbsHeaderCellModel = TabularDataCellModel("carbs", value: 0)
+        let proteinHeaderCellModel = TabularDataCellModel("protein", value: 0)
+        let caloriesHeaderCellModel = TabularDataCellModel("calories", value: 0)
+
+
+        let newCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModel\(cellViewModels.count + 100)", hidden: false, isHeader: true)
+        cellViewModels.append(newCellViewModel)
+        filteredCellViewModels.append(newCellViewModel)
+
+        let newIndexPath = NSIndexPath(forRow: filteredCellViewModels.count - 1, inSection: 0)
+        mealsCollectionView.insertItemsAtIndexPaths([newIndexPath])
     }
 }
 
 extension MealsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let cell = mealsCollectionView.dequeueReusableCellWithReuseIdentifier(TabularDataRowCell.kReuseIdentifier, forIndexPath: indexPath) as? TabularDataRowCell {
-            let viewModel = cellViewModels[indexPath.row]
+            let viewModel = filteredCellViewModels[indexPath.row]
             cell.setup(viewModel)
+            cell.tabularDataRowCellDelegate = self
             cell.synchronizedCellsScrollViewDelegate = self
             return cell
         }
@@ -123,18 +161,30 @@ extension MealsViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellViewModels.count
+        return filteredCellViewModels.count
     }
 
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // do some shared shit
         // show details about this item
     }
+
+//    public func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
+//        if let cell = mealsCollectionView.dequeueReusableCellWithReuseIdentifier(TabularDataRowCell.kReuseIdentifier, forIndexPath: indexPath) as? TabularDataRowCell {
+//            cell.highlight()
+//        }
+//    }
+//
+//    public func collectionView(collectionView: UICollectionView, didUnhighlightItemAtIndexPath indexPath: NSIndexPath) {
+//        if let cell = mealsCollectionView.dequeueReusableCellWithReuseIdentifier(TabularDataRowCell.kReuseIdentifier, forIndexPath: indexPath) as? TabularDataRowCell {
+//            cell.unhighlight()
+//        }
+//    }
 }
 
 extension MealsViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let foodItem = cellViewModels[indexPath.row]
+        let foodItem = filteredCellViewModels[indexPath.row]
         return TabularDataRowCell.size(mealsCollectionView.bounds.width, viewModel: foodItem)
     }
 
@@ -210,5 +260,72 @@ extension MealsViewController: SynchronizedCellsScrollViewDelegate {
         if let headerCell = mealsCollectionView.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as? TabularDataRowCell {
             headerCell.tabularDataCollectionView.contentOffset = contentOffset
         }
+    }
+}
+
+extension MealsViewController: TabularDataRowCellDelegate {
+    public func expandCollapse(cell: TabularDataRowCell) {
+        //  look at view model, figure out how to expand collapse, then update the cells ui
+        guard let indexPath = mealsCollectionView.indexPathForCell(cell) else {
+            return
+        }
+        let selectedRow = indexPath.row
+        var indexPaths: [NSIndexPath] = []
+        var addRemoveCellViewModels: [TabularDataRowCellModel] = []
+
+        var shouldAdd: Bool = false
+        var insertionDeletionStartingRow = indexPath.row
+        for (index, cellViewModel) in cellViewModels.enumerate() {
+            if cell.viewModel.uniqueId == cellViewModel.uniqueId {
+                // determine whether or not to show/hide the next subrows
+
+                // dip toe one index ahead to test if it's subrow, if so, toggle its visibility
+                var innerRow = index + 1
+                if innerRow < cellViewModels.count && cellViewModels[innerRow].isSubRow {
+                    if cellViewModels[innerRow].hidden == true {
+                        // show
+                        // currently hidden, so means we should expand the next consecutive subrows
+                        while innerRow < cellViewModels.count && cellViewModels[innerRow].isSubRow {
+                            cellViewModels[innerRow].hidden = false
+                            addRemoveCellViewModels.append(cellViewModels[innerRow])
+                            insertionDeletionStartingRow += 1
+                            indexPaths.append(NSIndexPath(forRow: insertionDeletionStartingRow, inSection: 0))
+                            innerRow += 1
+                            shouldAdd = true
+                        }
+                        cellViewModel.isExpanded = true
+                    } else {
+                        // hide
+                        // collapse the next consecutive visible ones
+                        while innerRow < cellViewModels.count && cellViewModels[innerRow].isSubRow {
+                            cellViewModels[innerRow].hidden = true
+                            addRemoveCellViewModels.append(cellViewModels[innerRow])
+                            insertionDeletionStartingRow += 1
+                            indexPaths.append(NSIndexPath(forRow: insertionDeletionStartingRow, inSection: 0))
+                            innerRow += 1
+                            shouldAdd = false
+                        }
+                        cellViewModel.isExpanded = false
+                    }
+                }
+            }
+        }
+
+        if addRemoveCellViewModels.count <= 0 {
+            return
+        }
+
+        if shouldAdd {
+            // Add our model at the correct index
+            filteredCellViewModels.insertContentsOf(addRemoveCellViewModels, at: selectedRow + 1)
+            mealsCollectionView.insertItemsAtIndexPaths(indexPaths)
+        } else {
+            // Remove our model at the correct indices
+            for _ in 1...addRemoveCellViewModels.count {
+                filteredCellViewModels.removeAtIndex(selectedRow + 1)
+            }
+            mealsCollectionView.deleteItemsAtIndexPaths(indexPaths)
+        }
+        mealsCollectionView.reloadItemsAtIndexPaths([indexPath])
     }
 }
