@@ -41,6 +41,12 @@ class TabularDataVerticalCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
                     let section = layoutAttributes.indexPath.section
                     let numberOfItemsInSection = cv.numberOfItemsInSection(section)
+
+                    if numberOfItemsInSection == 0 {
+                        // Just stop right here
+                        return originalAttributes
+                    }
+
                     let firstCellIndexPath = NSIndexPath(forItem: 0, inSection: section)
                     let lastCellIndexPath = NSIndexPath(forItem: max(0, numberOfItemsInSection - 1), inSection: section)
 

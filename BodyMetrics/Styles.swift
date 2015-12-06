@@ -86,11 +86,12 @@ struct Styles {
         static let MediumXXXLarge = UIFont(name: "BlenderPro-Medium", size: 32.0)
         static let MediumXXXXLarge = UIFont(name: "BlenderPro-Medium", size: 48.0)
 
-        static let BookSmall = UIFont(name: "BlenderPro-Bold", size: 12.0)
-        static let BookMedium = UIFont(name: "BlenderPro-Bold", size: 16.0)
-        static let BookLarge = UIFont(name: "BlenderPro-Bold", size: 20.0)
-        static let BookXLarge = UIFont(name: "BlenderPro-Bold", size: 24.0)
-        static let BookXXLarge = UIFont(name: "BlenderPro-Bold", size: 32.0)
+        static let BookSmall = UIFont(name: "BlenderPro-Book", size: 12.0)
+        static let BookMedium = UIFont(name: "BlenderPro-Book", size: 16.0)
+        static let BookLarge = UIFont(name: "BlenderPro-Book", size: 20.0)
+        static let BookXLarge = UIFont(name: "BlenderPro-Book", size: 24.0)
+        static let BookXXLarge = UIFont(name: "BlenderPro-Book", size: 32.0)
+        static let BookXXXLarge = UIFont(name: "BlenderPro-Book", size: 36.0)
 
         static let BoldSmall = UIFont(name: "BlenderPro-Bold", size: 22.0)
         static let BoldMedium = UIFont(name: "BlenderPro-Bold", size: 32.0)

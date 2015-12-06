@@ -11,10 +11,12 @@ import UIKit
 
 public class TabularDataCellModel {
     let columnTitle: String
-    let value: AnyObject
+    let columnKey: String
+    var value: AnyObject
 
-    public init(_ columnTitle: String, value: AnyObject) {
+    public init(_ columnTitle: String, columnKey: String, value: AnyObject) {
         self.columnTitle = columnTitle
+        self.columnKey = columnKey
         self.value = value
     }
 }

@@ -10,6 +10,9 @@
                 <outlet property="calendarContentView" destination="qlA-G0-Sfc" id="RSn-rs-Ojh"/>
                 <outlet property="calendarMenuView" destination="dbl-i2-jrJ" id="xte-gw-P0X"/>
                 <outlet property="calendarWeekDayView" destination="cnW-rJ-UNc" id="Pm1-ZZ-WTa"/>
+                <outlet property="editMealsButton" destination="d67-WG-10N" id="FRN-p0-cnY"/>
+                <outlet property="editMealsWrapperView" destination="LO3-OQ-JUo" id="C0r-Ny-TqD"/>
+                <outlet property="spinner" destination="zo8-I1-LAR" id="mLS-aN-nmh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="zeroStateButton" destination="MyV-6K-DDn" id="cGx-6N-gxi"/>
                 <outlet property="zeroStateLabel" destination="Ue1-qU-qbu" id="Zl1-dP-zAm"/>
@@ -50,17 +53,20 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91T-ga-eHo">
                     <rect key="frame" x="0.0" y="364" width="600" height="236"/>
                     <subviews>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="zo8-I1-LAR">
+                            <rect key="frame" x="290" y="108" width="20" height="20"/>
+                        </activityIndicatorView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTF-LH-S25">
                             <rect key="frame" x="0.0" y="82" width="600" height="72"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing planned here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue1-qU-qbu">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MyV-6K-DDn">
-                                    <rect key="frame" x="261.5" y="36" width="77" height="36"/>
+                                    <rect key="frame" x="261" y="36" width="77" height="36"/>
                                     <state key="normal" title="Add a Meal"/>
                                     <connections>
                                         <action selector="tapAddMeal:" destination="-1" eventType="touchUpInside" id="BPL-qS-R3g"/>
@@ -80,11 +86,34 @@
                                 <constraint firstItem="MyV-6K-DDn" firstAttribute="centerX" secondItem="MTF-LH-S25" secondAttribute="centerX" id="oMe-xw-Crz"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LO3-OQ-JUo">
+                            <rect key="frame" x="0.0" y="82" width="600" height="72"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d67-WG-10N">
+                                    <rect key="frame" x="251.5" y="21" width="97" height="30"/>
+                                    <state key="normal" title="Edit Meal Plan"/>
+                                    <connections>
+                                        <action selector="tapEditMeal:" destination="-1" eventType="touchUpInside" id="48K-7d-KDD"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="d67-WG-10N" firstAttribute="centerX" secondItem="LO3-OQ-JUo" secondAttribute="centerX" id="8lg-Fr-fHK"/>
+                                <constraint firstAttribute="height" constant="72" id="Wrk-nB-HZC"/>
+                                <constraint firstItem="d67-WG-10N" firstAttribute="centerY" secondItem="LO3-OQ-JUo" secondAttribute="centerY" id="ple-aN-T0Q"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="MTF-LH-S25" firstAttribute="leading" secondItem="91T-ga-eHo" secondAttribute="leading" id="1XC-Q3-bcs"/>
+                        <constraint firstItem="LO3-OQ-JUo" firstAttribute="centerY" secondItem="91T-ga-eHo" secondAttribute="centerY" id="7y1-lk-IFI"/>
+                        <constraint firstItem="zo8-I1-LAR" firstAttribute="centerX" secondItem="91T-ga-eHo" secondAttribute="centerX" id="M9t-Oy-Ydu"/>
+                        <constraint firstItem="zo8-I1-LAR" firstAttribute="centerY" secondItem="91T-ga-eHo" secondAttribute="centerY" id="YKl-R4-5FP"/>
+                        <constraint firstAttribute="trailing" secondItem="LO3-OQ-JUo" secondAttribute="trailing" id="dKO-GI-iA5"/>
                         <constraint firstAttribute="trailing" secondItem="MTF-LH-S25" secondAttribute="trailing" id="dZz-Ox-NG9"/>
+                        <constraint firstItem="LO3-OQ-JUo" firstAttribute="leading" secondItem="91T-ga-eHo" secondAttribute="leading" id="dfw-wP-FFJ"/>
                         <constraint firstItem="MTF-LH-S25" firstAttribute="centerY" secondItem="91T-ga-eHo" secondAttribute="centerY" id="wJf-6G-9Ft"/>
                     </constraints>
                 </view>

@@ -8,6 +8,12 @@
 
 import UIKit
 import JTCalendar
+import Parse
+
+
+public protocol MealUpdateDelegate: class {
+    func didSaveMeal(mealObj: PFObject)
+}
 
 public
 class PlannerViewController: UIViewController {
@@ -20,10 +26,14 @@ class PlannerViewController: UIViewController {
     @IBOutlet weak var zeroStateLabel: UILabel!
     @IBOutlet weak var zeroStateButton: UIButton!
 
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
 
+    @IBOutlet weak var editMealsWrapperView: UIView!
+    @IBOutlet weak var editMealsButton: UIButton!
+
+    private var allMeals: [PFObject] = []
     private var calendarManager: JTCalendarManager?
     private var selectedDate: NSDate? = NSDate()
-
 
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -90,6 +100,67 @@ class PlannerViewController: UIViewController {
         setupNavBar()
         setupCalendar()
         setupZeroStateViews()
+        setupSpinner()
+
+        // see if we have any meals for this user on selected date
+//        fetchSelectedDateMealPlan()
+    }
+
+    public override func viewWillAppear(animated: Bool) {
+        fetchMealPlans()
+    }
+
+    private func fetchMealPlans() {
+        guard let currentUser = PFUser.currentUser() else {
+            return
+        }
+
+        spinner.startAnimating()
+
+        let query: PFQuery = PFQuery(className: "MealPlan")
+        query.whereKey("user", equalTo: currentUser)
+        query.includeKey("user")
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            self.spinner.stopAnimating()
+            if let error = error {
+                print("Error: \(error.description)")
+                return
+            }
+            if let mealPlans = objects {
+                print(mealPlans.count)
+                self.allMeals = mealPlans
+                self.updateDetailContainerView()
+            }
+        }
+    }
+
+    private func fetchSelectedDateMealPlan() {
+        let query: PFQuery = PFQuery(className: "MealPlan")
+        query.includeKey("user")
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            if let error = error {
+                print("Error: \(error.description)")
+                return
+            }
+            if let tradeIdeas = objects {
+//                self.feedModels = tradeIdeas
+//                self.feedCollectionView.reloadData()
+            }
+        }
+    }
+
+    private func updateDetailContainerView() {
+        if let mealPlanObj = getMealPlanObjForDate(selectedDate) {
+            self.zeroStateWrapperView.hidden = true
+            self.editMealsWrapperView.hidden = false
+        } else {
+            self.zeroStateWrapperView.hidden = false
+            self.editMealsWrapperView.hidden = true
+        }
+    }
+
+    private func setupSpinner() {
+        spinner.stopAnimating()
     }
 
     private func setupNavBar() {
@@ -98,7 +169,7 @@ class PlannerViewController: UIViewController {
 
     private func setupZeroStateViews() {
         zeroStateWrapperView.backgroundColor = UIColor.clearColor()
-        zeroStateWrapperView.hidden = false
+        zeroStateWrapperView.hidden = true
         zeroStateLabel.textColor = Styles.Colors.BarLabel
         zeroStateLabel.text = zeroStateLabel.text?.uppercaseString
         zeroStateLabel.font = Styles.Fonts.ThinMedium
@@ -106,6 +177,12 @@ class PlannerViewController: UIViewController {
         zeroStateButton.titleLabel?.text = zeroStateButton.titleLabel?.text?.uppercaseString
         zeroStateButton.setTitle(zeroStateButton.titleLabel?.text?.uppercaseString, forState: .Normal)
         zeroStateButton.titleLabel?.font = Styles.Fonts.MediumLarge
+
+        editMealsWrapperView.hidden = true
+        editMealsButton.tintColor = Styles.Colors.BarNumber
+        editMealsButton.titleLabel?.text = editMealsButton.titleLabel?.text?.uppercaseString
+        editMealsButton.setTitle(editMealsButton.titleLabel?.text?.uppercaseString, forState: .Normal)
+        editMealsButton.titleLabel?.font = Styles.Fonts.MediumLarge
     }
 
     public override func add() {
@@ -113,10 +190,74 @@ class PlannerViewController: UIViewController {
     }
 
     public func addMeal() {
-        print("Got here")
-        let mealsViewController = MealsViewController()
-        let navigationController = UINavigationController(rootViewController: mealsViewController)
-        presentViewController(navigationController, animated: true, completion: nil)
+        let mealsViewController = MealsViewController(selectedDate: selectedDate, cellViewModels: [])
+        navigationController?.pushViewController(mealsViewController, animated: true)
+    }
+
+    private func parseMealsForDate(date: NSDate?) -> [TabularDataRowCellModel] {
+        for mealPlan in allMeals {
+            if let selectedDate = date, mealPlanDate = mealPlan["date"] as? NSDate
+                where JTDateHelper().date(selectedDate, isTheSameDayThan: mealPlanDate) {
+                    // prep cell view models
+                    guard let meals = mealPlan["meals"] as? [AnyObject] else { break }
+
+                    var mealPlanMealRows: [TabularDataRowCellModel] = []
+                    for rowDataJSON in meals {
+                        var cellModels: [TabularDataCellModel] = []
+                        guard let cellModelsJSON = rowDataJSON["cellModels"] as? [AnyObject] else { continue }
+
+                        for columnDataJSON in cellModelsJSON {
+                            guard let cellModelColumnTitle = columnDataJSON["columnTitle"] as? String else { continue }
+                            guard let cellModelColumnKey = columnDataJSON["columnKey"] as? String else { continue }
+                            guard let cellModelValue = columnDataJSON["value"] as AnyObject! else { continue }
+                            let cellModel = TabularDataCellModel(cellModelColumnTitle, columnKey: cellModelColumnKey, value: cellModelValue)
+                            cellModels.append(cellModel)
+                        }
+
+                        guard let hidden = rowDataJSON["hidden"] as? Bool else { continue }
+                        guard let isExpandable = rowDataJSON["isExpandable"] as? Bool else { continue }
+                        guard let isExpanded = rowDataJSON["isExpanded"] as? Bool else { continue }
+                        guard let isHeader = rowDataJSON["isHeader"] as? Bool else { continue }
+                        guard let isSubRow = rowDataJSON["isSubRow"] as? Bool else { continue }
+                        guard let uniqueId = rowDataJSON["uniqueId"] as? String else { continue }
+
+
+                        let mealCellData = TabularDataRowCellModel(cellModels, uniqueId: uniqueId, hidden: hidden, isSubRow: isSubRow, isExpanded: isExpanded, isHeader: isHeader, isExpandable: isExpandable)
+
+                        mealPlanMealRows.append(mealCellData)
+                    }
+
+                    return mealPlanMealRows
+            }
+        }
+        return []
+    }
+
+    private func getMealPlanObjForDate(date: NSDate?) -> PFObject? {
+        for mealPlan in allMeals {
+            if let selectedDate = date, mealPlanDate = mealPlan["date"] as? NSDate
+                where JTDateHelper().date(selectedDate, isTheSameDayThan: mealPlanDate) {
+                    return mealPlan
+            }
+        }
+        return nil
+    }
+
+    public func editMeals() {
+        // get mealPlan for selected Date
+        let mealsViewController = MealsViewController(selectedDate: selectedDate, cellViewModels: parseMealsForDate(selectedDate), mealObj: getMealPlanObjForDate(selectedDate))
+        mealsViewController.mealUpdateDelegate = self
+        navigationController?.pushViewController(mealsViewController, animated: true)
+    }
+
+//    private func constructMealPlanCellViewModel(mealJson: ) {
+//
+//    }
+}
+
+extension PlannerViewController: MealUpdateDelegate {
+    public func didSaveMeal(mealObj: PFObject) {
+        fetchMealPlans()
     }
 }
 
@@ -175,6 +316,7 @@ extension PlannerViewController: JTCalendarDelegate {
         if let dayView = dayView as? JTCalendarDayView {
             selectedDate = dayView.date
             calendarManager?.reload()
+            updateDetailContainerView()
         }
 
         return
@@ -214,6 +356,10 @@ extension PlannerViewController: JTCalendarDelegate {
 
     @IBAction func tapAddMeal(sender: UIButton) {
         addMeal()
+    }
+
+    @IBAction func tapEditMeal(sender: UIButton) {
+        editMeals()
     }
 
     public func calendarBuildDayView(calendar: JTCalendarManager!) -> UIView! {

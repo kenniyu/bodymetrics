@@ -19,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ej9-vZ-9cC">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ej9-vZ-9cC">
                     <rect key="frame" x="0.0" y="114" width="600" height="436"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vRu-UV-wRm">
                         <size key="itemSize" width="50" height="50"/>
@@ -29,7 +29,7 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oT8-xX-jF5">
-                    <rect key="frame" x="60" y="0.0" width="540" height="50"/>
+                    <rect key="frame" x="91.5" y="64" width="508.5" height="50"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -43,8 +43,8 @@
                         <action selector="addMealTapped:" destination="-1" eventType="touchUpInside" id="1B3-XT-mBS"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fs-wp-HTu">
-                    <rect key="frame" x="12" y="64" width="36" height="50"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal On" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fs-wp-HTu">
+                    <rect key="frame" x="12" y="64" width="63.5" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="KQc-qY-hTp"/>
                     </constraints>
@@ -64,11 +64,17 @@
                 <constraint firstItem="hAD-UM-oQm" firstAttribute="top" secondItem="Ej9-vZ-9cC" secondAttribute="bottom" id="Yi2-ml-l6L"/>
                 <constraint firstItem="1fs-wp-HTu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="h6y-Ld-62d"/>
                 <constraint firstAttribute="trailing" secondItem="Ej9-vZ-9cC" secondAttribute="trailing" id="hn0-du-oiR"/>
-                <constraint firstItem="oT8-xX-jF5" firstAttribute="leading" secondItem="1fs-wp-HTu" secondAttribute="trailing" constant="12" id="j0A-sv-020"/>
+                <constraint firstItem="oT8-xX-jF5" firstAttribute="leading" secondItem="1fs-wp-HTu" secondAttribute="trailing" constant="16" id="j0A-sv-020"/>
                 <constraint firstItem="Ej9-vZ-9cC" firstAttribute="top" secondItem="1fs-wp-HTu" secondAttribute="bottom" id="l4N-bB-DKT"/>
+                <constraint firstItem="oT8-xX-jF5" firstAttribute="top" secondItem="1fs-wp-HTu" secondAttribute="top" id="pzg-5f-v8i"/>
                 <constraint firstAttribute="bottom" secondItem="hAD-UM-oQm" secondAttribute="bottom" id="qdn-Y4-w3E"/>
                 <constraint firstItem="oT8-xX-jF5" firstAttribute="height" secondItem="1fs-wp-HTu" secondAttribute="height" id="zVo-Aj-338"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Vwx-JH-5cU"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

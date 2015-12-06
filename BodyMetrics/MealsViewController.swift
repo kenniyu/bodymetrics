@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 public protocol SynchronizedCellsScrollViewDelegate: class {
     func didScrollSynchronizedCollectionView(cell: TabularDataRowCell)
@@ -22,8 +23,20 @@ class MealsViewController: UIViewController {
     @IBOutlet weak var addMealButton: UIButton!
     var cellViewModels: [TabularDataRowCellModel] = []
     var filteredCellViewModels: [TabularDataRowCellModel] = []
+    var mealObj: PFObject?
 
     public static let kNavHeight: CGFloat = 64
+
+    private var newMealNameTextField: UITextField?
+    private var newMealTimeTextField: UITextField?
+    private var newMealDatePicker: UIDatePicker?
+
+    public var mealUpdateDelegate: MealUpdateDelegate?
+
+    // Fonts
+    private static let kDateLabelFont = Styles.Fonts.MediumMedium!
+    private static let kDateFont = Styles.Fonts.ThinMedium!
+    private var selectedDate: NSDate!
 
     public static let kNibName = "MealsViewController"
     public override func viewDidLoad() {
@@ -38,8 +51,11 @@ class MealsViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    public convenience init() {
+    public convenience init(selectedDate: NSDate? = NSDate(), cellViewModels: [TabularDataRowCellModel] = [], mealObj: PFObject? = nil) {
         self.init(nibName: MealsViewController.kNibName, bundle: nil)
+        self.selectedDate = selectedDate
+        self.cellViewModels = cellViewModels
+        self.mealObj = mealObj
     }
 
     public required init(coder aDecoder: NSCoder) {
@@ -50,42 +66,120 @@ class MealsViewController: UIViewController {
         //        profileImageView.cornerRadius = profileImageView.bounds.width/2
     }
 
+
+    public override func viewDidDisappear(animated: Bool) {
+        print("GOT HERE")
+        saveMeals()
+    }
+
+    private func createParseMealsModel() -> [AnyObject] {
+        var cellViewModelsArr: [AnyObject] = []
+        for cellViewModel in cellViewModels {
+            var cellModelsArr: [AnyObject] = []
+            let cellModels = cellViewModel.cellModels
+            for cellModel in cellModels {
+                let cellModelDict = [
+                    "columnKey": cellModel.columnKey,
+                    "columnTitle": cellModel.columnTitle,
+                    "value": cellModel.value
+                ]
+                cellModelsArr.append(cellModelDict)
+            }
+
+            let cellViewModelDict = [
+                "hidden": cellViewModel.hidden,
+                "isExpandable": cellViewModel.isExpandable,
+                "isExpanded": cellViewModel.isExpanded,
+                "isHeader": cellViewModel.isHeader,
+                "isSubRow": cellViewModel.isSubRow,
+                "uniqueId": cellViewModel.uniqueId,
+                "cellModels": cellModelsArr
+            ]
+
+            cellViewModelsArr.append(cellViewModelDict)
+        }
+        return cellViewModelsArr
+    }
+
+    private func saveMeals() {
+        if mealObj == nil {
+            mealObj = PFObject(className: "MealPlan")
+            mealObj?["date"] = selectedDate
+            mealObj?["user"] = PFUser.currentUser()
+        }
+        guard let mealObj = mealObj else { return }
+        mealObj["meals"] = createParseMealsModel()
+        mealObj.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {
+                // The object has been saved.
+                print("Success \(success)")
+                self.mealUpdateDelegate?.didSaveMeal(mealObj)
+            } else {
+                // There was a problem, check error.description
+                print("Error: \(error?.description)")
+            }
+        }
+    }
+
     public func setup() {
         // add done button
-        addRightBarButtons([createDoneButton()])
-        addCloseButton()
+//        addRightBarButtons([createDoneButton()])
 
         title = "Today's Meals".uppercaseString
         view.backgroundColor = Styles.Colors.AppDarkBlue
 
 
+        setupStyles()
+        setupMealDatePicker()
         setupCollectionView()
 
-        createCellModels()
+        prepareCellModels()
 
         registerCells()
 
         mealsCollectionView.reloadData()
     }
 
-    private func createCellModels() {
-        for i in 1...15 {
-            let fatCellModel = TabularDataCellModel("fat", value: CGFloat(arc4random_uniform(6) + 1))
-            let carbsCellModel = TabularDataCellModel("carbs", value: CGFloat(arc4random_uniform(6) + 1))
-            let proteinCellModel = TabularDataCellModel("protein", value: CGFloat(arc4random_uniform(6) + 1))
-            let caloriesCellModel = TabularDataCellModel("calories", value: CGFloat(arc4random_uniform(6) + 1))
-            var mealTitleCellModel = TabularDataCellModel("mealName", value: "Meal \(i)")
+    private func setupMealDatePicker() {
+        newMealDatePicker = UIDatePicker()
+        newMealDatePicker?.datePickerMode = UIDatePickerMode.Time
+        newMealDatePicker?.addTarget(self, action: "didUpdateMealTime:", forControlEvents: UIControlEvents.ValueChanged)
+        mealDateTextField.inputView = newMealDatePicker
 
-            var hidden = false
-            var isSubRow = false
-            if i > 1 && Int(arc4random_uniform(4) + 1) < 3 {
-                hidden = true
-                isSubRow = true
-                mealTitleCellModel = TabularDataCellModel("mealName", value: "Food Item \(i)")
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.FullStyle
+        mealDateTextField.text = formatter.stringFromDate(selectedDate)
+    }
+
+    private func setupStyles() {
+        mealDateLabel.font = MealsViewController.kDateLabelFont
+        mealDateLabel.textColor = Styles.Colors.BarNumber
+        mealDateTextField.font = MealsViewController.kDateFont
+        mealDateTextField.textColor = Styles.Colors.BarNumber
+    }
+
+    private func prepareCellModels() {
+        if cellViewModels.count == 0  && false {
+            // if no plan, create one for now
+            for i in 0...10 {
+                let fatCellModel = TabularDataCellModel("fat", columnKey: TabularDataCellColumnKeys.kFatKey, value: CGFloat(arc4random_uniform(6) + 1))
+                let carbsCellModel = TabularDataCellModel("carbs", columnKey: TabularDataCellColumnKeys.kCarbsKey, value: CGFloat(arc4random_uniform(6) + 1))
+                let proteinCellModel = TabularDataCellModel("protein", columnKey: TabularDataCellColumnKeys.kProteinKey, value: CGFloat(arc4random_uniform(6) + 1))
+                let caloriesCellModel = TabularDataCellModel("calories", columnKey: TabularDataCellColumnKeys.kCaloriesKey, value: CGFloat(arc4random_uniform(6) + 1))
+                let mealTitleCellModel = TabularDataCellModel("mealName", columnKey: TabularDataCellColumnKeys.kMealNameKey, value: "Meal \(i)")
+
+                var hidden = false
+                var isSubRow = false
+                if i > 1 && Int(arc4random_uniform(4) + 1) < 3 {
+                    hidden = true
+                    isSubRow = true
+                    mealTitleCellModel.value = "Food Item \(i)"
+                }
+
+                let firstViewModel = TabularDataRowCellModel([mealTitleCellModel, fatCellModel, carbsCellModel, proteinCellModel, caloriesCellModel], uniqueId: "tabularDataRowCellModel\(i)", hidden: hidden, isSubRow: isSubRow)
+                cellViewModels.append(firstViewModel)
             }
-
-            let firstViewModel = TabularDataRowCellModel([mealTitleCellModel, fatCellModel, carbsCellModel, proteinCellModel, caloriesCellModel], uniqueId: "tabularDataRowCellModel\(i)", hidden: hidden, isSubRow: isSubRow)
-            cellViewModels.append(firstViewModel)
         }
 
         // filter out hidden ones
@@ -102,6 +196,7 @@ class MealsViewController: UIViewController {
         mealsCollectionView.delegate = self
         mealsCollectionView.dataSource = self
         mealsCollectionView.collectionViewLayout = TabularDataVerticalCollectionViewFlowLayout()
+        mealsCollectionView.alwaysBounceVertical = true
     }
 
     public func registerCells(collectionView: UICollectionView) {
@@ -111,11 +206,11 @@ class MealsViewController: UIViewController {
     }
 
     public func getHeaderCellViewModel() -> TabularDataRowCellModel {
-        let mealHeaderCellModel = TabularDataCellModel("mealName", value: "meal")
-        let fatHeaderCellModel = TabularDataCellModel("fat", value: "fat")
-        let carbsHeaderCellModel = TabularDataCellModel("carbs", value: "carbs")
-        let proteinHeaderCellModel = TabularDataCellModel("protein", value: "protein")
-        let caloriesHeaderCellModel = TabularDataCellModel("calories", value: "calories")
+        let mealHeaderCellModel = TabularDataCellModel("mealName", columnKey: TabularDataCellColumnKeys.kMealNameKey, value: "meal")
+        let fatHeaderCellModel = TabularDataCellModel("fat", columnKey: TabularDataCellColumnKeys.kFatKey, value: "fat")
+        let carbsHeaderCellModel = TabularDataCellModel("carbs", columnKey: TabularDataCellColumnKeys.kCarbsKey, value: "carbs")
+        let proteinHeaderCellModel = TabularDataCellModel("protein", columnKey: TabularDataCellColumnKeys.kProteinKey, value: "protein")
+        let caloriesHeaderCellModel = TabularDataCellModel("calories", columnKey: TabularDataCellColumnKeys.kCaloriesKey, value: "calories")
 
         let headerCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModelHeader", hidden: false, isHeader: true)
         return headerCellViewModel
@@ -132,19 +227,92 @@ class MealsViewController: UIViewController {
     }
 
     @IBAction func addMealTapped(sender: UIButton) {
-        let mealHeaderCellModel = TabularDataCellModel("mealName", value: "meal")
-        let fatHeaderCellModel = TabularDataCellModel("fat", value: 0)
-        let carbsHeaderCellModel = TabularDataCellModel("carbs", value: 0)
-        let proteinHeaderCellModel = TabularDataCellModel("protein", value: 0)
-        let caloriesHeaderCellModel = TabularDataCellModel("calories", value: 0)
+        let alertController = UIAlertController(title: "Enter Meal Name", message: nil, preferredStyle: .Alert)
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            print(action)
+        }
+        alertController.addAction(cancelAction)
+
+        let doneAction = UIAlertAction(title: "Done", style: UIAlertActionStyle.Default) { (action) in
+            if let textField = self.newMealNameTextField, newMealName = textField.text where newMealName != "" {
+                let mealHeaderCellModel = TabularDataCellModel("mealName", columnKey: TabularDataCellColumnKeys.kMealNameKey, value: newMealName)
+                let fatHeaderCellModel = TabularDataCellModel("fat", columnKey: TabularDataCellColumnKeys.kFatKey, value: 0)
+                let carbsHeaderCellModel = TabularDataCellModel("carbs", columnKey: TabularDataCellColumnKeys.kCarbsKey, value: 0)
+                let proteinHeaderCellModel = TabularDataCellModel("protein", columnKey: TabularDataCellColumnKeys.kProteinKey, value: 0)
+                let caloriesHeaderCellModel = TabularDataCellModel("calories", columnKey: TabularDataCellColumnKeys.kCaloriesKey, value: 0)
+
+                let newCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModel\(self.cellViewModels.count + 100)", hidden: false, isHeader: true)
+                self.cellViewModels.append(newCellViewModel)
+                self.filteredCellViewModels.append(newCellViewModel)
+
+                let newIndexPath = NSIndexPath(forRow: self.filteredCellViewModels.count - 1, inSection: 0)
+                self.mealsCollectionView.insertItemsAtIndexPaths([newIndexPath])
+                self.mealsCollectionView.scrollToItemAtIndexPath(newIndexPath, atScrollPosition: .Bottom, animated: true)
+            }
+
+        }
+        alertController.addAction(doneAction)
+
+        alertController.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "Meal name"
+            textField.keyboardType = .Default
+            self.newMealNameTextField = textField
+        }
+
+//        alertController.addTextFieldWithConfigurationHandler { (textField) in
+//            textField.placeholder = "Meal time"
+//            textField.keyboardType = .Default
+//
+//            self.newMealDatePicker = UIDatePicker()
+//            self.newMealDatePicker?.datePickerMode = UIDatePickerMode.Time
+//            self.newMealDatePicker?.addTarget(self, action: "didUpdateMealTime:", forControlEvents: UIControlEvents.ValueChanged)
+//            textField.inputView = self.newMealDatePicker
+//
+//            self.newMealTimeTextField = textField
+//        }
+
+        self.presentViewController(alertController, animated: true) {
+            // ...
+        }
+    }
+
+    public func didUpdateMealTime(datePicker: UIDatePicker) {
+        if let date = self.newMealDatePicker?.date {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+            dateFormatter.timeStyle = NSDateFormatterStyle.FullStyle
+            dateFormatter.timeZone = NSTimeZone.defaultTimeZone()
+            dateFormatter.dateFormat = "hh:mm"
 
 
-        let newCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModel\(cellViewModels.count + 100)", hidden: false, isHeader: true)
-        cellViewModels.append(newCellViewModel)
-        filteredCellViewModels.append(newCellViewModel)
+//            print("Did change date \(date)")
+            let timeStr = NSDateFormatter().stringFromDate(date)
+            print("time = \(timeStr)")
+//            self.newMealTimeTextField?.text = timeStr
 
-        let newIndexPath = NSIndexPath(forRow: filteredCellViewModels.count - 1, inSection: 0)
-        mealsCollectionView.insertItemsAtIndexPaths([newIndexPath])
+        }
+    }
+
+    public func getMealFoodItems(cell: TabularDataRowCell) -> [TabularDataRowCellModel] {
+        // cell = cell tapped on from filteredCellViewModels
+        // if cell is a subrow, just return the cell's view model to display info about the food item
+        if cell.viewModel.isSubRow {
+            return [cell.viewModel]
+        }
+
+        var subRowCellViewModels: [TabularDataRowCellModel] = []
+        for (index, cellViewModel) in cellViewModels.enumerate() {
+            if cell.viewModel.uniqueId == cellViewModel.uniqueId {
+                var innerRow = index + 1
+                while innerRow < cellViewModels.count && cellViewModels[innerRow].isSubRow {
+                    let subRowCellViewModel = cellViewModels[innerRow]
+                    subRowCellViewModels.append(subRowCellViewModel)
+                    innerRow += 1
+                }
+            }
+        }
+        return subRowCellViewModels
     }
 }
 
@@ -167,6 +335,12 @@ extension MealsViewController: UICollectionViewDataSource, UICollectionViewDeleg
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // do some shared shit
         // show details about this item
+        if let cell = mealsCollectionView.cellForItemAtIndexPath(indexPath) as? TabularDataRowCell {
+            let cellModel = filteredCellViewModels[indexPath.row]
+            let mealFoodItems = getMealFoodItems(cell)
+            let mealDetailViewController = MealDetailViewController(mealDataModel: cellModel, mealFoodItems: mealFoodItems)
+            navigationController?.pushViewController(mealDetailViewController, animated: true)
+        }
     }
 
 //    public func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {

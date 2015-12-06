@@ -27,8 +27,8 @@ public class TabularDataRowCell: UICollectionViewCell {
     static let kSocialActionsHeight: CGFloat = 40
     static let kSocialActionsButtonWidth: CGFloat = 80
     static let kBorderViewHeight: CGFloat = 8
-    static let kCellHeight: CGFloat = 50
-    static let kCellWidth: CGFloat = 80
+    static let kDataCellHeight: CGFloat = TabularDataCell.kCellHeight
+    static let kDataCellWidth: CGFloat = TabularDataCell.kCellWidth
     static let kHeaderCellWidth: CGFloat = 132
     static let kExpandCollapseButtonWidth: CGFloat = 32
 
@@ -111,7 +111,7 @@ public class TabularDataRowCell: UICollectionViewCell {
         registerCells()
         tabularDataCollectionView.delegate = self
         tabularDataCollectionView.dataSource = self
-        tabularDataCollectionView.contentInset = UIEdgeInsetsMake(0, TabularDataRowCell.kHeaderCellWidth, 0, 0)
+        tabularDataCollectionView.contentInset = UIEdgeInsetsMake(0, TabularDataRowCell.kHeaderCellWidth, 0, Styles.Dimensions.kItemSpacingDim3)
         tabularDataCollectionView.backgroundColor = UIColor.clearColor()
         tabularDataCollectionView.showsHorizontalScrollIndicator = false
         tabularDataCollectionView.showsVerticalScrollIndicator = false
@@ -143,7 +143,7 @@ public class TabularDataRowCell: UICollectionViewCell {
     }
 
     public class func size(boundingWidth: CGFloat, viewModel: TabularDataRowCellModel) -> CGSize {
-        return CGSizeMake(boundingWidth, TabularDataRowCell.kCellHeight)
+        return CGSizeMake(boundingWidth, TabularDataCell.kCellHeight)
     }
 
     public func setSubviewFrames() {
@@ -155,7 +155,7 @@ public class TabularDataRowCell: UICollectionViewCell {
         tabularDataHeaderView.top = 0
         tabularDataHeaderView.left = 0
         tabularDataHeaderView.width = TabularDataRowCell.kHeaderCellWidth
-        tabularDataHeaderView.height = TabularDataRowCell.kCellHeight
+        tabularDataHeaderView.height = TabularDataCell.kCellHeight
 
 
         expandCollapseButton.width = TabularDataRowCell.kExpandCollapseButtonWidth
@@ -209,15 +209,6 @@ public class TabularDataRowCell: UICollectionViewCell {
         tabularDataCollectionView.registerNib(TabularDataCell.nib, forCellWithReuseIdentifier: TabularDataCell.reuseId)
         tabularDataCollectionView.registerClass(TabularDataCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: TabularDataCell.reuseId)
         tabularDataCollectionView.registerNib(TabularDataCell.nib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: TabularDataCell.reuseId)
-    }
-
-    public func getHeaderCellViewModel() -> TabularDataCellModel {
-        if let headerCellModel = viewModel.cellModels.first {
-            return headerCellModel
-        } else {
-            let mealHeaderCellModel = TabularDataCellModel("mealName", value: "Meal 1")
-            return mealHeaderCellModel
-        }
     }
 
     public func highlight() {

@@ -96,6 +96,8 @@
 		C1B210391BFF95B0002C72E9 /* MDRotatingPieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210381BFF95B0002C72E9 /* MDRotatingPieChart.swift */; };
 		C1B210771BFFA8C4002C72E9 /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B210761BFFA8C4002C72E9 /* Double+.swift */; };
 		C1B71C9B1C08017700282D3C /* PieChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B71C9A1C08017700282D3C /* PieChartData.swift */; };
+		C1BDCC791C123A75001570F9 /* MealDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BDCC771C123A75001570F9 /* MealDetailViewController.swift */; };
+		C1BDCC7A1C123A75001570F9 /* MealDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1BDCC781C123A75001570F9 /* MealDetailViewController.xib */; };
 		C1DEF2F71C03C5D400DFB7F0 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEF2F61C03C5D400DFB7F0 /* MainTabBarController.swift */; };
 		C1DEF2FB1C03C62100DFB7F0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEF2F91C03C62100DFB7F0 /* SettingsViewController.swift */; };
 		C1DEF2FC1C03C62100DFB7F0 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1DEF2FA1C03C62100DFB7F0 /* SettingsViewController.xib */; };
@@ -228,6 +230,8 @@
 		C1B210381BFF95B0002C72E9 /* MDRotatingPieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDRotatingPieChart.swift; sourceTree = "<group>"; };
 		C1B210761BFFA8C4002C72E9 /* Double+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
 		C1B71C9A1C08017700282D3C /* PieChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartData.swift; sourceTree = "<group>"; };
+		C1BDCC771C123A75001570F9 /* MealDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealDetailViewController.swift; sourceTree = "<group>"; };
+		C1BDCC781C123A75001570F9 /* MealDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MealDetailViewController.xib; sourceTree = "<group>"; };
 		C1DEF2F61C03C5D400DFB7F0 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		C1DEF2F91C03C62100DFB7F0 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C1DEF2FA1C03C62100DFB7F0 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -304,6 +308,8 @@
 				C18FA8B61C0D776500ACDF63 /* MealsViewController.xib */,
 				C142CD6E1C0EC67C00141AE7 /* TabularDataVerticalCollectionViewFlowLayout.swift */,
 				C153973E1C0ECD8F0064EF20 /* TabularDataHorizontalCollectionViewFlowLayout.swift */,
+				C1BDCC771C123A75001570F9 /* MealDetailViewController.swift */,
+				C1BDCC781C123A75001570F9 /* MealDetailViewController.xib */,
 			);
 			name = Planner;
 			sourceTree = "<group>";
@@ -713,6 +719,7 @@
 				C1B20F971BFBE9A7002C72E9 /* Main.storyboard in Resources */,
 				C1DEF31A1C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib in Resources */,
 				C15682DB1C038E00000479B0 /* ManualMacroEntryViewController.xib in Resources */,
+				C1BDCC7A1C123A75001570F9 /* MealDetailViewController.xib in Resources */,
 				C142CD5F1C0E597100141AE7 /* TabularDataRowCell.xib in Resources */,
 				C1B20FFE1BFBED69002C72E9 /* BlenderPro-BoldItalic.otf in Resources */,
 				C1B210031BFBED69002C72E9 /* BlenderPro-MediumItalic.otf in Resources */,
@@ -830,6 +837,7 @@
 				C1B20FD61BFBEA31002C72E9 /* UITextField+.swift in Sources */,
 				C1B20FD31BFBEA31002C72E9 /* CGRect+.swift in Sources */,
 				C1B20FD21BFBEA31002C72E9 /* UIEdgeInsets+.swift in Sources */,
+				C1BDCC791C123A75001570F9 /* MealDetailViewController.swift in Sources */,
 				C1B20FD11BFBEA31002C72E9 /* UIView+.swift in Sources */,
 				C1B71C9B1C08017700282D3C /* PieChartData.swift in Sources */,
 				C1B20FEC1BFBEC32002C72E9 /* TextUtils.swift in Sources */,

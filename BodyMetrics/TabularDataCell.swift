@@ -11,6 +11,13 @@ import UIKit
 public protocol TabularDataCellDelegate: class {
 }
 
+public class TabularDataCellColumnKeys {
+    public static let kFatKey = "MACRO_FAT"
+    public static let kCarbsKey = "MACRO_CARBS"
+    public static let kProteinKey = "MACRO_PROTEIN"
+    public static let kCaloriesKey = "CALORIES"
+    public static let kMealNameKey = "MEAL_NAME"
+}
 
 public
 class TabularDataCell: UICollectionViewCell {
@@ -27,7 +34,7 @@ class TabularDataCell: UICollectionViewCell {
     static let kSocialActionsButtonWidth: CGFloat = 80
     static let kBorderViewHeight: CGFloat = 8
     static let kCellHeight: CGFloat = 50
-    static let kCellWidth: CGFloat = 80
+    static let kCellWidth: CGFloat = 60
 
     @IBOutlet weak var containerView: UIView!
     /// row of tabular data cells
@@ -82,18 +89,6 @@ class TabularDataCell: UICollectionViewCell {
         containerView.frame = bounds
 
         containerView.backgroundColor = UIColor.clearColor()
-        // HACK: to avoid unnecessary maintenance of clipping view color, setting the color to be cell.backgroundColor
-        // or cell.superview.backgroundcolor (collectionView background color). This would produce corner radius effect
-        // with clipping
-        //        cellContainerView.clippingView.color = {
-        //            if self.backgroundColor != UIColor.clearColor() {
-        //                return self.backgroundColor
-        //            } else if let superview = self.superview {
-        //                return superview.backgroundColor
-        //            }
-        //
-        //            return UIColor.redColor()
-        //            }()
 
         setSubviewFrames()
     }
