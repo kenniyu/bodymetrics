@@ -102,7 +102,8 @@ class MealsViewController: UIViewController {
     }
 
     private func saveMeals() {
-        if mealObj == nil {
+        if mealObj == nil && cellViewModels.count > 0 {
+            // If there was nothing and the user has actually created meals
             mealObj = PFObject(className: "MealPlan")
             mealObj?["date"] = selectedDate
             mealObj?["user"] = PFUser.currentUser()

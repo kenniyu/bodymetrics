@@ -116,6 +116,8 @@ class PlannerViewController: UIViewController {
         }
 
         spinner.startAnimating()
+        self.zeroStateWrapperView.hidden = true
+        self.editMealsWrapperView.hidden = true
 
         let query: PFQuery = PFQuery(className: "MealPlan")
         query.whereKey("user", equalTo: currentUser)
@@ -127,13 +129,13 @@ class PlannerViewController: UIViewController {
                 return
             }
             if let mealPlans = objects {
-                print(mealPlans.count)
                 self.allMeals = mealPlans
                 self.updateDetailContainerView()
             }
         }
     }
 
+    /// Do we need this?
     private func fetchSelectedDateMealPlan() {
         let query: PFQuery = PFQuery(className: "MealPlan")
         query.includeKey("user")
@@ -143,8 +145,6 @@ class PlannerViewController: UIViewController {
                 return
             }
             if let tradeIdeas = objects {
-//                self.feedModels = tradeIdeas
-//                self.feedCollectionView.reloadData()
             }
         }
     }

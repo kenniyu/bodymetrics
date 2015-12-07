@@ -86,24 +86,8 @@ public class SearchResultsCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
 
         // set cell container frame
-        //        containerView.frame = UIEdgeInsetsInsetRect(bounds, feedModel.style.cellContainerMargin)
-
         containerView.frame = bounds
-
         containerView.backgroundColor = UIColor.clearColor()
-        // HACK: to avoid unnecessary maintenance of clipping view color, setting the color to be cell.backgroundColor
-        // or cell.superview.backgroundcolor (collectionView background color). This would produce corner radius effect
-        // with clipping
-        //        cellContainerView.clippingView.color = {
-        //            if self.backgroundColor != UIColor.clearColor() {
-        //                return self.backgroundColor
-        //            } else if let superview = self.superview {
-        //                return superview.backgroundColor
-        //            }
-        //
-        //            return UIColor.redColor()
-        //            }()
-
         setSubviewFrames()
     }
 
@@ -127,65 +111,6 @@ public class SearchResultsCollectionViewCell: UICollectionViewCell {
         foodNameLabel.left = SearchResultsCollectionViewCell.kCellContainerPadding
         foodNameLabel.width = containerView.width - 2 * SearchResultsCollectionViewCell.kCellContainerPadding
         foodNameLabel.height = titleLabelHeight
-
-//        activityTitle.top = actorImageView.top
-//        activityTitle.left = actorImageView.left + actorImageView.width + SearchResultsCollectionViewCell.kCellContainerPadding
-//        activityTitle.height = actorPhotoHeight/2
-//        activityTitle.width = containerView.width - 3 * SearchResultsCollectionViewCell.kCellContainerPadding - actorImageView.width
-//
-//        activityTimestamp.top = actorImageView.top + actorPhotoHeight/2
-//        activityTimestamp.left = activityTitle.left
-//        activityTimestamp.height = actorPhotoHeight/2
-//        activityTimestamp.width = activityTitle.width
-//
-
-//        // set title frame
-//        let titleHeight = SearchResultsCollectionViewCell.titleLabelHeight(containerView.width - 2 * SearchResultsCollectionViewCell.kCellContainerPadding, viewModel: viewModel)
-//        titleLabel.left = SearchResultsCollectionViewCell.kCellContainerPadding
-//        titleLabel.width = containerView.width - 2 * SearchResultsCollectionViewCell.kCellContainerPadding
-//        titleLabel.height = titleHeight
-//        titleLabel.top = 2 * SearchResultsCollectionViewCell.kCellContainerPadding + actorImageView.top + actorPhotoHeight
-//
-//        // set text view
-//        let textViewHeight = SearchResultsCollectionViewCell.textViewHeight(containerView.width - 2 * SearchResultsCollectionViewCell.kCellContainerPadding, viewModel: viewModel)
-//        tradeDescriptionTextView.left = titleLabel.left
-//        tradeDescriptionTextView.width = titleLabel.width
-//        tradeDescriptionTextView.height = textViewHeight
-//        tradeDescriptionTextView.top = titleLabel.bottom + SearchResultsCollectionViewCell.kCellContainerPadding
-//
-//        // set image view
-//        articleImageView.width = containerView.width
-//        articleImageView.height = SearchResultsCollectionViewCell.imageHeight(viewModel)
-//        articleImageView.top = tradeDescriptionTextView.bottom + SearchResultsCollectionViewCell.kCellContainerPadding
-//        articleImageView.left = 0
-//
-//        // set social actions frame
-//        socialActionsView.width = containerView.width
-//        socialActionsView.height = SearchResultsCollectionViewCell.kSocialActionsHeight
-//        socialActionsView.left = 0
-//        socialActionsView.top = articleImageView.bottom + SearchResultsCollectionViewCell.kCellContainerPadding
-//
-//        // set social actions buttons
-//        likeButton.left = SearchResultsCollectionViewCell.kCellContainerPadding
-//        likeButton.width = SearchResultsCollectionViewCell.kSocialActionsButtonWidth
-//        likeButton.top = 0
-//        likeButton.height = SearchResultsCollectionViewCell.kSocialActionsHeight
-//
-//        commentButton.width = SearchResultsCollectionViewCell.kSocialActionsButtonWidth
-//        commentButton.center = socialActionsView.center
-//        commentButton.top = 0
-//        commentButton.height = SearchResultsCollectionViewCell.kSocialActionsHeight
-//
-//        followButton.left = containerView.width - SearchResultsCollectionViewCell.kCellContainerPadding - SearchResultsCollectionViewCell.kSocialActionsButtonWidth
-//        followButton.width = SearchResultsCollectionViewCell.kSocialActionsButtonWidth
-//        followButton.top = 0
-//        followButton.height = SearchResultsCollectionViewCell.kSocialActionsHeight
-//
-//        // bottom border view
-//        bottomBorderView.width = containerView.width
-//        bottomBorderView.height = SearchResultsCollectionViewCell.kBorderViewHeight
-//        bottomBorderView.left = 0
-//        bottomBorderView.top = socialActionsView.bottom + SearchResultsCollectionViewCell.kCellContainerPadding
     }
 
     public class func imageHeight(viewModel: PFObject?) -> CGFloat {
