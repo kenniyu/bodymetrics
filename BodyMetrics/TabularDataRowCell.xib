@@ -64,6 +64,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" id="awJ-g0-avm">
+                                <rect key="frame" x="0.0" y="0.0" width="409" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -79,6 +84,7 @@
                 <outlet property="tabularDataHeaderRightBorder" destination="3SP-Mj-gGw" id="ech-Iz-S1R"/>
                 <outlet property="tabularDataHeaderView" destination="GhB-lZ-G2L" id="D3C-2f-1DP"/>
                 <outlet property="tabularDataRowBottomBorder" destination="wD4-bP-mX1" id="gZY-tY-i6e"/>
+                <outlet property="tabularDataRowTopBorder" destination="awJ-g0-avm" id="A3L-SH-h8O"/>
             </connections>
             <point key="canvasLocation" x="324.5" y="389"/>
         </collectionViewCell>

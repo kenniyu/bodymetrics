@@ -9,6 +9,10 @@
 import UIKit
 import Parse
 
+public protocol MealDetailDelegate: class {
+    func didFinishMeal(mealDataModel: TabularDataRowCellModel?)
+}
+
 public protocol SynchronizedCellsScrollViewDelegate: class {
     func didScrollSynchronizedCollectionView(cell: TabularDataRowCell)
 }
@@ -67,7 +71,7 @@ class MealsViewController: UIViewController {
     }
 
 
-    public override func viewDidDisappear(animated: Bool) {
+    public override func viewWillDisappear(animated: Bool) {
         print("GOT HERE")
         saveMeals()
     }
@@ -93,6 +97,7 @@ class MealsViewController: UIViewController {
                 "isHeader": cellViewModel.isHeader,
                 "isSubRow": cellViewModel.isSubRow,
                 "uniqueId": cellViewModel.uniqueId,
+                "isCompleted": cellViewModel.isCompleted,
                 "cellModels": cellModelsArr
             ]
 
@@ -161,7 +166,7 @@ class MealsViewController: UIViewController {
     }
 
     private func prepareCellModels() {
-        if cellViewModels.count == 0  && false {
+        if cellViewModels.count == 0 {
             // if no plan, create one for now
             for i in 0...10 {
                 let fatCellModel = TabularDataCellModel("fat", columnKey: TabularDataCellColumnKeys.kFatKey, value: CGFloat(arc4random_uniform(6) + 1))
@@ -243,7 +248,7 @@ class MealsViewController: UIViewController {
                 let proteinHeaderCellModel = TabularDataCellModel("protein", columnKey: TabularDataCellColumnKeys.kProteinKey, value: 0)
                 let caloriesHeaderCellModel = TabularDataCellModel("calories", columnKey: TabularDataCellColumnKeys.kCaloriesKey, value: 0)
 
-                let newCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModel\(self.cellViewModels.count + 100)", hidden: false, isHeader: true)
+                let newCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModel\(self.cellViewModels.count + 100)", hidden: false, isHeader: false)
                 self.cellViewModels.append(newCellViewModel)
                 self.filteredCellViewModels.append(newCellViewModel)
 
@@ -340,6 +345,7 @@ extension MealsViewController: UICollectionViewDataSource, UICollectionViewDeleg
             let cellModel = filteredCellViewModels[indexPath.row]
             let mealFoodItems = getMealFoodItems(cell)
             let mealDetailViewController = MealDetailViewController(mealDataModel: cellModel, mealFoodItems: mealFoodItems)
+            mealDetailViewController.mealDetailDelegate = self
             navigationController?.pushViewController(mealDetailViewController, animated: true)
         }
     }
@@ -357,6 +363,46 @@ extension MealsViewController: UICollectionViewDataSource, UICollectionViewDeleg
 //    }
 }
 
+extension MealsViewController: MealDetailDelegate {
+    public func didFinishMeal(mealDataModel: TabularDataRowCellModel?) {
+        guard let mealDataModel = mealDataModel else { return }
+        let mealCellModelUniqueId = mealDataModel.uniqueId
+
+        for viewModel in cellViewModels {
+            if viewModel.uniqueId == mealCellModelUniqueId {
+                viewModel.isCompleted = true
+                break
+            }
+        }
+
+        // update filtered view models
+        for (index, viewModel) in filteredCellViewModels.enumerate() {
+            if viewModel.uniqueId == mealCellModelUniqueId {
+                // update cell at this index path
+                let indexPath = NSIndexPath(forRow: index, inSection: 0)
+                if let cell = mealsCollectionView.cellForItemAtIndexPath(indexPath) as? TabularDataRowCell {
+                    var indexPathsToUpdate: [NSIndexPath] = [indexPath]
+                    if viewModel.isExpanded {
+                        // also reload all meal items in subrow
+                        var innerRow = index + 1
+                        while innerRow < filteredCellViewModels.count && filteredCellViewModels[innerRow].isSubRow {
+                            // mark the item as completed as well
+                            filteredCellViewModels[innerRow].isCompleted = true
+                            indexPathsToUpdate.append(NSIndexPath(forRow: innerRow, inSection: 0))
+                            innerRow += 1
+                        }
+                    }
+                    print(indexPathsToUpdate.count)
+                    mealsCollectionView.reloadItemsAtIndexPaths(indexPathsToUpdate)
+                }
+            }
+        }
+
+        print("Did finish")
+        return
+    }
+}
+
 extension MealsViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let foodItem = filteredCellViewModels[indexPath.row]
@@ -372,7 +418,7 @@ extension MealsViewController: UICollectionViewDelegateFlowLayout {
     }
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 1.0
+        return 0
     }
 
     public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -388,8 +434,7 @@ extension MealsViewController: UICollectionViewDelegateFlowLayout {
     }
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSizeZero
-        return CGSizeMake(mealsCollectionView.bounds.width, 50)
+        return CGSizeMake(mealsCollectionView.bounds.width, TabularDataCell.kHeaderCellHeight)
     }
 
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {

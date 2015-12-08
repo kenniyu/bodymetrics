@@ -33,6 +33,7 @@ class TabularDataCell: UICollectionViewCell {
     static let kSocialActionsHeight: CGFloat = 40
     static let kSocialActionsButtonWidth: CGFloat = 80
     static let kBorderViewHeight: CGFloat = 8
+    static let kHeaderCellHeight: CGFloat = 36
     static let kCellHeight: CGFloat = 50
     static let kCellWidth: CGFloat = 60
 

@@ -39,6 +39,7 @@ public class TabularDataRowCell: UICollectionViewCell {
     @IBOutlet weak var tabularDataHeaderLabel: UILabel!
     @IBOutlet weak var tabularDataHeaderRightBorder: UIView!
     @IBOutlet weak var tabularDataRowBottomBorder: UIView!
+    @IBOutlet weak var tabularDataRowTopBorder: UIView!
 
     @IBOutlet weak var expandCollapseButton: UIButton!
 
@@ -86,7 +87,8 @@ public class TabularDataRowCell: UICollectionViewCell {
     public func setupStyles() {
         containerView.backgroundColor = UIColor.clearColor()
         tabularDataRowBottomBorder.backgroundColor = Styles.Colors.BarLabel
-        tabularDataHeaderRightBorder.backgroundColor = Styles.Colors.BarLabel
+        tabularDataRowTopBorder.backgroundColor = Styles.Colors.BarLabel
+        tabularDataHeaderRightBorder.backgroundColor = Styles.Colors.TabularDataCellRightBorder
 
         // style
         if viewModel.isSubRow {
@@ -94,6 +96,11 @@ public class TabularDataRowCell: UICollectionViewCell {
         } else {
             backgroundColor = Styles.Colors.AppDarkBlue
         }
+        // regardless of meal or subrow, mark as green if completed
+        if viewModel.isCompleted {
+            backgroundColor = Styles.Colors.AppGreen
+        }
+
         tabularDataHeaderView.backgroundColor = backgroundColor
 
         expandCollapseButton.tintColor = Styles.Colors.BarNumber
@@ -143,6 +150,9 @@ public class TabularDataRowCell: UICollectionViewCell {
     }
 
     public class func size(boundingWidth: CGFloat, viewModel: TabularDataRowCellModel) -> CGSize {
+        if viewModel.isHeader {
+            return CGSizeMake(boundingWidth, TabularDataCell.kHeaderCellHeight)
+        }
         return CGSizeMake(boundingWidth, TabularDataCell.kCellHeight)
     }
 
@@ -155,8 +165,12 @@ public class TabularDataRowCell: UICollectionViewCell {
         tabularDataHeaderView.top = 0
         tabularDataHeaderView.left = 0
         tabularDataHeaderView.width = TabularDataRowCell.kHeaderCellWidth
-        tabularDataHeaderView.height = TabularDataCell.kCellHeight
 
+        if viewModel.isHeader {
+            tabularDataHeaderView.height = TabularDataCell.kHeaderCellHeight
+        } else {
+            tabularDataHeaderView.height = TabularDataCell.kCellHeight
+        }
 
         expandCollapseButton.width = TabularDataRowCell.kExpandCollapseButtonWidth
         expandCollapseButton.height = expandCollapseButton.width
@@ -198,6 +212,7 @@ public class TabularDataRowCell: UICollectionViewCell {
 
     public func hideUnhideViews() {
         expandCollapseButton.hidden = viewModel.isSubRow || viewModel.isHeader || !viewModel.isExpandable
+        tabularDataRowTopBorder.hidden = !viewModel.isHeader
     }
 
 
@@ -266,7 +281,7 @@ extension TabularDataRowCell: UICollectionViewDelegateFlowLayout {
     }
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 1.0
+        return 0
     }
 
 //    public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {

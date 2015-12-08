@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlannerViewController" customModule="BodyMetrics" customModuleProvider="target">
@@ -38,7 +40,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlA-G0-Sfc" customClass="JTVerticalCalendarView">
-                    <rect key="frame" x="0.0" y="128" width="600" height="236"/>
+                    <rect key="frame" x="0.0" y="128" width="600" height="210"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="200" id="YFg-k1-wVz"/>
@@ -50,13 +52,13 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91T-ga-eHo">
-                    <rect key="frame" x="0.0" y="364" width="600" height="236"/>
+                    <rect key="frame" x="0.0" y="338" width="600" height="262"/>
                     <subviews>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="zo8-I1-LAR">
-                            <rect key="frame" x="290" y="108" width="20" height="20"/>
+                            <rect key="frame" x="290" y="120.5" width="20" height="20"/>
                         </activityIndicatorView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTF-LH-S25">
-                            <rect key="frame" x="0.0" y="82" width="600" height="72"/>
+                            <rect key="frame" x="0.0" y="94.5" width="600" height="72"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing planned here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue1-qU-qbu">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
@@ -86,7 +88,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LO3-OQ-JUo">
-                            <rect key="frame" x="0.0" y="82" width="600" height="72"/>
+                            <rect key="frame" x="0.0" y="94.5" width="600" height="72"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d67-WG-10N">
                                     <rect key="frame" x="251.5" y="21" width="97" height="30"/>
@@ -120,8 +122,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="91T-ga-eHo" secondAttribute="bottom" id="BmT-Wm-fue"/>
-                <constraint firstItem="91T-ga-eHo" firstAttribute="height" secondItem="qlA-G0-Sfc" secondAttribute="height" id="Bxl-5x-P8C"/>
-                <constraint firstAttribute="bottom" secondItem="qlA-G0-Sfc" secondAttribute="bottom" id="FSb-qA-ceJ"/>
+                <constraint firstItem="91T-ga-eHo" firstAttribute="height" secondItem="qlA-G0-Sfc" secondAttribute="height" multiplier="1.25" id="Bxl-5x-P8C"/>
                 <constraint firstItem="91T-ga-eHo" firstAttribute="top" secondItem="qlA-G0-Sfc" secondAttribute="bottom" id="N60-6H-kuo"/>
                 <constraint firstItem="91T-ga-eHo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="NgM-b3-L1k"/>
                 <constraint firstAttribute="trailing" secondItem="dbl-i2-jrJ" secondAttribute="trailing" id="UmM-yy-8fS"/>
@@ -130,18 +131,11 @@
                 <constraint firstItem="qlA-G0-Sfc" firstAttribute="top" secondItem="cnW-rJ-UNc" secondAttribute="bottom" id="fPH-Cq-8Bq"/>
                 <constraint firstAttribute="trailing" secondItem="cnW-rJ-UNc" secondAttribute="trailing" id="fTF-3A-80v"/>
                 <constraint firstItem="qlA-G0-Sfc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ktW-gV-XHU"/>
-                <constraint firstItem="qlA-G0-Sfc" firstAttribute="top" secondItem="dbl-i2-jrJ" secondAttribute="bottom" id="lKb-my-edQ"/>
                 <constraint firstItem="cnW-rJ-UNc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lcs-N6-ymo"/>
                 <constraint firstItem="dbl-i2-jrJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ld8-pZ-rlZ"/>
                 <constraint firstItem="cnW-rJ-UNc" firstAttribute="top" secondItem="dbl-i2-jrJ" secondAttribute="bottom" id="nGe-Aa-zhY"/>
                 <constraint firstAttribute="trailing" secondItem="qlA-G0-Sfc" secondAttribute="trailing" id="zaW-f4-151"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="FSb-qA-ceJ"/>
-                    <exclude reference="lKb-my-edQ"/>
-                </mask>
-            </variation>
         </view>
     </objects>
 </document>

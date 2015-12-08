@@ -32,6 +32,7 @@ class PlannerViewController: UIViewController {
     @IBOutlet weak var editMealsButton: UIButton!
 
     private var allMeals: [PFObject] = []
+    private var allMealsDict: [NSDate: PFObject] = [:]
     private var calendarManager: JTCalendarManager?
     private var selectedDate: NSDate? = NSDate()
 
@@ -103,10 +104,6 @@ class PlannerViewController: UIViewController {
         setupSpinner()
 
         // see if we have any meals for this user on selected date
-//        fetchSelectedDateMealPlan()
-    }
-
-    public override func viewWillAppear(animated: Bool) {
         fetchMealPlans()
     }
 
@@ -130,7 +127,17 @@ class PlannerViewController: UIViewController {
             }
             if let mealPlans = objects {
                 self.allMeals = mealPlans
+                self.cacheMeals()
                 self.updateDetailContainerView()
+                self.calendarManager?.reload()
+            }
+        }
+    }
+
+    private func cacheMeals() {
+        for mealPlan in allMeals {
+            if let mealPlanDate = mealPlan["date"] as? NSDate {
+                allMealsDict[mealPlanDate] = mealPlan
             }
         }
     }
@@ -164,7 +171,7 @@ class PlannerViewController: UIViewController {
     }
 
     private func setupNavBar() {
-        addRightBarButtons([createAddButton()])
+//        addRightBarButtons([createAddButton()])
     }
 
     private func setupZeroStateViews() {
@@ -191,54 +198,54 @@ class PlannerViewController: UIViewController {
 
     public func addMeal() {
         let mealsViewController = MealsViewController(selectedDate: selectedDate, cellViewModels: [])
+        mealsViewController.mealUpdateDelegate = self
         navigationController?.pushViewController(mealsViewController, animated: true)
     }
 
     private func parseMealsForDate(date: NSDate?) -> [TabularDataRowCellModel] {
-        for mealPlan in allMeals {
-            if let selectedDate = date, mealPlanDate = mealPlan["date"] as? NSDate
-                where JTDateHelper().date(selectedDate, isTheSameDayThan: mealPlanDate) {
+
+        if let selectedDate = date, mealPlan = allMealsDict[selectedDate] {
+//        for mealPlan in allMeals {
+//            if let selectedDate = date, mealPlanDate = mealPlan["date"] as? NSDate
+//                where JTDateHelper().date(selectedDate, isTheSameDayThan: mealPlanDate) {
                     // prep cell view models
-                    guard let meals = mealPlan["meals"] as? [AnyObject] else { break }
+            guard let meals = mealPlan["meals"] as? [AnyObject] else { return [] }
 
-                    var mealPlanMealRows: [TabularDataRowCellModel] = []
-                    for rowDataJSON in meals {
-                        var cellModels: [TabularDataCellModel] = []
-                        guard let cellModelsJSON = rowDataJSON["cellModels"] as? [AnyObject] else { continue }
+            var mealPlanMealRows: [TabularDataRowCellModel] = []
+            for rowDataJSON in meals {
+                var cellModels: [TabularDataCellModel] = []
+                guard let cellModelsJSON = rowDataJSON["cellModels"] as? [AnyObject] else { continue }
 
-                        for columnDataJSON in cellModelsJSON {
-                            guard let cellModelColumnTitle = columnDataJSON["columnTitle"] as? String else { continue }
-                            guard let cellModelColumnKey = columnDataJSON["columnKey"] as? String else { continue }
-                            guard let cellModelValue = columnDataJSON["value"] as AnyObject! else { continue }
-                            let cellModel = TabularDataCellModel(cellModelColumnTitle, columnKey: cellModelColumnKey, value: cellModelValue)
-                            cellModels.append(cellModel)
-                        }
+                for columnDataJSON in cellModelsJSON {
+                    guard let cellModelColumnTitle = columnDataJSON["columnTitle"] as? String else { continue }
+                    guard let cellModelColumnKey = columnDataJSON["columnKey"] as? String else { continue }
+                    guard let cellModelValue = columnDataJSON["value"] as AnyObject! else { continue }
+                    let cellModel = TabularDataCellModel(cellModelColumnTitle, columnKey: cellModelColumnKey, value: cellModelValue)
+                    cellModels.append(cellModel)
+                }
 
-                        guard let hidden = rowDataJSON["hidden"] as? Bool else { continue }
-                        guard let isExpandable = rowDataJSON["isExpandable"] as? Bool else { continue }
-                        guard let isExpanded = rowDataJSON["isExpanded"] as? Bool else { continue }
-                        guard let isHeader = rowDataJSON["isHeader"] as? Bool else { continue }
-                        guard let isSubRow = rowDataJSON["isSubRow"] as? Bool else { continue }
-                        guard let uniqueId = rowDataJSON["uniqueId"] as? String else { continue }
+                guard let hidden = rowDataJSON["hidden"] as? Bool else { continue }
+                guard let isExpandable = rowDataJSON["isExpandable"] as? Bool else { continue }
+                guard let isExpanded = rowDataJSON["isExpanded"] as? Bool else { continue }
+                guard let isHeader = rowDataJSON["isHeader"] as? Bool else { continue }
+                guard let isSubRow = rowDataJSON["isSubRow"] as? Bool else { continue }
+                guard let uniqueId = rowDataJSON["uniqueId"] as? String else { continue }
+                guard let isCompleted = rowDataJSON["isCompleted"] as? Bool else { continue }
 
 
-                        let mealCellData = TabularDataRowCellModel(cellModels, uniqueId: uniqueId, hidden: hidden, isSubRow: isSubRow, isExpanded: isExpanded, isHeader: isHeader, isExpandable: isExpandable)
+                let mealCellData = TabularDataRowCellModel(cellModels, uniqueId: uniqueId, hidden: hidden, isSubRow: isSubRow, isExpanded: isExpanded, isHeader: isHeader, isExpandable: isExpandable, isCompleted: isCompleted)
 
-                        mealPlanMealRows.append(mealCellData)
-                    }
-
-                    return mealPlanMealRows
+                mealPlanMealRows.append(mealCellData)
             }
+
+            return mealPlanMealRows
         }
         return []
     }
 
     private func getMealPlanObjForDate(date: NSDate?) -> PFObject? {
-        for mealPlan in allMeals {
-            if let selectedDate = date, mealPlanDate = mealPlan["date"] as? NSDate
-                where JTDateHelper().date(selectedDate, isTheSameDayThan: mealPlanDate) {
-                    return mealPlan
-            }
+        if let selectedDate = date, mealPlan = allMealsDict[selectedDate] {
+            return mealPlan
         }
         return nil
     }
@@ -272,6 +279,30 @@ extension PlannerViewController: JTCalendarDelegate {
             if dayView.isFromAnotherMonth {
                 dayView.hidden = true
                 return
+            }
+
+            if let mealPlan = getMealPlanObjForDate(dayView.date), let meals = mealPlan["meals"] as? [AnyObject] {
+                dayView.ringView.hidden = false
+                var completedMeals = 0
+                var incompleteMeals = 0
+                for meal in meals {
+                    if let completed = meal["completed"] as? Bool, let isSubRow = meal["isSubRow"] as? Bool {
+                        if isSubRow {
+                            // ignore subrows, only care about meal item encapsulation rows
+                            continue
+                        } else {
+                            // figure out if meal is completed
+                            if completed {
+                                completedMeals += 1
+                            } else {
+                                incompleteMeals += 1
+                            }
+                        }
+                    }
+                }
+                dayView.updateSlicesData(CGFloat(completedMeals), pending: CGFloat(incompleteMeals))
+            } else {
+                dayView.ringView.hidden = true
             }
 
             if let dateHelper = calendarManager?.dateHelper {

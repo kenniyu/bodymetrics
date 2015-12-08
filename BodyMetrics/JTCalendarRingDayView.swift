@@ -13,8 +13,8 @@ public class JTCalendarRingDayView: JTCalendarDayView {
     public var ringView: UIView!
     var pieChart: MDRotatingPieChart? = nil
     var slicesData:Array<PieChartData> = Array<PieChartData>()
-    var completedMeals: Int = 0
-    var incompleteMeals: Int = 1
+    var completedMeals: CGFloat = 0
+    var incompleteMeals: CGFloat = 1
 
     public override func commonInit() {
         super.commonInit()
@@ -35,33 +35,47 @@ public class JTCalendarRingDayView: JTCalendarDayView {
         createPieChart(inContainerView: ringView)
     }
 
+    public func updateSlicesData(completed: CGFloat, pending: CGFloat) {
+        let color = getColor(completed/(completed + pending))
+        if completed == 0 && pending == 0 {
+            slicesData = [
+                PieChartData(myValue: 0, myColor: color, myLabel: "Done"),
+                PieChartData(myValue: 1, myColor: Styles.Colors.AppLightGray, myLabel: "Pending")
+            ]
+        } else {
+            slicesData = [
+                PieChartData(myValue: completed, myColor: color, myLabel: "Done"),
+                PieChartData(myValue: pending, myColor: Styles.Colors.AppLightGray, myLabel: "Pending")
+            ]
+        }
+
+        if completedMeals != completed || incompleteMeals != pending {
+            completedMeals = completed
+            incompleteMeals = pending
+            
+            // only refresh if data was different from previous
+            refreshPieChart()
+        }
+    }
+
     private func createPieChart(inContainerView containerView: UIView) {
         // ensure we don't add more than necessary
         if let pieChart = pieChart {
             return
         }
         pieChart = MDRotatingPieChart(frame: CGRectMake(0, 0, containerView.frame.width, containerView.frame.height))
-        let completedValue: CGFloat = 1
-        let pendingValue: CGFloat = 5
-
-        let totalValue = completedValue + pendingValue
-        let color = getColor(completedValue/totalValue)
-
-        slicesData = [
-            PieChartData(myValue: completedValue, myColor: color, myLabel: "Done"),
-            PieChartData(myValue: pendingValue, myColor: Styles.Colors.AppLightGray, myLabel: "Pending")
-        ]
-
         pieChart!.delegate = self
         pieChart!.datasource = self
         pieChart!.userInteractionEnabled = false
-        containerView.addSubview(pieChart!)
 
         var properties = Properties()
         properties.smallRadius = circleView.width / 2 + 5
         properties.bigRadius = circleView.width / 2 + circleView.width / 4
         pieChart!.properties = properties
-        refreshPieChart()
+
+        containerView.addSubview(pieChart!)
+        updateSlicesData(0, pending: 5)
+//        refreshPieChart()
     }
 }
 

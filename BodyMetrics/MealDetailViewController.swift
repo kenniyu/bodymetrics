@@ -47,6 +47,8 @@ class MealDetailViewController: UIViewController {
     private static let kPieChartCaloriesCountFont = Styles.Fonts.BookXXXLarge!
     private static let kPieChartCaloriesTextFont = Styles.Fonts.MediumSmall!
 
+    public var mealDetailDelegate: MealDetailDelegate?
+    
     // pie chart shit
     var slicesData:Array<Data> = Array<Data>()
     var pieChart: MDRotatingPieChart!
@@ -249,6 +251,11 @@ class MealDetailViewController: UIViewController {
         let headerCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModelHeader", hidden: false, isHeader: true)
         return headerCellViewModel
     }
+
+    public override func done() {
+        mealDetailDelegate?.didFinishMeal(mealDataModel)
+        navigationController?.popViewControllerAnimated(true)
+    }
 }
 
 extension MealDetailViewController: MDRotatingPieChartDelegate, MDRotatingPieChartDataSource {
@@ -337,7 +344,7 @@ extension MealDetailViewController: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         //        return CGSizeZero
-        return CGSizeMake(mealFoodItemsCollectionView.bounds.width, 50)
+        return CGSizeMake(mealFoodItemsCollectionView.bounds.width, TabularDataCell.kHeaderCellHeight)
     }
 
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
