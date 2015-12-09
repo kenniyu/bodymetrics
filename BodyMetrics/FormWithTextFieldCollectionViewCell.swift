@@ -56,13 +56,13 @@ public class FormWithTextFieldCollectionViewCell: FormCollectionViewCell {
         super.awakeFromNib()
     }
 
-    public override func setup(formModel: [String: AnyObject?]) {
+    public override func setup(formModel: [String: AnyObject?], keyboardType: UIKeyboardType = UIKeyboardType.DecimalPad) {
         super.setup(formModel)
         self.viewModel = formModel
 
         formTextField.font = FormWithTextFieldCollectionViewCell.kFormTextFieldFontStyle
         formTextField.textColor = FormWithTextFieldCollectionViewCell.kFontColor
-        formTextField.keyboardType = .DecimalPad
+        formTextField.keyboardType = keyboardType
 
         // set placeholder
         if let placeholder = viewModel["placeholder"] as? String {

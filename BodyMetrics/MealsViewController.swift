@@ -10,7 +10,8 @@ import UIKit
 import Parse
 
 public protocol MealDetailDelegate: class {
-    func didFinishMeal(mealDataModel: TabularDataRowCellModel?)
+    func didUpdateMeal(mealDataModel: TabularDataRowCellModel?, finished: Bool)
+    func didAddFoodItem(foodItem: PFObject, toMeal mealDataModel: TabularDataRowCellModel?)
 }
 
 public protocol SynchronizedCellsScrollViewDelegate: class {
@@ -72,7 +73,7 @@ class MealsViewController: UIViewController {
 
 
     public override func viewWillDisappear(animated: Bool) {
-        print("GOT HERE")
+        print("Saving Meals")
         saveMeals()
     }
 
@@ -152,6 +153,7 @@ class MealsViewController: UIViewController {
         newMealDatePicker?.datePickerMode = UIDatePickerMode.Time
         newMealDatePicker?.addTarget(self, action: "didUpdateMealTime:", forControlEvents: UIControlEvents.ValueChanged)
         mealDateTextField.inputView = newMealDatePicker
+        mealDateTextField.enabled = false
 
         let formatter = NSDateFormatter()
         formatter.dateStyle = NSDateFormatterStyle.FullStyle
@@ -326,7 +328,7 @@ extension MealsViewController: UICollectionViewDataSource, UICollectionViewDeleg
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let cell = mealsCollectionView.dequeueReusableCellWithReuseIdentifier(TabularDataRowCell.kReuseIdentifier, forIndexPath: indexPath) as? TabularDataRowCell {
             let viewModel = filteredCellViewModels[indexPath.row]
-            cell.setup(viewModel)
+            cell.setup(viewModel, isFirst: indexPath.row == 0)
             cell.tabularDataRowCellDelegate = self
             cell.synchronizedCellsScrollViewDelegate = self
             return cell
@@ -344,7 +346,7 @@ extension MealsViewController: UICollectionViewDataSource, UICollectionViewDeleg
         if let cell = mealsCollectionView.cellForItemAtIndexPath(indexPath) as? TabularDataRowCell {
             let cellModel = filteredCellViewModels[indexPath.row]
             let mealFoodItems = getMealFoodItems(cell)
-            let mealDetailViewController = MealDetailViewController(mealDataModel: cellModel, mealFoodItems: mealFoodItems)
+            let mealDetailViewController = MealDetailViewController(mealDataModel: cellModel, mealFoodItems: mealFoodItems, date: selectedDate)
             mealDetailViewController.mealDetailDelegate = self
             navigationController?.pushViewController(mealDetailViewController, animated: true)
         }
@@ -364,13 +366,18 @@ extension MealsViewController: UICollectionViewDataSource, UICollectionViewDeleg
 }
 
 extension MealsViewController: MealDetailDelegate {
-    public func didFinishMeal(mealDataModel: TabularDataRowCellModel?) {
+    // a No-op
+    public func didAddFoodItem(foodItem: PFObject, toMeal mealDataModel: TabularDataRowCellModel?) {
+        return
+    }
+
+    public func didUpdateMeal(mealDataModel: TabularDataRowCellModel?, finished: Bool) {
         guard let mealDataModel = mealDataModel else { return }
         let mealCellModelUniqueId = mealDataModel.uniqueId
 
         for viewModel in cellViewModels {
             if viewModel.uniqueId == mealCellModelUniqueId {
-                viewModel.isCompleted = true
+                viewModel.isCompleted = finished
                 break
             }
         }
@@ -378,27 +385,37 @@ extension MealsViewController: MealDetailDelegate {
         // update filtered view models
         for (index, viewModel) in filteredCellViewModels.enumerate() {
             if viewModel.uniqueId == mealCellModelUniqueId {
-                // update cell at this index path
-                let indexPath = NSIndexPath(forRow: index, inSection: 0)
-                if let cell = mealsCollectionView.cellForItemAtIndexPath(indexPath) as? TabularDataRowCell {
-                    var indexPathsToUpdate: [NSIndexPath] = [indexPath]
-                    if viewModel.isExpanded {
-                        // also reload all meal items in subrow
-                        var innerRow = index + 1
-                        while innerRow < filteredCellViewModels.count && filteredCellViewModels[innerRow].isSubRow {
-                            // mark the item as completed as well
-                            filteredCellViewModels[innerRow].isCompleted = true
-                            indexPathsToUpdate.append(NSIndexPath(forRow: innerRow, inSection: 0))
-                            innerRow += 1
+                // we've found the cell in filteredCelLViewModels, now find it in our actual cellViewModels
+                for (cellViewModelsIndex, cellViewModel) in cellViewModels.enumerate() {
+                    if cellViewModel.uniqueId == mealCellModelUniqueId {
+
+                        // update cell at this index path
+                        let indexPath = NSIndexPath(forRow: index, inSection: 0)
+                        if let cell = mealsCollectionView.cellForItemAtIndexPath(indexPath) as? TabularDataRowCell {
+                            var indexPathsToUpdate: [NSIndexPath] = [indexPath]
+                            var innerRow = index + 1
+                            while innerRow < filteredCellViewModels.count && filteredCellViewModels[innerRow].isSubRow {
+                                // mark the item as completed as well
+                                filteredCellViewModels[innerRow].isCompleted = finished
+                                indexPathsToUpdate.append(NSIndexPath(forRow: innerRow, inSection: 0))
+                                innerRow += 1
+                            }
+                            // however, you still want to mark the cellViewModel's next rows as completed as well
+                            // Reset innerRow back to cellViewModelsIndex, and dip toe forward to update
+                            innerRow = cellViewModelsIndex + 1
+                            while innerRow < cellViewModels.count && cellViewModels[innerRow].isSubRow {
+                                // mark the item as completed as well
+                                cellViewModels[innerRow].isCompleted = finished
+                                innerRow += 1
+                            }
+                            // also reload all meal items in subrow
+                            mealsCollectionView.reloadItemsAtIndexPaths(indexPathsToUpdate)
                         }
                     }
-                    print(indexPathsToUpdate.count)
-                    mealsCollectionView.reloadItemsAtIndexPaths(indexPathsToUpdate)
                 }
             }
         }
 
-        print("Did finish")
         return
     }
 }

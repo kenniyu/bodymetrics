@@ -7,6 +7,13 @@
 //
 
 import UIKit
+import JTCalendar
+
+public enum MealActionSections: Int {
+    case kSectionMealItems = 0
+    case kSectionMealActions
+}
+
 public
 class MealDetailViewController: UIViewController {
 
@@ -39,6 +46,8 @@ class MealDetailViewController: UIViewController {
     private var mealDataModel: TabularDataRowCellModel?
     private var mealFoodItemsDataModels: [TabularDataRowCellModel] = []
 
+    private var mealActionModels: [MealActionCellModel] = []
+
     private static let kSubtitleFont = Styles.Fonts.BookLarge!
     private static let kStatsNameFont = Styles.Fonts.MediumMedium!
     private static let kStatsPctFont = Styles.Fonts.ThinXLarge!
@@ -48,6 +57,7 @@ class MealDetailViewController: UIViewController {
     private static let kPieChartCaloriesTextFont = Styles.Fonts.MediumSmall!
 
     public var mealDetailDelegate: MealDetailDelegate?
+    private var selectedDate: NSDate?
     
     // pie chart shit
     var slicesData:Array<Data> = Array<Data>()
@@ -69,10 +79,11 @@ class MealDetailViewController: UIViewController {
         self.init(nibName: MealDetailViewController.kNibName, bundle: nil)
     }
 
-    public convenience init(mealDataModel: TabularDataRowCellModel, mealFoodItems: [TabularDataRowCellModel] = []) {
+    public convenience init(mealDataModel: TabularDataRowCellModel, mealFoodItems: [TabularDataRowCellModel] = [], date: NSDate) {
         self.init(nibName: MealDetailViewController.kNibName, bundle: nil)
         self.mealDataModel = mealDataModel
         self.mealFoodItemsDataModels = mealFoodItems
+        self.selectedDate = date
 
         if let mealName = mealDataModel.cellModels.first?.value as? String {
             self.title = mealName
@@ -92,7 +103,10 @@ class MealDetailViewController: UIViewController {
 
     public func setup() {
         // add done button
-        addRightBarButtons([createDoneButton()])
+        if let selectedDate = selectedDate where JTDateHelper().date(selectedDate, isEqualOrBefore: NSDate()) {
+            // only allow them to complete meals which are dated at or before today
+            addRightBarButtons([createDoneButton()])
+        }
 
 //        title = "Meal Details".uppercaseString
         view.backgroundColor = Styles.Colors.AppDarkBlue
@@ -102,7 +116,21 @@ class MealDetailViewController: UIViewController {
         setupLabelData()
         setupPieChart()
 
+        createMealActions()
         setupCollectionView()
+    }
+
+    private func createMealActions() {
+        let addMealItemAction = MealActionCellModel(MealActionKeys.kAddMealItem, actionTitle: "Add Food Item")
+
+        var mealActions: [MealActionCellModel] = [addMealItemAction]
+        guard let mealDataModel = mealDataModel else { return }
+        if mealDataModel.isCompleted {
+            mealActions.append(MealActionCellModel(MealActionKeys.kUncompleteMeal, actionTitle: "Uncomplete Meal"))
+        } else {
+            mealActions.append(MealActionCellModel(MealActionKeys.kCompleteMeal, actionTitle: "Complete Meal"))
+        }
+        mealActionModels = mealActions
     }
 
     private func setupCollectionView() {
@@ -236,9 +264,11 @@ class MealDetailViewController: UIViewController {
 
 
     public func registerCells(collectionView: UICollectionView) {
-        mealFoodItemsCollectionView.registerClass(TabularDataRowCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: TabularDataRowCell.reuseId)
         mealFoodItemsCollectionView.registerNib(TabularDataRowCell.nib, forCellWithReuseIdentifier: TabularDataRowCell.reuseId)
         mealFoodItemsCollectionView.registerNib(TabularDataRowCell.nib, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: TabularDataRowCell.reuseId)
+
+        mealFoodItemsCollectionView.registerNib(MealActionCollectionViewCell.nib, forCellWithReuseIdentifier: MealActionCollectionViewCell.reuseId)
+//        mealFoodItemsCollectionView.registerNib(TabularDataRowCell.nib, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: TabularDataRowCell.reuseId)
     }
 
     public func getHeaderCellViewModel() -> TabularDataRowCellModel {
@@ -252,9 +282,29 @@ class MealDetailViewController: UIViewController {
         return headerCellViewModel
     }
 
+    public func getFooterCellViewModel() -> TabularDataRowCellModel {
+        let mealHeaderCellModel = TabularDataCellModel("mealName", columnKey: TabularDataCellColumnKeys.kMealNameKey, value: "meal")
+        let fatHeaderCellModel = TabularDataCellModel("fat", columnKey: TabularDataCellColumnKeys.kFatKey, value: "fat")
+        let carbsHeaderCellModel = TabularDataCellModel("carbs", columnKey: TabularDataCellColumnKeys.kCarbsKey, value: "carbs")
+        let proteinHeaderCellModel = TabularDataCellModel("protein", columnKey: TabularDataCellColumnKeys.kProteinKey, value: "protein")
+        let caloriesHeaderCellModel = TabularDataCellModel("calories", columnKey: TabularDataCellColumnKeys.kCaloriesKey, value: "calories")
+
+        let headerCellViewModel = TabularDataRowCellModel([mealHeaderCellModel, fatHeaderCellModel, carbsHeaderCellModel, proteinHeaderCellModel, caloriesHeaderCellModel], uniqueId: "tabularDataRowCellModelFooter", hidden: false, isHeader: true)
+        return headerCellViewModel
+    }
+
     public override func done() {
-        mealDetailDelegate?.didFinishMeal(mealDataModel)
         navigationController?.popViewControllerAnimated(true)
+    }
+
+    public func completeMeal() {
+        mealDetailDelegate?.didUpdateMeal(mealDataModel, finished: true)
+        self.done()
+    }
+
+    public func uncompleteMeal() {
+        mealDetailDelegate?.didUpdateMeal(mealDataModel, finished: false)
+        self.done()
     }
 }
 
@@ -303,31 +353,66 @@ extension MealDetailViewController: MDRotatingPieChartDelegate, MDRotatingPieCha
 
 extension MealDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if let cell = mealFoodItemsCollectionView.dequeueReusableCellWithReuseIdentifier(TabularDataRowCell.kReuseIdentifier, forIndexPath: indexPath) as? TabularDataRowCell {
-            let viewModel = mealFoodItemsDataModels[indexPath.row]
-            cell.setup(viewModel)
-            cell.synchronizedCellsScrollViewDelegate = self
-            return cell
+        if indexPath.section == MealActionSections.kSectionMealItems.rawValue {
+            if let cell = mealFoodItemsCollectionView.dequeueReusableCellWithReuseIdentifier(TabularDataRowCell.kReuseIdentifier, forIndexPath: indexPath) as? TabularDataRowCell {
+                let viewModel = mealFoodItemsDataModels[indexPath.row]
+                cell.setup(viewModel, isFirst: indexPath.row == 0)
+                cell.synchronizedCellsScrollViewDelegate = self
+                return cell
+            }
+        } else if indexPath.section == MealActionSections.kSectionMealActions.rawValue {
+            if let cell = mealFoodItemsCollectionView.dequeueReusableCellWithReuseIdentifier(MealActionCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? MealActionCollectionViewCell {
+                let viewModel = mealActionModels[indexPath.row]
+                cell.setup(viewModel, isFirst: indexPath.row == 0)
+                return cell
+            }
         }
         return UICollectionViewCell()
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mealFoodItemsDataModels.count
+        if section == MealActionSections.kSectionMealItems.rawValue {
+            return mealFoodItemsDataModels.count
+        } else if section == MealActionSections.kSectionMealActions.rawValue {
+            return mealActionModels.count
+        }
+        return 0
     }
 
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // do some shared shit
         // show details about this item
+        if indexPath.section == MealActionSections.kSectionMealActions.rawValue {
+            if let mealAction = mealActionModels[indexPath.row] as? MealActionCellModel {
+                switch mealAction.actionKey {
+                case MealActionKeys.kAddMealItem:
+                    print("Add meal item")
+                case MealActionKeys.kCompleteMeal:
+                    self.completeMeal()
+                case MealActionKeys.kUncompleteMeal:
+                    self.uncompleteMeal()
+                default:
+                    break
+                }
+            }
+        }
     }
 
-    
+    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 2
+    }
 }
 
 extension MealDetailViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let foodItem = mealFoodItemsDataModels[indexPath.row]
-        return TabularDataRowCell.size(mealFoodItemsCollectionView.bounds.width, viewModel: foodItem)
+        if indexPath.section == MealActionSections.kSectionMealItems.rawValue {
+            let foodItem = mealFoodItemsDataModels[indexPath.row]
+            return TabularDataRowCell.size(mealFoodItemsCollectionView.bounds.width, viewModel: foodItem)
+        } else if indexPath.section == MealActionSections.kSectionMealActions.rawValue {
+            let mealActionItem = mealActionModels[indexPath.row]
+            return MealActionCollectionViewCell.size(mealFoodItemsCollectionView.bounds.width, viewModel: mealActionItem)
+        }
+        return CGSizeZero
     }
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
@@ -344,8 +429,16 @@ extension MealDetailViewController: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         //        return CGSizeZero
-        return CGSizeMake(mealFoodItemsCollectionView.bounds.width, TabularDataCell.kHeaderCellHeight)
+        if section == 0 {
+            return CGSizeMake(mealFoodItemsCollectionView.bounds.width, TabularDataCell.kHeaderCellHeight)
+        }
+        return CGSizeZero
     }
+
+//    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+//        //        return CGSizeZero
+//        return CGSizeMake(mealFoodItemsCollectionView.bounds.width, TabularDataCell.kHeaderCellHeight)
+//    }
 
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         let visibleCells = mealFoodItemsCollectionView.visibleCells()
@@ -373,12 +466,17 @@ extension MealDetailViewController: UICollectionViewDelegateFlowLayout {
     
     // make header sticky
     public func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        if kind == UICollectionElementKindSectionHeader {
+        if kind == UICollectionElementKindSectionHeader && indexPath.section == MealActionSections.kSectionMealItems.rawValue {
             let cell = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: TabularDataRowCell.kReuseIdentifier, forIndexPath: indexPath) as! TabularDataRowCell
             let viewModel = getHeaderCellViewModel()
             cell.setup(viewModel)
             cell.synchronizedCellsScrollViewDelegate = self
             return cell
+//        } else if kind == UICollectionElementKindSectionFooter {
+//            let cell = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionFooter, withReuseIdentifier: TabularDataRowCell.kReuseIdentifier, forIndexPath: indexPath) as! TabularDataRowCell
+//            let viewModel = getFooterCellViewModel()
+//            cell.setup(viewModel)
+//            return cell
         }
         // TODO: Generate the footer cell which would be sub totals
         return UICollectionViewCell()

@@ -38,7 +38,7 @@ public class FormCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
 
-    public func setup(formModel: [String: AnyObject?]) {
+    public func setup(formModel: [String: AnyObject?], keyboardType: UIKeyboardType = UIKeyboardType.DecimalPad) {
         // override
 //        self.viewModel = formModel
         self.backgroundColor = UIColor.clearColor()

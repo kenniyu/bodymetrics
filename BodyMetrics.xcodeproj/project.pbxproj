@@ -113,6 +113,9 @@
 		C1DEF31A1C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1DEF3181C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib */; };
 		C1DEF31C1C05137000DFB7F0 /* PickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DEF31B1C05137000DFB7F0 /* PickerModalView.swift */; };
 		C1DEF31E1C05138100DFB7F0 /* PickerModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1DEF31D1C05138100DFB7F0 /* PickerModalView.xib */; };
+		C1FE89BC1C1775010052237F /* MealActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FE89BA1C1775010052237F /* MealActionCollectionViewCell.swift */; };
+		C1FE89BD1C1775010052237F /* MealActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1FE89BB1C1775010052237F /* MealActionCollectionViewCell.xib */; };
+		C1FE89BF1C1776250052237F /* MealActionCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FE89BE1C1776250052237F /* MealActionCellModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +250,9 @@
 		C1DEF3181C04F1C100DFB7F0 /* FormWithPickerViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormWithPickerViewCollectionViewCell.xib; sourceTree = "<group>"; };
 		C1DEF31B1C05137000DFB7F0 /* PickerModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerModalView.swift; sourceTree = "<group>"; };
 		C1DEF31D1C05138100DFB7F0 /* PickerModalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerModalView.xib; sourceTree = "<group>"; };
+		C1FE89BA1C1775010052237F /* MealActionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealActionCollectionViewCell.swift; sourceTree = "<group>"; };
+		C1FE89BB1C1775010052237F /* MealActionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MealActionCollectionViewCell.xib; sourceTree = "<group>"; };
+		C1FE89BE1C1776250052237F /* MealActionCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealActionCellModel.swift; sourceTree = "<group>"; };
 		ED0F968D1D78EB81FBA6BB6B /* Pods_BodyMetrics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BodyMetrics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -310,6 +316,9 @@
 				C153973E1C0ECD8F0064EF20 /* TabularDataHorizontalCollectionViewFlowLayout.swift */,
 				C1BDCC771C123A75001570F9 /* MealDetailViewController.swift */,
 				C1BDCC781C123A75001570F9 /* MealDetailViewController.xib */,
+				C1FE89BA1C1775010052237F /* MealActionCollectionViewCell.swift */,
+				C1FE89BB1C1775010052237F /* MealActionCollectionViewCell.xib */,
+				C1FE89BE1C1776250052237F /* MealActionCellModel.swift */,
 			);
 			name = Planner;
 			sourceTree = "<group>";
@@ -723,6 +732,7 @@
 				C142CD5F1C0E597100141AE7 /* TabularDataRowCell.xib in Resources */,
 				C1B20FFE1BFBED69002C72E9 /* BlenderPro-BoldItalic.otf in Resources */,
 				C1B210031BFBED69002C72E9 /* BlenderPro-MediumItalic.otf in Resources */,
+				C1FE89BD1C1775010052237F /* MealActionCollectionViewCell.xib in Resources */,
 				C1B210371BFE8491002C72E9 /* fruit-loops.jpg in Resources */,
 				C1B210051BFBED69002C72E9 /* BlenderPro-ThinItalic.otf in Resources */,
 				C1B210011BFBED69002C72E9 /* BlenderPro-Heavy.otf in Resources */,
@@ -820,6 +830,7 @@
 				C142CD5E1C0E597100141AE7 /* TabularDataRowCell.swift in Sources */,
 				C128612A1C077CA400B1B5A2 /* PlannerViewController.swift in Sources */,
 				C1DEF2F71C03C5D400DFB7F0 /* MainTabBarController.swift in Sources */,
+				C1FE89BC1C1775010052237F /* MealActionCollectionViewCell.swift in Sources */,
 				C1B20F941BFBE9A7002C72E9 /* ViewController.swift in Sources */,
 				C142CD6A1C0E643B00141AE7 /* SignUpViewController.swift in Sources */,
 				C1B20FED1BFBEC32002C72E9 /* WebUrlRegularExpressionConstants.swift in Sources */,
@@ -858,6 +869,7 @@
 				C1DEF30C1C03D62B00DFB7F0 /* ProfileViewController.swift in Sources */,
 				C1B20FD71BFBEA31002C72E9 /* UIColor+.swift in Sources */,
 				C1DEF2FB1C03C62100DFB7F0 /* SettingsViewController.swift in Sources */,
+				C1FE89BF1C1776250052237F /* MealActionCellModel.swift in Sources */,
 				C1B20FEE1BFBEC32002C72E9 /* KeyboardObserver.swift in Sources */,
 				C1B210271BFD0574002C72E9 /* FoodSearchViewController.swift in Sources */,
 				C1DEF31C1C05137000DFB7F0 /* PickerModalView.swift in Sources */,

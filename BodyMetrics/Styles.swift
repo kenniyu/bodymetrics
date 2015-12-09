@@ -44,8 +44,9 @@ struct Styles {
 
         static let CalendarMenu = UIColor(red: 18/255.0, green: 22/255.0, blue: 28/255.0, alpha: 1.0)
         static let CalendarWeekDay = UIColor(red: 22/255.0, green: 27/255.0, blue: 35/255.0, alpha: 1.0)
-        static let CalendarContent = UIColor(red: 232/255.0, green: 239/255.0, blue: 243/255.0, alpha: 1.0)
+        static let CalendarContent = UIColor(red: 38/255.0, green: 43/255.0, blue: 55/255.0, alpha: 1.0)
         static let TabularDataCellRightBorder = UIColor(red: 22/255.0, green: 27/255.0, blue: 35/255.0, alpha: 1.0)
+        static let TabularDataRowCellCompleted = UIColor(red: 38/255.0, green: 43/255.0, blue: 55/255.0, alpha: 1.0)
 
         static let DataVisBlue = UIColor(red: 22/255.0, green: 96/255.0, blue: 167/255.0, alpha: 1.0)
         static let DataVisLightBlue = UIColor(red: 158/255.0, green: 185/255.0, blue: 228/255.0, alpha: 1.0)

@@ -40,12 +40,12 @@ public class JTCalendarRingDayView: JTCalendarDayView {
         if completed == 0 && pending == 0 {
             slicesData = [
                 PieChartData(myValue: 0, myColor: color, myLabel: "Done"),
-                PieChartData(myValue: 1, myColor: Styles.Colors.AppLightGray, myLabel: "Pending")
+                PieChartData(myValue: 1, myColor: Styles.Colors.AppDarkBlueLighter, myLabel: "Pending")
             ]
         } else {
             slicesData = [
                 PieChartData(myValue: completed, myColor: color, myLabel: "Done"),
-                PieChartData(myValue: pending, myColor: Styles.Colors.AppLightGray, myLabel: "Pending")
+                PieChartData(myValue: pending, myColor: Styles.Colors.AppDarkBlueLighter, myLabel: "Pending")
             ]
         }
 

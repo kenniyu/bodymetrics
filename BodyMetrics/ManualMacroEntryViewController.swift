@@ -57,20 +57,18 @@ class ManualMacroEntryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    public override func viewDidLayoutSubviews() {
-//        manualEntryCollectionView.setNeedsLayout()
-//        updateFeedModels()
-//    }
-
     private func updateFeedModels() {
         feedModels = []
+        let foodNameDict = ["key": "foodName", "name": "Food Item", "placeholder": "eg. chicken breast"]
         let fatDict = ["macroKey": MacroKeys.kFatKey, "name": "Fat (g)"]
         let carbsDict = ["macroKey": MacroKeys.kCarbsKey, "name": "Carbs (g)"]
         let proteinDict = ["macroKey": MacroKeys.kProteinKey, "name": "Protein (g)"]
 
+        feedModels.append(foodNameDict)
         feedModels.append(fatDict)
         feedModels.append(carbsDict)
         feedModels.append(proteinDict)
+
 
         manualEntryCollectionView.reloadData()
     }
@@ -104,7 +102,11 @@ extension ManualMacroEntryViewController: UICollectionViewDataSource, UICollecti
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let cell = manualEntryCollectionView.dequeueReusableCellWithReuseIdentifier(FormWithTextFieldCollectionViewCell.kReuseIdentifier, forIndexPath: indexPath) as? FormWithTextFieldCollectionViewCell {
             let viewModel = feedModels[indexPath.row]
-            cell.setup(viewModel)
+            if let foodNameKey = viewModel["key"] {
+                cell.setup(viewModel, keyboardType: UIKeyboardType.Alphabet)
+            } else {
+                cell.setup(viewModel)
+            }
             return cell
         }
         return UICollectionViewCell()

@@ -19,8 +19,9 @@ public class TabularDataRowCell: UICollectionViewCell {
     static let kNib = UINib(nibName: kClassName, bundle: NSBundle(forClass: TabularDataRowCell.self))
 
     static let kCellContainerPadding: CGFloat = 12
-    static let kTitleLabelFontStyle: UIFont = Styles.Fonts.BookLarge!
-    static let kHeaderLabelFontStyle: UIFont = Styles.Fonts.MediumMedium!
+    static let kTitleLabelFontStyle: UIFont = Styles.Fonts.BookMedium!
+    static let kSubRowTitleLabelFontStyle: UIFont = Styles.Fonts.MediumMedium!
+    static let kHeaderLabelFontStyle: UIFont = Styles.Fonts.BookMedium!
     static let kFontColor: UIColor = Styles.Colors.DataVisLightTeal
     static let kImageHeight: CGFloat = 200
     static let kActorPhotoHeight: CGFloat = 50
@@ -47,6 +48,8 @@ public class TabularDataRowCell: UICollectionViewCell {
     public var tabularDataRowCellDelegate: TabularDataRowCellDelegate?
     public var synchronizedCellsScrollViewDelegate: SynchronizedCellsScrollViewDelegate?
 
+    private var isFirst: Bool = false
+
     public class var nib: UINib {
         get {
             return TabularDataRowCell.kNib
@@ -65,14 +68,11 @@ public class TabularDataRowCell: UICollectionViewCell {
 
     public override func awakeFromNib() {
         super.awakeFromNib()
-
-        tabularDataHeaderLabel.font = TabularDataRowCell.kHeaderLabelFontStyle
-        tabularDataHeaderLabel.textColor = Styles.Colors.BarNumber
-        self.backgroundColor = Styles.Colors.AppDarkBlue
     }
 
-    public func setup(viewModel: TabularDataRowCellModel) {
+    public func setup(viewModel: TabularDataRowCellModel, isFirst: Bool = false) {
         self.viewModel = viewModel
+        self.isFirst = isFirst
         setupStyles()
 
         loadDataIntoViews(viewModel)
@@ -86,30 +86,30 @@ public class TabularDataRowCell: UICollectionViewCell {
 
     public func setupStyles() {
         containerView.backgroundColor = UIColor.clearColor()
+
+        tabularDataHeaderLabel.font = viewModel.isSubRow ? TabularDataRowCell.kHeaderLabelFontStyle : TabularDataRowCell.kSubRowTitleLabelFontStyle
+        tabularDataHeaderLabel.textColor = Styles.Colors.BarNumber
+
         tabularDataRowBottomBorder.backgroundColor = Styles.Colors.BarLabel
         tabularDataRowTopBorder.backgroundColor = Styles.Colors.BarLabel
         tabularDataHeaderRightBorder.backgroundColor = Styles.Colors.TabularDataCellRightBorder
 
-        // style
-        if viewModel.isSubRow {
-            backgroundColor = Styles.Colors.AppDarkBlueLighter
-        } else {
-            backgroundColor = Styles.Colors.AppDarkBlue
-        }
+        backgroundColor = Styles.Colors.AppDarkBlue
+
         // regardless of meal or subrow, mark as green if completed
         if viewModel.isCompleted {
-            backgroundColor = Styles.Colors.AppGreen
+            backgroundColor = Styles.Colors.TabularDataRowCellCompleted
         }
 
         tabularDataHeaderView.backgroundColor = backgroundColor
 
         expandCollapseButton.tintColor = Styles.Colors.BarNumber
         if viewModel.isExpanded {
-            // show expanded button icon
-            expandCollapseButton.setImage(UIImage(named: "collapse-white.png"), forState: .Normal)
+            // show expanded state button icon
+            expandCollapseButton.setImage(UIImage(named: "expanded-white.png"), forState: .Normal)
         } else {
-            // show collapse button icon
-            expandCollapseButton.setImage(UIImage(named: "expand-white.png"), forState: .Normal)
+            // show collapsed state button icon
+            expandCollapseButton.setImage(UIImage(named: "collapsed-white.png"), forState: .Normal)
         }
         hideUnhideViews()
     }
@@ -186,10 +186,19 @@ public class TabularDataRowCell: UICollectionViewCell {
         tabularDataHeaderLabel.width = tabularDataHeaderView.width - tabularDataHeaderLabel.left
         tabularDataHeaderLabel.height = tabularDataHeaderView.height
 
+        if viewModel.isHeader {
+            tabularDataHeaderLabel.textAlignment = NSTextAlignment.Left
+        }
+
         tabularDataHeaderRightBorder.top = 0
         tabularDataHeaderRightBorder.left = tabularDataHeaderView.width - 1
         tabularDataHeaderRightBorder.width = 1
         tabularDataHeaderRightBorder.height = tabularDataHeaderView.height
+
+        tabularDataRowTopBorder.height = 1
+        tabularDataRowTopBorder.left = (isFirst || viewModel.isHeader) ? 0 : Styles.Dimensions.kItemSpacingDim3
+        tabularDataRowTopBorder.width = containerView.width - tabularDataRowTopBorder.left
+        tabularDataRowTopBorder.top = 0
 
         tabularDataRowBottomBorder.height = 1
         tabularDataRowBottomBorder.width = tabularDataCollectionView.width
@@ -212,7 +221,8 @@ public class TabularDataRowCell: UICollectionViewCell {
 
     public func hideUnhideViews() {
         expandCollapseButton.hidden = viewModel.isSubRow || viewModel.isHeader || !viewModel.isExpandable
-        tabularDataRowTopBorder.hidden = !viewModel.isHeader
+//        tabularDataRowTopBorder.hidden = !viewModel.isHeader
+        tabularDataRowBottomBorder.hidden = true
     }
 
 

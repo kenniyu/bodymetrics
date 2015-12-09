@@ -27,6 +27,7 @@ class TabularDataCell: UICollectionViewCell {
 
     static let kCellContainerPadding: CGFloat = 12
     static let kDataValueLabelFont: UIFont = Styles.Fonts.MediumMedium!
+    static let kSubRowDataValueLabelFont: UIFont = Styles.Fonts.BookLarge!
     static let kFontColor: UIColor = Styles.Colors.DataVisLightTeal
     static let kImageHeight: CGFloat = 200
     static let kActorPhotoHeight: CGFloat = 50
@@ -35,7 +36,7 @@ class TabularDataCell: UICollectionViewCell {
     static let kBorderViewHeight: CGFloat = 8
     static let kHeaderCellHeight: CGFloat = 36
     static let kCellHeight: CGFloat = 50
-    static let kCellWidth: CGFloat = 60
+    static let kCellWidth: CGFloat = 72
 
     @IBOutlet weak var containerView: UIView!
     /// row of tabular data cells

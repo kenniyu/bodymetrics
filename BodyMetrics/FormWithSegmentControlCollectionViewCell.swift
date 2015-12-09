@@ -55,7 +55,7 @@ public class FormWithSegmentControlCollectionViewCell: FormCollectionViewCell {
         return self.viewModel
     }
 
-    public override func setup(formModel: [String: AnyObject?]) {
+    public override func setup(formModel: [String: AnyObject?], keyboardType: UIKeyboardType = UIKeyboardType.DecimalPad) {
         super.setup(formModel)
         self.viewModel = formModel
 

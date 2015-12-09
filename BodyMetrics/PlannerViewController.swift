@@ -286,7 +286,7 @@ extension PlannerViewController: JTCalendarDelegate {
                 var completedMeals = 0
                 var incompleteMeals = 0
                 for meal in meals {
-                    if let completed = meal["completed"] as? Bool, let isSubRow = meal["isSubRow"] as? Bool {
+                    if let completed = meal["isCompleted"] as? Bool, let isSubRow = meal["isSubRow"] as? Bool {
                         if isSubRow {
                             // ignore subrows, only care about meal item encapsulation rows
                             continue
@@ -311,23 +311,23 @@ extension PlannerViewController: JTCalendarDelegate {
                     dayView.circleView.hidden = false
                     dayView.circleView.backgroundColor = UIColor.clearColor()
                     dayView.dotView.backgroundColor = UIColor.grayColor()
-                    dayView.textLabel.textColor = UIColor.redColor()
+                    dayView.textLabel.textColor = Styles.Colors.DataVisLightPurple
 
                     if let selectedDate = selectedDate where dateHelper.date(selectedDate, isTheSameDayThan: NSDate()) {
-                        dayView.circleView.backgroundColor = UIColor.redColor()
+                        dayView.circleView.backgroundColor = Styles.Colors.DataVisLightPurple
                         dayView.textLabel.textColor = UIColor.whiteColor()
                     }
                 } else if let selectedDate = selectedDate where dateHelper.date(selectedDate, isTheSameDayThan: dayView.date) {
                     // Selected date
                     dayView.circleView.hidden = false
-                    dayView.circleView.backgroundColor = Styles.Colors.AppDarkBlue
+                    dayView.circleView.backgroundColor = Styles.Colors.DataVisLightBlue
                     dayView.dotView.backgroundColor = UIColor.grayColor()
                     dayView.textLabel.textColor = UIColor.whiteColor()
                 } else {
                     // Another day of the current month
                     dayView.circleView.hidden = true
                     dayView.dotView.backgroundColor = UIColor.grayColor()
-                    dayView.textLabel.textColor = Styles.Colors.AppDarkBlue
+                    dayView.textLabel.textColor = Styles.Colors.BarNumber
                 }
             }
 
@@ -396,7 +396,9 @@ extension PlannerViewController: JTCalendarDelegate {
     public func calendarBuildDayView(calendar: JTCalendarManager!) -> UIView! {
         let view = JTCalendarRingDayView()
         view.textLabel.font = Styles.Fonts.MediumMedium
-        view.textLabel.textColor = Styles.Colors.AppDarkBlue
+        view.textLabel.adjustsFontSizeToFitWidth = true
+        view.textLabel.minimumScaleFactor = 0.6
+        view.textLabel.textColor = Styles.Colors.BarNumber
         view.circleRatio = 0.6
         view.dotRatio = 1 / 0.9
 
