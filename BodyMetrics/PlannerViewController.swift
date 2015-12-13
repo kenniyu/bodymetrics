@@ -311,16 +311,22 @@ extension PlannerViewController: JTCalendarDelegate {
                     dayView.circleView.hidden = false
                     dayView.circleView.backgroundColor = UIColor.clearColor()
                     dayView.dotView.backgroundColor = UIColor.grayColor()
-                    dayView.textLabel.textColor = Styles.Colors.DataVisLightPurple
+                    dayView.textLabel.textColor = Styles.Colors.DataVisLightGreen
 
                     if let selectedDate = selectedDate where dateHelper.date(selectedDate, isTheSameDayThan: NSDate()) {
-                        dayView.circleView.backgroundColor = Styles.Colors.DataVisLightPurple
+                        dayView.circleView.backgroundColor = Styles.Colors.DataVisLightGreen
                         dayView.textLabel.textColor = UIColor.whiteColor()
                     }
                 } else if let selectedDate = selectedDate where dateHelper.date(selectedDate, isTheSameDayThan: dayView.date) {
                     // Selected date
+                    if dateHelper.date(selectedDate, isEqualOrBefore: NSDate()) {
+                        // if the selected date is before today, highlight it purple
+                        dayView.circleView.backgroundColor = Styles.Colors.DataVisLightPurple
+                    } else {
+                        // selected date is in the future, highlight it blue
+                        dayView.circleView.backgroundColor = Styles.Colors.DataVisLightBlue
+                    }
                     dayView.circleView.hidden = false
-                    dayView.circleView.backgroundColor = Styles.Colors.DataVisLightBlue
                     dayView.dotView.backgroundColor = UIColor.grayColor()
                     dayView.textLabel.textColor = UIColor.whiteColor()
                 } else {

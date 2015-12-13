@@ -8,6 +8,7 @@
 
 import UIKit
 import JTCalendar
+import Parse
 
 public enum MealActionSections: Int {
     case kSectionMealItems = 0
@@ -105,7 +106,6 @@ class MealDetailViewController: UIViewController {
         // add done button
         if let selectedDate = selectedDate where JTDateHelper().date(selectedDate, isEqualOrBefore: NSDate()) {
             // only allow them to complete meals which are dated at or before today
-            addRightBarButtons([createDoneButton()])
         }
 
 //        title = "Meal Details".uppercaseString
@@ -145,13 +145,7 @@ class MealDetailViewController: UIViewController {
         mealFoodItemsCollectionView.reloadData()
     }
 
-    private func setupPieChart() {
-        guard mealFat + mealCarbs + mealProtein > 0 else {
-            return
-        }
-
-        pieChart = MDRotatingPieChart(frame: CGRectMake(0, 0, pieChartContainerView.frame.width, pieChartContainerView.frame.height))
-
+    private func updateSlicesData() {
         let fatGrams = mealFat
         let carbsGrams = mealCarbs
         let proteinGrams = mealProtein
@@ -164,6 +158,16 @@ class MealDetailViewController: UIViewController {
             Data(myValue: fatCalories, myColor: Styles.Colors.DataVisLightRed, myLabel: "Fat"),
             Data(myValue: carbsCalories, myColor: Styles.Colors.DataVisLightPurple, myLabel: "Carbs"),
             Data(myValue: proteinCalories, myColor: Styles.Colors.DataVisLightGreen, myLabel: "Protein")]
+    }
+
+    private func setupPieChart() {
+        guard mealFat + mealCarbs + mealProtein > 0 else {
+            return
+        }
+
+        pieChart = MDRotatingPieChart(frame: CGRectMake(0, 0, pieChartContainerView.frame.width, pieChartContainerView.frame.height))
+
+        updateSlicesData()
 
         pieChart.delegate = self
         pieChart.datasource = self
@@ -225,13 +229,20 @@ class MealDetailViewController: UIViewController {
         let proteinCalories = mealProtein * 4
         let totalCalories = fatCalories + carbsCalories + proteinCalories
 
-        let fatPct = Double(fatCalories * 100 / totalCalories).roundToPlaces(1)
-        let carbsPct = Double(carbsCalories * 100 / totalCalories).roundToPlaces(1)
-        let proteinPct = Double(proteinCalories * 100 / totalCalories).roundToPlaces(1)
-        fatPctLabel.text = "\(fatPct)%"
-        carbsPctLabel.text = "\(carbsPct)%"
-        proteinPctLabel.text = "\(proteinPct)%"
         pieChartCaloriesCountLabel.text = "\(totalCalories)"
+        if totalCalories == 0 {
+            fatPctLabel.text = "0%"
+            carbsPctLabel.text = "0%"
+            proteinPctLabel.text = "0%"
+            return
+        } else {
+            let fatPct = Double(fatCalories * 100 / totalCalories).roundToPlaces(1)
+            let carbsPct = Double(carbsCalories * 100 / totalCalories).roundToPlaces(1)
+            let proteinPct = Double(proteinCalories * 100 / totalCalories).roundToPlaces(1)
+            fatPctLabel.text = "\(fatPct)%"
+            carbsPctLabel.text = "\(carbsPct)%"
+            proteinPctLabel.text = "\(proteinPct)%"
+        }
     }
 
     private func storeMacros() {
@@ -306,6 +317,55 @@ class MealDetailViewController: UIViewController {
         mealDetailDelegate?.didUpdateMeal(mealDataModel, finished: false)
         self.done()
     }
+
+    private func updateMealDataModelCalculations() {
+        var totalFat: CGFloat = 0
+        var totalCarbs: CGFloat = 0
+        var totalProtein: CGFloat = 0
+        var totalCalories: CGFloat = 0
+        for foodItemDataModel in mealFoodItemsDataModels {
+            for cellModel in foodItemDataModel.cellModels {
+                switch cellModel.columnKey {
+                case TabularDataCellColumnKeys.kFatKey:
+                    totalFat += CGFloat(cellModel.value.floatValue)
+                case TabularDataCellColumnKeys.kCarbsKey:
+                    totalCarbs += CGFloat(cellModel.value.floatValue)
+                case TabularDataCellColumnKeys.kProteinKey:
+                    totalProtein += CGFloat(cellModel.value.floatValue)
+                case TabularDataCellColumnKeys.kCaloriesKey:
+                    totalCalories += CGFloat(cellModel.value.floatValue)
+                default:
+                    break
+
+                }
+            }
+        }
+
+        if let mealDataModel = mealDataModel {
+            let cellModels = mealDataModel.cellModels
+            // loop through our existing models and update the macro contents
+            for cellModel in cellModels {
+                switch cellModel.columnKey {
+                case TabularDataCellColumnKeys.kFatKey:
+                    cellModel.value = totalFat
+                case TabularDataCellColumnKeys.kCarbsKey:
+                    cellModel.value = totalCarbs
+                case TabularDataCellColumnKeys.kProteinKey:
+                    cellModel.value = totalProtein
+                case TabularDataCellColumnKeys.kCaloriesKey:
+                    cellModel.value = totalCalories
+                default:
+                    break
+                }
+            }
+        }
+
+        // refresh all views
+        storeMacros()
+        setupLabelData()
+        updateSlicesData()
+        refreshPieChart()
+    }
 }
 
 extension MealDetailViewController: MDRotatingPieChartDelegate, MDRotatingPieChartDataSource {
@@ -346,7 +406,11 @@ extension MealDetailViewController: MDRotatingPieChartDelegate, MDRotatingPieCha
 
     /// This must be called to render the pie chart
     func refreshPieChart()  {
-        pieChart.build()
+        if let pieChart = pieChart {
+            pieChart.build()
+        } else {
+            setupPieChart()
+        }
     }
 }
 
@@ -387,6 +451,10 @@ extension MealDetailViewController: UICollectionViewDataSource, UICollectionView
                 switch mealAction.actionKey {
                 case MealActionKeys.kAddMealItem:
                     print("Add meal item")
+                    let manualFoodItemEntryViewController = ManualMacroEntryViewController()
+                    let manualFoodItemEntryNavigationController = UINavigationController(rootViewController: manualFoodItemEntryViewController)
+                    manualFoodItemEntryViewController.mealDetailDelegate = self
+                    presentViewController(manualFoodItemEntryNavigationController, animated: true, completion: nil)
                 case MealActionKeys.kCompleteMeal:
                     self.completeMeal()
                 case MealActionKeys.kUncompleteMeal:
@@ -500,5 +568,22 @@ extension MealDetailViewController: SynchronizedCellsScrollViewDelegate {
         if let headerCell = mealFoodItemsCollectionView.supplementaryViewForElementKind(UICollectionElementKindSectionHeader, atIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as? TabularDataRowCell {
             headerCell.tabularDataCollectionView.contentOffset = contentOffset
         }
+    }
+}
+
+extension MealDetailViewController: MealDetailDelegate {
+
+    public func didAddFoodItem(foodItem: FoodItemModel, toMeal mealCellModel: TabularDataRowCellModel?) {
+        let foodItemRowCellModel = foodItem.toTabularDataRowCellModel()
+        mealFoodItemsDataModels.append(foodItemRowCellModel)
+        mealFoodItemsCollectionView.insertItemsAtIndexPaths([NSIndexPath(forRow: mealFoodItemsDataModels.count - 1, inSection: 0)])
+
+        updateMealDataModelCalculations()
+
+        mealDetailDelegate?.didAddFoodItem(foodItem, toMeal: mealDataModel)
+    }
+
+    public func didUpdateMeal(mealDataModel: TabularDataRowCellModel?, finished: Bool) {
+        return
     }
 }

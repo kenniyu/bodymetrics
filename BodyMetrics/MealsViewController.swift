@@ -11,7 +11,7 @@ import Parse
 
 public protocol MealDetailDelegate: class {
     func didUpdateMeal(mealDataModel: TabularDataRowCellModel?, finished: Bool)
-    func didAddFoodItem(foodItem: PFObject, toMeal mealDataModel: TabularDataRowCellModel?)
+    func didAddFoodItem(foodItem: FoodItemModel, toMeal mealCellModel: TabularDataRowCellModel?)
 }
 
 public protocol SynchronizedCellsScrollViewDelegate: class {
@@ -20,6 +20,9 @@ public protocol SynchronizedCellsScrollViewDelegate: class {
 
 public
 class MealsViewController: UIViewController {
+    @IBOutlet weak var zeroStateView: UIView!
+    @IBOutlet weak var zeroStateLabel: UILabel!
+    @IBOutlet weak var zeroStateAddMealButton: UIButton!
 
     @IBOutlet weak var mealsCollectionView: UICollectionView!
     @IBOutlet weak var mealDateLabel: UILabel!
@@ -41,6 +44,9 @@ class MealsViewController: UIViewController {
     // Fonts
     private static let kDateLabelFont = Styles.Fonts.MediumMedium!
     private static let kDateFont = Styles.Fonts.ThinMedium!
+    private static let kButtonFont = Styles.Fonts.MediumLarge!
+    private static let kLabelFont = Styles.Fonts.BookMedium!
+
     private var selectedDate: NSDate!
 
     public static let kNibName = "MealsViewController"
@@ -130,9 +136,6 @@ class MealsViewController: UIViewController {
     }
 
     public func setup() {
-        // add done button
-//        addRightBarButtons([createDoneButton()])
-
         title = "Today's Meals".uppercaseString
         view.backgroundColor = Styles.Colors.AppDarkBlue
 
@@ -140,12 +143,18 @@ class MealsViewController: UIViewController {
         setupStyles()
         setupMealDatePicker()
         setupCollectionView()
+        setupZeroStateView()
 
         prepareCellModels()
 
         registerCells()
 
         mealsCollectionView.reloadData()
+    }
+
+    private func setupZeroStateView() {
+        zeroStateView.hidden = cellViewModels.count > 0
+        addMealButton.hidden = !zeroStateView.hidden
     }
 
     private func setupMealDatePicker() {
@@ -165,10 +174,19 @@ class MealsViewController: UIViewController {
         mealDateLabel.textColor = Styles.Colors.BarNumber
         mealDateTextField.font = MealsViewController.kDateFont
         mealDateTextField.textColor = Styles.Colors.BarNumber
+
+        zeroStateAddMealButton.titleLabel?.font = MealsViewController.kButtonFont
+        zeroStateAddMealButton.tintColor = Styles.Colors.BarNumber
+
+        zeroStateLabel.font = MealsViewController.kLabelFont
+        zeroStateLabel.textColor = Styles.Colors.BarNumber
+
+        addMealButton.titleLabel?.font = MealsViewController.kButtonFont
+        addMealButton.tintColor = Styles.Colors.BarNumber
     }
 
     private func prepareCellModels() {
-        if cellViewModels.count == 0 {
+        if cellViewModels.count == 0 && false {
             // if no plan, create one for now
             for i in 0...10 {
                 let fatCellModel = TabularDataCellModel("fat", columnKey: TabularDataCellColumnKeys.kFatKey, value: CGFloat(arc4random_uniform(6) + 1))
@@ -205,6 +223,8 @@ class MealsViewController: UIViewController {
         mealsCollectionView.dataSource = self
         mealsCollectionView.collectionViewLayout = TabularDataVerticalCollectionViewFlowLayout()
         mealsCollectionView.alwaysBounceVertical = true
+
+        mealsCollectionView.hidden = !(cellViewModels.count > 0)
     }
 
     public func registerCells(collectionView: UICollectionView) {
@@ -225,16 +245,32 @@ class MealsViewController: UIViewController {
     }
 
     public func updateFilteredCellViewModels() {
+        filteredCellViewModels = []
+        var shouldExpandCurrentMeal = false
         for (index, cellViewModel) in cellViewModels.enumerate() {
-            // dip toe one index ahead to test if it's subrow, if so, then mark current as expandable
-            let nextRow = index + 1
-            let isExpandable = !cellViewModel.isSubRow && nextRow < cellViewModels.count && cellViewModels[nextRow].isSubRow
-            cellViewModel.isExpandable = isExpandable
+            if !cellViewModel.isSubRow {
+                // append to filtered model if it's a meal parent
+                shouldExpandCurrentMeal = cellViewModel.isExpanded
+                filteredCellViewModels.append(cellViewModel)
+            } else {
+                // we are a subrow, check to see if current meal should be expanded
+                // if so, mark current as not hidden
+                cellViewModel.hidden = !shouldExpandCurrentMeal
+                if !cellViewModel.hidden {
+                    // if the food item is not hidden, also append it
+                    filteredCellViewModels.append(cellViewModel)
+                }
+            }
         }
-        filteredCellViewModels = cellViewModels.filter({!$0.hidden})
     }
 
-    @IBAction func addMealTapped(sender: UIButton) {
+    public func toggleViews() {
+        mealsCollectionView.hidden = cellViewModels.count <= 0
+        zeroStateView.hidden = cellViewModels.count > 0
+        addMealButton.hidden = mealsCollectionView.hidden
+    }
+
+    public func addMeal() {
         let alertController = UIAlertController(title: "Enter Meal Name", message: nil, preferredStyle: .Alert)
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
@@ -256,6 +292,8 @@ class MealsViewController: UIViewController {
 
                 let newIndexPath = NSIndexPath(forRow: self.filteredCellViewModels.count - 1, inSection: 0)
                 self.mealsCollectionView.insertItemsAtIndexPaths([newIndexPath])
+
+                self.toggleViews()
                 self.mealsCollectionView.scrollToItemAtIndexPath(newIndexPath, atScrollPosition: .Bottom, animated: true)
             }
 
@@ -268,21 +306,29 @@ class MealsViewController: UIViewController {
             self.newMealNameTextField = textField
         }
 
-//        alertController.addTextFieldWithConfigurationHandler { (textField) in
-//            textField.placeholder = "Meal time"
-//            textField.keyboardType = .Default
-//
-//            self.newMealDatePicker = UIDatePicker()
-//            self.newMealDatePicker?.datePickerMode = UIDatePickerMode.Time
-//            self.newMealDatePicker?.addTarget(self, action: "didUpdateMealTime:", forControlEvents: UIControlEvents.ValueChanged)
-//            textField.inputView = self.newMealDatePicker
-//
-//            self.newMealTimeTextField = textField
-//        }
-
+        //        alertController.addTextFieldWithConfigurationHandler { (textField) in
+        //            textField.placeholder = "Meal time"
+        //            textField.keyboardType = .Default
+        //
+        //            self.newMealDatePicker = UIDatePicker()
+        //            self.newMealDatePicker?.datePickerMode = UIDatePickerMode.Time
+        //            self.newMealDatePicker?.addTarget(self, action: "didUpdateMealTime:", forControlEvents: UIControlEvents.ValueChanged)
+        //            textField.inputView = self.newMealDatePicker
+        //
+        //            self.newMealTimeTextField = textField
+        //        }
+        
         self.presentViewController(alertController, animated: true) {
             // ...
         }
+    }
+
+    @IBAction func zeroStateAddMealTapped(sender: UIButton) {
+        addMeal()
+    }
+
+    @IBAction func addMealTapped(sender: UIButton) {
+        addMeal()
     }
 
     public func didUpdateMealTime(datePicker: UIDatePicker) {
@@ -366,8 +412,55 @@ extension MealsViewController: UICollectionViewDataSource, UICollectionViewDeleg
 }
 
 extension MealsViewController: MealDetailDelegate {
-    // a No-op
-    public func didAddFoodItem(foodItem: PFObject, toMeal mealDataModel: TabularDataRowCellModel?) {
+    // a no-op
+    public func didAddFoodItem(foodItem: FoodItemModel, toMeal mealDataModel: TabularDataRowCellModel?) {
+        guard let mealDataModel = mealDataModel else { return }
+        let foodItemRowCellModel = foodItem.toTabularDataRowCellModel()
+
+        let mealCellModelUniqueId = mealDataModel.uniqueId
+
+        for (index, viewModel) in filteredCellViewModels.enumerate() {
+            if viewModel.uniqueId == mealCellModelUniqueId {
+
+                for (cellViewModelsIndex, cellViewModel) in cellViewModels.enumerate() {
+                    if cellViewModel.uniqueId == mealCellModelUniqueId {
+                        let indexPath = NSIndexPath(forRow: index, inSection: 0)
+
+                        var indexPathsToUpdate: [NSIndexPath] = [indexPath]
+                        var innerRow = index + 1
+                        while innerRow < filteredCellViewModels.count && filteredCellViewModels[innerRow].isSubRow {
+                            // increment inner row until we get to the desired indexPath
+                            innerRow += 1
+                        }
+                        let indexPathsToAdd = [NSIndexPath(forRow: innerRow, inSection: 0)]
+
+                        // set the hidden state to reflect the view model's expanded state
+                        foodItemRowCellModel.hidden = !viewModel.isExpanded
+                        print(foodItemRowCellModel.hidden)
+                        filteredCellViewModels.insert(foodItemRowCellModel, atIndex: innerRow)
+
+                        // however, we still need to update cellViewModel collection
+                        // Reset innerRow back to cellViewModelsIndex, and dip toe forward to update
+                        innerRow = cellViewModelsIndex + 1
+                        while innerRow < cellViewModels.count && cellViewModels[innerRow].isSubRow {
+                            innerRow += 1
+                        }
+
+                        cellViewModels.insert(foodItemRowCellModel, atIndex: innerRow)
+                        viewModel.isExpandable = true
+                        cellViewModel.isExpandable = true
+
+                        print(indexPathsToAdd.count)
+                        updateFilteredCellViewModels()
+                        mealsCollectionView.reloadData()
+//                        mealsCollectionView.insertItemsAtIndexPaths(indexPathsToAdd)
+//                        mealsCollectionView.reloadItemsAtIndexPaths(indexPathsToUpdate)
+                        return
+                    }
+                }
+                
+            }
+        }
         return
     }
 

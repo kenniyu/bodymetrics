@@ -19,7 +19,10 @@ class ManualMacroEntryViewController: UIViewController {
     private var currentProtein: CGFloat = 0
     private var currentCarbs: CGFloat = 0
 
+    public var mealDetailDelegate: MealDetailDelegate?
+
     public var nutritionDelegate: NutritionDelegate?
+    private var foodName: String? = ""
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,8 +95,13 @@ class ManualMacroEntryViewController: UIViewController {
         let newFat = currentFat + getAddedMacro(MacroKeys.kFatKey)
         let newCarbs = currentCarbs + getAddedMacro(MacroKeys.kCarbsKey)
         let newProtein = currentProtein + getAddedMacro(MacroKeys.kProteinKey)
+
         dismissViewControllerAnimated(true) { () -> Void in
             self.nutritionDelegate?.didUpdateMacros(newFat, carbs: newCarbs, protein: newProtein)
+            if let foodName = self.getFoodItemName() {
+                let foodItemModel = FoodItemModel(foodName, itemFat: newFat, itemCarbs: newCarbs, itemProtein: newProtein)
+                self.mealDetailDelegate?.didAddFoodItem(foodItemModel, toMeal: nil)
+            }
         }
     }
 }
@@ -126,6 +134,19 @@ extension ManualMacroEntryViewController: UICollectionViewDataSource, UICollecti
 //            foodDetailViewController.nutritionDelegate = nutritionDelegate
 //            self.navigationController?.pushViewController(foodDetailViewController, animated: true)
 //        }
+    }
+
+    private func getFoodItemName() -> String? {
+        for (index, feedModel) in feedModels.enumerate() {
+            guard let foodItemDict = feedModel["key"] as? String else { return nil }
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            if let cell = manualEntryCollectionView.cellForItemAtIndexPath(indexPath) as? FormWithTextFieldCollectionViewCell {
+                if let formText = cell.formTextField.text {
+                    return formText
+                }
+            }
+        }
+        return nil
     }
 
     private func getAddedMacro(macroKey: String) -> CGFloat {
